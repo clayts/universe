@@ -81,7 +81,7 @@
 					              };
 					            };
 					            state = {
-					              size = \"8G\";
+					              size = \"14G\";
 					              content = {
 					                type = \"btrfs\";
 					                extraArgs = [ \"-f\" ];
