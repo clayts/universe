@@ -10,16 +10,17 @@
   environment.persistence."/data" = {
     hideMounts = true;
     directories = [
-	  "/var/lib/nixos"
-      "/var/db"
-      "/var/tmp"
-      "/etc/NetworkManager/system-connections"
-      "/etc/ssh"
-      "/etc/password-files"
+"nix"
+	  "var/lib/nixos"
+      "var/db"
+      "var/tmp"
+      "etc/NetworkManager/system-connections"
+      "etc/ssh"
+      "etc/password-files"
     ];
     files = [
-      "/etc/machine-id"
-      "/etc/adjtime"
+      "etc/machine-id"
+      "etc/adjtime"
     ];
   };
   boot.initrd.postResumeCommands =
