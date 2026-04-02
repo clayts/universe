@@ -33,7 +33,7 @@
       }
 
       mkdir /state
-      # mount ${config.fileSystems."/state".device} /state
+      # mount ${config.fileSystems."/".device} /state to-do fix!!!!?
 
       if [[ -f /state/impermanence.conf ]]; then
         while IFS= read -r name; do
