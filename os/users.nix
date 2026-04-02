@@ -32,15 +32,15 @@
         description = "User";
         isNormalUser = true;
         extraGroups = ["wheel" "libvirtd" "networkmanager"];
-        hashedPasswordFile = "/etc/password-files/user";
+        initialHashedPasswordFile = "/etc/password-files/user";
       };
       "guest" = {
         description = "Guest";
         isNormalUser = true;
         extraGroups = [];
-        hashedPasswordFile = "/etc/password-files/guest";
+        initialHashedPasswordFile = "/etc/password-files/guest";
       };
-      "root".hashedPasswordFile = "/etc/password-files/root";
+      "root".initialHashedPasswordFile = "/etc/password-files/root";
     };
   };
   home-manager = {
