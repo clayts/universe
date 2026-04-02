@@ -10,6 +10,7 @@
   environment.persistence."/data" = {
     hideMounts = true;
     directories = [
+	  "/nix"
       "/var/db"
       "/var/tmp"
       "/etc/NetworkManager/system-connections"
