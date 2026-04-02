@@ -50,7 +50,6 @@
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";
     users =
-      (lib.genAttrs ["root" "user" "guest"] (user: {imports = [../home];}))
-      // {gdm = {imports = [../home/desktop.nix];};};
+      (lib.genAttrs ["root" "user" "guest"] (user: {imports = [../home];}));
   };
 }
