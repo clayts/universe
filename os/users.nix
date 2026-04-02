@@ -27,6 +27,7 @@
   };
   users = {
     defaultUserShell = pkgs.zsh;
+    mutableUsers = false;
     users = {
       "user" = {
         description = "User";
