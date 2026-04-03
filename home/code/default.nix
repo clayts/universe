@@ -75,8 +75,8 @@ in {
       buffer_font_weight = 400;
       buffer_font_size = style.fonts.mono.size * 4.0 / 3.0;
       buffer_line_height.custom = 1.19;
-      ui_font_family = style.fonts.sans.name;
-      ui_font_size = style.fonts.sans.size * 4.0 / 3.0;
+      ui_font_family = ".SystemUIFont"; #style.fonts.sans.name;
+      ui_font_size = style.fonts.sans.size * 8.0 / 5.0;
       ui_font_weight = 400;
       soft_wrap = "none";
       preferred_line_length = 100;

@@ -33,7 +33,7 @@
         userContent = ''@import "${inputs.firefox-theme}/userContent.css";'';
         extraConfig = builtins.readFile "${inputs.firefox-theme}/configuration/user.js";
         settings = {
-          # "extensions.uBlock0@raymondhill.net.general.prefetch-disable" = false;
+          "browser.display.use_document_fonts" = 0;
           "browser.tabs.groups.enabled" = false;
           "extensions.pocket.enabled" = false;
           "browser.newtabpage.pinned" = "";

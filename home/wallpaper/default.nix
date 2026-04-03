@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   earthpaper = pkgs.writeShellScriptBin "earthpaper" ''
 
-    target_dir="$HOME/.earthpaper"
+    target_dir="$HOME/.local/share/earthpaper"
 
     tmp_dir=$(mktemp -d)
 

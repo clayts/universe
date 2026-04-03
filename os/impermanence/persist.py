@@ -114,7 +114,7 @@ def make_nix_path(src: Path, path: Path, user=None):
     if user != "root":
         nix_path = str(Path(*path.relative_to(src).parts[2:]))
     else:
-        nix_path = str(path.relative_to(src))
+        nix_path = "/" + str(path.relative_to(src))
 
     if not mismatches:
         return '"' + nix_path + '"'
@@ -145,17 +145,33 @@ def filter_paths(paths: list[Path]) -> list[Path]:
     return kept
 
 
+def copy_exact(a: str, b: str) -> None:
+    script = """
+if [ -d "$a" ]; then
+  mkdir -p "$b"
+  chmod --reference="$a" "$b"
+  chown --reference="$a" "$b"
+  rsync -aHAX --delete "${a%/}/" "${b%/}/"
+else
+  mkdir -p "$(dirname "$b")"
+  chmod --reference="$(dirname "$a")" "$(dirname "$b")"
+  chown --reference="$(dirname "$a")" "$(dirname "$b")"
+  rsync -aHAX "$a" "$b"
+fi
+"""
+    subprocess.run(
+        ["sh", "-c", script],
+        env={"a": a, "b": b, "PATH": os.environ["PATH"]},
+        check=True,
+    )
+
+
 def copy_paths(source_root, dest_root, paths):
     rel_paths = [p.relative_to(source_root) for p in paths]
     for rel_path in rel_paths:
         src = os.path.join(source_root, rel_path)
         dst = os.path.join(dest_root, rel_path)
-        subprocess.run(["mkdir", "-p", os.path.dirname(dst)], check=True)
-        subprocess.run(["cp", "-a", src, dst], check=True)
-        if os.path.isfile(src):
-            src_dir, dst_dir = os.path.dirname(src), os.path.dirname(dst)
-            subprocess.run(["chmod", "--reference", src_dir, dst_dir], check=True)
-            subprocess.run(["chown", "--reference", src_dir, dst_dir], check=True)
+        copy_exact(src, dst)
 
 
 def main() -> None:

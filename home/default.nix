@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ./ide
+    ./code
     ./shell
     ./wallpaper
     ./browser.nix

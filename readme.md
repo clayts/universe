@@ -10,8 +10,10 @@
 
 Generate /etc/nixos/hardware.nix:
 ```bash
-nix run github:clayts/universe#scan > /etc/nixos/hardware.nix
+sudo nix run --experimental-features "nix-command flakes" github:clayts/universe#scan > /etc/nixos/hardware.nix
 ```
+
+run disko
 
 Create /etc/nixos/flake.nix:
 ```nix
@@ -20,6 +22,10 @@ Create /etc/nixos/flake.nix:
   outputs = inputs: inputs.universe.system "aura" [./hardware.nix];
 }
 ```
+
+mkdir /mnt/nix
+mkdir /mnt/data/nix
+mount --bind /mnt/data/nix /mnt/nix
 
 Finalise:
 - make password hashes in /data/etc/password-files/{user,guest,root}

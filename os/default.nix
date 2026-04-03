@@ -21,6 +21,7 @@
   virtualisation.libvirtd.enable = true;
   system.stateVersion = "24.11";
   boot = {
+    tmp.useTmpfs = true;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "quiet"
