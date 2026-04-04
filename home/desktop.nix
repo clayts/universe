@@ -26,6 +26,7 @@
     papers
     impression
     baobab
+    lutris
   ];
 in {
   home.packages = with pkgs;
@@ -107,6 +108,7 @@ in {
       "firefox.desktop"
       "com.mitchellh.ghostty.desktop"
     ];
+    "org/gnome/settings-daemon/plugins/housekeeping".donation-reminder-enabled = false;
     "org/gnome/desktop/peripherals/touchpad".disable-while-typing = false; # Required for touchpad/keyboard games
     "org/gnome/evolution-data-server/calendar".notify-enable-audio = false; # Silences annoying daily beeps
     "org/gnome/settings-daemon/plugins/power".power-button-action = "hibernate";
@@ -119,6 +121,7 @@ in {
       edge-tiling = true;
       workspaces-only-on-primary = true;
     };
+    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Super>z"];
     "org/gnome/desktop/wm/keybindings" = {
       toggle-fullscreen = ["<Super>f"];
       close = ["<Super>q"];

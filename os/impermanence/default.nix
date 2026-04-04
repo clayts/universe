@@ -19,6 +19,11 @@
       "/etc/machine-id"
       "/etc/adjtime"
     ];
+    users."guest" = {
+      directories = [
+        ".local/share/earthpaper"
+      ];
+    };
     users."user" = {
       directories = [
         ".Public"
@@ -28,6 +33,7 @@
         }
         ".local"
         ".mozilla"
+        ".steam"
         "Desktop"
         "Documents"
         "Media"

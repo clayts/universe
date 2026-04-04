@@ -48,6 +48,7 @@ in
             vpl-gpu-rt # oneVPL (QSV) runtime
             intel-compute-runtime # OpenCL (NEO) + Level Zero for Arc/Xe
           ];
+          enable32Bit = true;
           extraPackages32 = with pkgs.pkgsi686Linux; [
             intel-media-driver
           ];
