@@ -159,7 +159,7 @@
           mkdir /mnt/nix
           mkdir /mnt/data/nix
           mount --bind /mnt/data/nix /mnt/nix
-          nixos-install --flake /mnt/data/etc/nixos#$1
+          nixos-install --flake /mnt/data/etc/nixos#\"$1\"
           ";
         }}/bin/install";
       };
