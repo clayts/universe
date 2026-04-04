@@ -145,45 +145,14 @@ def filter_paths(paths: list[Path]) -> list[Path]:
     return kept
 
 
-def copy_exact(a: str, b: str) -> None:
-    script = """
-if [ -d "$a" ]; then
-  mkdir -p "$b"
-  chmod --reference="$a" "$b"
-  chown --reference="$a" "$b"
-  rsync -aHAX --delete "${a%/}/" "${b%/}/"
-else
-  mkdir -p "$(dirname "$b")"
-  chmod --reference="$(dirname "$a")" "$(dirname "$b")"
-  chown --reference="$(dirname "$a")" "$(dirname "$b")"
-  rsync -aHAX "$a" "$b"
-fi
-"""
-    subprocess.run(
-        ["sh", "-c", script],
-        env={"a": a, "b": b, "PATH": os.environ["PATH"]},
-        check=True,
-    )
-
-
-def copy_paths(source_root, dest_root, paths):
-    rel_paths = [p.relative_to(source_root) for p in paths]
-    for rel_path in rel_paths:
-        src = os.path.join(source_root, rel_path)
-        dst = os.path.join(dest_root, rel_path)
-        copy_exact(src, dst)
-
-
 def main() -> None:
     if len(sys.argv) != 3:
-        sys.exit(f"Usage: {sys.argv[0]} <src> <dst>")
+        sys.exit(f"Usage: {sys.argv[0]} <src>")
 
     src = Path(sys.argv[1]).expanduser().resolve()
-    dst = Path(sys.argv[2]).expanduser().resolve()
 
-    for path in (src, dst):
-        if not path.is_dir():
-            sys.exit(f"Error: path '{path}' is not a directory.")
+    if not src.is_dir():
+        sys.exit(f"Error: path '{src}' is not a directory.")
 
     selected = select_paths(src)
 
@@ -193,11 +162,6 @@ def main() -> None:
 
     if len(filtered) != len(selected):
         print(f"Skipping {len(selected) - len(filtered)} duplicates")
-
-    print()
-    copy_paths(src, dst, filtered)
-    print("Copied:")
-    [print(str(p)) for p in filtered]
 
     print()
     print("Nix:")
