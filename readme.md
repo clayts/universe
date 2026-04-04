@@ -9,11 +9,14 @@
 ## Installation
 
 Become root
+```bash
+sudo su
+```
 
 Generate hardware.nix:
 ```bash
 nix run --experimental-features "nix-command flakes" \
-	github:clayts/universe#scan > /etc/nixos/hardware.nix
+	github:clayts/universe#scan > hardware.nix
 ```
 
 Run disko
@@ -25,14 +28,14 @@ nix run --experimental-features "nix-command flakes" \
 
 Make passwords
 ```bash
-mkdir -p /mnt/etc/nixos/passwords
-mkpasswd > /mnt/etc/nixos/passwords/root
-mkpasswd > /mnt/etc/nixos/passwords/user
-mkpasswd > /mnt/etc/nixos/passwords/guest
+mkdir -p /mnt/data/etc/nixos/passwords
+mkpasswd > /mnt/data/etc/nixos/passwords/root
+mkpasswd > /mnt/data/etc/nixos/passwords/user
+mkpasswd > /mnt/data/etc/nixos/passwords/guest
 ```
 
 
-Create /etc/nixos/flake.nix:
+Create /mnt/data/etc/nixos/flake.nix:
 ```nix
 {
   inputs.universe.url = "github:clayts/universe";
@@ -49,5 +52,5 @@ mount --bind /mnt/data/nix /mnt/nix
 
 Install
 ```bash
-nixos-install --flake /mnt/etc/nixos
+nixos-install --flake /mnt/data/etc/nixos
 ```

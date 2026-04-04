@@ -46,14 +46,13 @@
         };
       };
     };
-    apps.${system} = {
-      scan = {
-        type = "app";
-        program = "${pkgs.writeShellApplication {
-            name = "scan";
-            runtimeInputs = with pkgs; [nixos-facter jq alejandra];
-            text = "
-            	report=$(nixos-facter | jq '.hardware.disk |= map(select(.class_list | contains([\"usb\"]) | not))')
+    apps.${system} = let
+      scan =
+        pkgs.writeShellApplication {
+          name = "scan";
+          runtimeInputs = with pkgs; [nixos-facter jq alejandra];
+          text = "
+        	report=$(nixos-facter | jq '.hardware.disk |= map(select(.class_list | contains([\"usb\"]) | not))')
 							disk=$(echo \"$report\" | jq -r '
 								[ .hardware.disk[].unix_device_names
 								    | map(select(contains(\"/dev/disk/by-id/\")))
@@ -61,7 +60,7 @@
 								| if length == 1 then .[0] else \"\" end
 							')
 							swap=$(free -m | awk '/^Mem:/{print $2 * 2}')M
-              alejandra -q <<-EOF
+          alejandra -q <<-EOF
 							{...}: {
 								fileSystems.\"/data\".neededForBoot = true;
 								disko.devices.disk.main = {
@@ -124,7 +123,43 @@
 							}
 							EOF
 							";
-          }}/bin/scan";
+        };
+    in {
+      scan = {
+        type = "app";
+        program = "${scan}/bin/scan";
+      };
+      install = {
+        type = "app";
+        program = "${pkgs.writeShellApplication {
+          name = "install";
+          runtimeInputs = with pkgs; [nixos-facter jq alejandra];
+          text = "
+          set -euo pipefail
+
+          if [ \"$#\" -ne 1 ]; then
+              echo \"Usage: $0 <hostname>\"
+              exit 1
+          fi
+
+          sudo su
+          ${scan}/bin/scan > /tmp/hardware.nix
+          nix run --experimental-features \"nix-command flakes\" github:nix-community/disko/latest -- --mode destroy,format,mount /tmp/hardware.nix
+          mkdir -p /mnt/data/etc/nixos/passwords
+          mkpasswd > /mnt/data/etc/nixos/passwords/root
+          mkpasswd > /mnt/data/etc/nixos/passwords/user
+          mkpasswd > /mnt/data/etc/nixos/passwords/guest
+          echo \"{
+            inputs.universe.url = \\\"github:clayts/universe\\\";
+            outputs = inputs: inputs.universe.system \\\"$1\\\" [./hardware.nix];
+          }\" > /mnt/data/etc/nixos/flake.nix
+          mv /tmp/hardware.nix /mnt/data/etc/nixos/
+          mkdir /mnt/nix
+          mkdir /mnt/data/nix
+          mount --bind /mnt/data/nix /mnt/nix
+          nixos-install --flake /mnt/data/etc/nixos
+          ";
+        }}/bin/install";
       };
     };
     devShells.${system}.default = pkgs.mkShell {
