@@ -41,6 +41,7 @@
   };
   console.keyMap = "uk";
   services = {
+    xserver.xkb.layout = "gb";
     logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
     avahi = {
       enable = true;

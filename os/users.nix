@@ -33,15 +33,15 @@
         description = "User";
         isNormalUser = true;
         extraGroups = ["wheel" "libvirtd" "networkmanager"];
-        hashedPasswordFile = "/data/etc/password-files/user";
+        hashedPasswordFile = "/data/etc/nixos/passwords/user";
       };
       "guest" = {
         description = "Guest";
         isNormalUser = true;
         extraGroups = [];
-        hashedPasswordFile = "/data/etc/password-files/guest";
+        hashedPasswordFile = "/data/etc/nixos/passwords/guest";
       };
-      "root".hashedPasswordFile = "/data/etc/password-files/root";
+      "root".hashedPasswordFile = "/data/etc/nixos/passwords/root";
     };
   };
   home-manager = {
@@ -51,6 +51,6 @@
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";
     users =
-      (lib.genAttrs ["root" "user" "guest"] (user: {imports = [../home];}));
+      lib.genAttrs ["root" "user" "guest"] (user: {imports = [../home];});
   };
 }

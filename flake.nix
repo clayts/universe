@@ -85,11 +85,12 @@
 					              content = {
 					                type = \"btrfs\";
 					                extraArgs = [ \"-f\" ];
+													mountpoint = \"/state\";
 					                mountOptions = [
 					                  \"compress=zstd\"
 					                  \"noatime\"
 					                ];
-													subvolumes.\"@root\" = {
+													subvolumes.\"@present\" = {
 														mountpoint = \"/\";
 														mountOptions = [
 														\"compress=zstd\"
