@@ -84,7 +84,7 @@
 					              content = {
 					                type = \"btrfs\";
 					                extraArgs = [ \"-f\" ];
-													mountpoint = \"/state\";
+													mountpoint = \"/var/run/state\";
 					                mountOptions = [
 					                  \"compress=zstd\"
 					                  \"noatime\"

@@ -93,7 +93,7 @@
         GREP_OPTIONS = "--color=auto";
         DIRENV_WARN_TIMEOUT = 0;
       };
-      dotDir = "${config.xdg.configHome}/zsh";
+      dotDir = "${config.xdg.dataHome}/zsh";
       historySubstringSearch.enable = true;
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;

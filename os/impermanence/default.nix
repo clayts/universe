@@ -33,16 +33,11 @@
         "Media"
       ];
       files = [
-        ".config/zsh/.zsh_history"
         {
           file = ".gitconfig";
-          parentDirectory = {mode = "0700";};
           method = "symlink";
         }
-        {
-          file = ".nix-profile";
-          parentDirectory = {mode = "0700";};
-        }
+        ".nix-profile"
       ];
     };
   };

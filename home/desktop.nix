@@ -113,7 +113,7 @@ in {
     "org/gnome/desktop/peripherals/touchpad".speed = 0.1;
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = false;
     "org/gnome/nautilus/icon-view".default-zoom-level = "small-plus";
-    "org/gnome/desktop/background".picture-uri = ".earthpaper/image.jpeg";
+    "org/gnome/desktop/background".picture-uri = ".local/share/earthpaper/image.jpeg";
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
