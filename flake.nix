@@ -142,12 +142,14 @@
               exit 1
           fi
 
-          sudo su
           ${scan}/bin/scan > /tmp/hardware.nix
           nix run --experimental-features \"nix-command flakes\" github:nix-community/disko/latest -- --mode destroy,format,mount /tmp/hardware.nix
           mkdir -p /mnt/data/etc/nixos/passwords
+          echo root
           mkpasswd > /mnt/data/etc/nixos/passwords/root
+          echo user
           mkpasswd > /mnt/data/etc/nixos/passwords/user
+          echo guest
           mkpasswd > /mnt/data/etc/nixos/passwords/guest
           echo \"{
             inputs.universe.url = \\\"github:clayts/universe\\\";
@@ -157,7 +159,7 @@
           mkdir /mnt/nix
           mkdir /mnt/data/nix
           mount --bind /mnt/data/nix /mnt/nix
-          nixos-install --flake /mnt/data/etc/nixos
+          nixos-install --flake /mnt/data/etc/nixos#$1
           ";
         }}/bin/install";
       };
