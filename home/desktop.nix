@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: let
   style = import ./style.nix pkgs;
@@ -71,21 +72,40 @@ in {
       '';
     };
   };
-  gtk.iconTheme = {
-    package = pkgs.papirus-icon-theme;
-    name = "Papirus"; # or "Papirus-Dark" / "Papirus-Light"
+  gtk = {
+    enable = true;
+    iconTheme = {
+      package = pkgs.morewaita-icon-theme;
+      name = "MoreWaita"; # or "Papirus-Dark" / "Papirus-Light"
+    };
+    gtk4.theme = null;
+    gtk3 = {
+      theme = {
+        name = "adw-gtk2";
+        package = pkgs.adw-gtk3;
+      };
+      bookmarks = [
+        "file://${config.home.homeDirectory}/Code Code"
+        "file://${config.home.homeDirectory}/Desktop Desktop"
+        "file://${config.home.homeDirectory}/Documents"
+        "file://${config.home.homeDirectory}/Media"
+      ];
+    };
+    cursorTheme = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+    };
   };
   programs.gnome-shell = {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       font-name = "${style.fonts.sans.name} ${toString style.fonts.sans.size}";
       document-font-name = "${style.fonts.serif.name} ${toString style.fonts.serif.size}";
       monospace-font-name = "${style.fonts.mono.name} ${toString style.fonts.mono.size}";
-      cursor-theme = "Bibata-Modern-Classic";
-      gtk-theme = "adw-gtk3";
       gtk-enable-primary-paste = false; # Disable middle-click paste as it can accidentally paste stuff when scrolling
       enable-hot-corners = false;
       font-antialiasing = "greyscale";
@@ -117,7 +137,7 @@ in {
     "org/gnome/settings-daemon/plugins/power".power-button-action = "hibernate";
     "org/gnome/desktop/peripherals/touchpad".speed = 0.1;
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = false;
-    "org/gnome/nautilus/icon-view".default-zoom-level = "small-plus";
+    "org/gnome/nautilus/icon-view".default-zoom-level = "medium";
     "org/gnome/desktop/background".picture-uri = ".local/share/earthpaper/image.jpeg";
     "org/gnome/mutter" = {
       dynamic-workspaces = true;

@@ -1,7 +1,5 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    bibata-cursors
-    adw-gtk3
     nautilus
     nautilus-python
     yelp
