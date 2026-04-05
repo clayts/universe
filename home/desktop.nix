@@ -106,7 +106,7 @@ in {
     };
     "org/gnome/shell".favorite-apps = [
       "firefox.desktop"
-      "com.mitchellh.ghostty.desktop"
+      "org.gnome.Nautilus.desktop"
     ];
     "org/gnome/settings-daemon/plugins/housekeeping".donation-reminder-enabled = false;
     "org/gnome/desktop/peripherals/touchpad".disable-while-typing = false; # Required for touchpad/keyboard games
