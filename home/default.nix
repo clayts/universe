@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./code
+    ./scripts
     ./shell
     ./wallpaper
     ./browser.nix

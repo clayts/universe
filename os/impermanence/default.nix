@@ -7,6 +7,7 @@
     inputs.impermanence.nixosModules.impermanence
   ];
   environment.persistence."/data" = {
+    allowTrash = true;
     hideMounts = true;
     directories = [
       "/nix"

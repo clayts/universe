@@ -22,7 +22,12 @@ def select_paths(src: Path) -> list[Path]:
         "--preview=cd " + str(src) + "; grc --colour=on stat {}",
     ]
 
-    find_proc = subprocess.Popen(find_cmd, stdout=subprocess.PIPE, cwd=src, text=True)
+    find_proc = subprocess.Popen(
+        find_cmd,  #
+        stdout=subprocess.PIPE,
+        cwd=src,
+        text=True,
+    )
     fzf_proc = subprocess.run(
         fzf_cmd,
         stdin=find_proc.stdout,
@@ -40,7 +45,13 @@ def select_paths(src: Path) -> list[Path]:
 def make_nix(src: Path, paths: list[Path]) -> str:
     categorised = {}
     for p in paths:
-        if p.relative_to(src).parts[0] == "home" and len(p.relative_to(src).parts) > 2:
+        if (
+            p.relative_to(src).parts[0] == "home"
+            and len(  #
+                p.relative_to(src).parts
+            )
+            > 2
+        ):
             if p.is_dir():
                 categorised.setdefault("users", {}).setdefault(
                     p.relative_to(src).parts[1], {}
@@ -55,7 +66,9 @@ def make_nix(src: Path, paths: list[Path]) -> str:
                     "directories", []
                 ).append(p)
             else:
-                categorised.setdefault("system", {}).setdefault("files", []).append(p)
+                categorised.setdefault(  #
+                    "system", {}
+                ).setdefault("files", []).append(p)
 
     nix = ""
     if "system" in categorised:
@@ -124,7 +137,13 @@ def make_nix_path(src: Path, path: Path, user=None):
     if is_dir:
         return "{ " + f'directory = "{nix_path}"; {attrs};' + " }"
     else:
-        return "{ " + f'file = "{nix_path}"; parentDirectory = {{ {attrs}; }};' + " }"
+        return (
+            "{ "
+            + f'file = "{nix_path}"; parentDirectory = {{ {  #
+                attrs
+            }; }};'
+            + " }"
+        )
 
 
 def filter_paths(paths: list[Path]) -> list[Path]:
@@ -138,7 +157,9 @@ def filter_paths(paths: list[Path]) -> list[Path]:
     for candidate in sorted_paths:
         # Check whether any already-kept path is a parent of this candidate
         if not any(
-            candidate != keeper and candidate.parts[: len(keeper.parts)] == keeper.parts
+            candidate  #
+            != keeper
+            and candidate.parts[: len(keeper.parts)] == keeper.parts
             for keeper in kept
         ):
             kept.append(candidate)
