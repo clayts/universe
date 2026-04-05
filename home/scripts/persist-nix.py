@@ -3,7 +3,6 @@ import os
 import pwd
 import stat
 import subprocess
-import sys
 from pathlib import Path
 
 
@@ -167,13 +166,8 @@ def filter_paths(paths: list[Path]) -> list[Path]:
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
-        sys.exit(f"Usage: {sys.argv[0]} <src>")
 
-    src = Path(sys.argv[1]).expanduser().resolve()
-
-    if not src.is_dir():
-        sys.exit(f"Error: path '{src}' is not a directory.")
+    src = Path("/")
 
     selected = select_paths(src)
 
