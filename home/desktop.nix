@@ -71,6 +71,10 @@ in {
       '';
     };
   };
+  gtk.iconTheme = {
+    package = pkgs.papirus-icon-theme;
+    name = "Papirus"; # or "Papirus-Dark" / "Papirus-Light"
+  };
   programs.gnome-shell = {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
