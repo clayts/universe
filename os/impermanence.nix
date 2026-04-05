@@ -38,6 +38,7 @@
         "Desktop"
         "Documents"
         "Media"
+        "Code"
       ];
       files = [
         {

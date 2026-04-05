@@ -99,50 +99,43 @@ def make_nix(src: Path, paths: list[Path]) -> str:
     return nix
 
 
-def make_nix_path(src: Path, path: Path, user=None):
-    group = None
-    mode = "0755"
-    if user is None:
-        user = "root"
-        group = "root"
-    else:
-        group = "users"
+def make_nix_path(src: Path, path: Path, user: str | None = None) -> str:
+    is_root = user is None
+    expected_user = "root" if is_root else user
+    expected_group = "root" if is_root else "users"
+    expected_mode = "0755"
+
     is_dir = path.is_dir()
+    rel = path.relative_to(src)
+    nix = ("/" + str(rel)) if is_root else str(Path(*rel.parts[2:]))
+
+    # Files directly inside a home dir (home/<user>/<file>) skip parent-dir
+    # permission checks; home dirs are managed separately.
+    directly_in_home = not is_dir and not is_root and len(rel.parts) == 3
+    if directly_in_home:
+        return f'"{nix}"'
+
     st = os.stat(path if is_dir else path.parent)
-
-    actual = {
-        "user": (pwd.getpwuid(st.st_uid).pw_name, user),
-        "group": (grp.getgrgid(st.st_gid).gr_name, group),
-        "mode": (f"{stat.S_IMODE(st.st_mode):04o}", mode),
+    checks = {
+        "user": (pwd.getpwuid(st.st_uid).pw_name, expected_user),
+        "group": (grp.getgrgid(st.st_gid).gr_name, expected_group),
+        "mode": (f"{stat.S_IMODE(st.st_mode):04o}", expected_mode),
     }
-
     mismatches = {
-        k: v
-        for k, (v, expected) in actual.items()
-        if expected is not None and v != expected
+        field: actual
+        for field, (actual, expected) in checks.items()
+        if actual != expected
     }
-
-    nix_path = ""
-    if user != "root":
-        nix_path = str(Path(*path.relative_to(src).parts[2:]))
-    else:
-        nix_path = "/" + str(path.relative_to(src))
 
     if not mismatches:
-        return '"' + nix_path + '"'
+        return f'"{nix}"'
 
     attrs = "; ".join(f'{k} = "{v}"' for k, v in mismatches.items())
 
     if is_dir:
-        return "{ " + f'directory = "{nix_path}"; {attrs};' + " }"
+        return f'{{ directory = "{nix}"; {attrs}; }}'
     else:
-        return (
-            "{ "
-            + f'file = "{nix_path}"; parentDirectory = {{ {  #
-                attrs
-            }; }};'
-            + " }"
-        )
+        return f'{{ file = "{nix}"; parentDirectory = {{ {attrs}; }}; }}'
 
 
 def filter_paths(paths: list[Path]) -> list[Path]:

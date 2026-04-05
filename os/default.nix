@@ -11,6 +11,12 @@
     ./impermanence.nix
   ];
   environment.systemPackages = with pkgs; [
+    # Hide CUPS
+    (pkgs.makeDesktopItem {
+      name = "cups";
+      desktopName = "";
+      noDisplay = true;
+    })
     (aspellWithDicts (dicts: [
       dicts.en
       dicts.en-computers
@@ -68,7 +74,6 @@
   programs = {
     zsh.enable = true;
     nh.enable = true;
-    virt-manager.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
