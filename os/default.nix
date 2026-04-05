@@ -8,7 +8,7 @@
     ./users.nix
     ./desktop.nix
     ./hardware.nix
-    ./impermanence
+    ./impermanence.nix
   ];
   environment.systemPackages = with pkgs; [
     (aspellWithDicts (dicts: [
