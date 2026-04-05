@@ -26,7 +26,6 @@
     papers
     impression
     baobab
-    lutris
   ];
 in {
   home.packages = with pkgs;
