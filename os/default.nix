@@ -45,7 +45,8 @@
     initrd.verbose = false;
     consoleLogLevel = 0;
   };
-  console.keyMap = "uk";
+  time.timeZone = "Europe/London";
+  console.useXkbConfig = true;
   services = {
     xserver.xkb.layout = "gb";
     logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
