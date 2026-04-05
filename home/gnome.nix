@@ -76,12 +76,12 @@ in {
     enable = true;
     iconTheme = {
       package = pkgs.morewaita-icon-theme;
-      name = "MoreWaita"; # or "Papirus-Dark" / "Papirus-Light"
+      name = "MoreWaita";
     };
     gtk4.theme = null;
     gtk3 = {
       theme = {
-        name = "adw-gtk2";
+        name = "adw-gtk3";
         package = pkgs.adw-gtk3;
       };
       bookmarks = [

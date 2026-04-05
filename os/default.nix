@@ -6,7 +6,7 @@
   imports = [
     inputs.disko.nixosModules.default
     ./users.nix
-    ./desktop.nix
+    ./gnome.nix
     ./hardware.nix
     ./impermanence.nix
   ];

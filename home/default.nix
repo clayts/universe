@@ -1,11 +1,11 @@
 {...}: {
   imports = [
-    ./code
+    ./zeditor
     ./scripts
-    ./shell
-    ./wallpaper
-    ./browser.nix
-    ./console.nix
-    ./desktop.nix
+    ./zsh
+    ./earthpaper
+    ./firefox.nix
+    ./ghostty.nix
+    ./gnome.nix
   ];
 }
