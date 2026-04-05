@@ -29,11 +29,11 @@
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};
   in {
-    system = name: modules: {
+    system = hostName: modules: {
       nixosConfigurations = {
-        ${name} = inputs.nixpkgs.lib.nixosSystem {
+        ${hostName} = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
-          modules = [./os {networking.hostName = name;}] ++ modules;
+          modules = [./os {networking = {inherit hostName;};}] ++ modules;
         };
       };
     };

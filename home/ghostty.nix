@@ -8,6 +8,34 @@ in {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
+    systemd.enable = true;
+    themes = {
+      "Custom" = {
+        background = "000000";
+        cursor-color = "ffffff";
+        foreground = "ffffff";
+        palette = [
+          "0=#000000"
+          "1=#c01c28"
+          "2=#00E8C6"
+          "3=#f5c211"
+          "4=#1e78e4"
+          "5=#9841bb"
+          "6=#00afff"
+          "7=#86878b"
+          "8=#10a793"
+          "9=#ee5d43"
+          "10=#57e389"
+          "11=#f29c14"
+          "12=#7cb7ff"
+          "13=#c74ded"
+          "14=#00e8c6"
+          "15=#f6f5f4"
+        ];
+        selection-background = "ffffff";
+        selection-foreground = "5e5c64";
+      };
+    };
     settings = {
       keybind = [
         "ctrl+c=copy_to_clipboard"
@@ -21,8 +49,8 @@ in {
       font-size = style.fonts.mono.size;
       adjust-cell-height = -2;
       font-feature = style.fonts.mono.features;
-      theme = "Adwaita Dark"; # ghostty +list-themes
-      background = "#000000";
+      # theme = "${./theme}";
+      theme = "Custom";
       command = "SHLVL=0; zsh";
       window-theme = "ghostty";
       adw-toolbar-style = "raised";

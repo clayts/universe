@@ -8,4 +8,5 @@
     ./ghostty.nix
     ./gnome.nix
   ];
+  home.stateVersion = "25.05";
 }
