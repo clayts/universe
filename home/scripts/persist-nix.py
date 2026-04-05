@@ -167,7 +167,7 @@ def filter_paths(paths: list[Path]) -> list[Path]:
 
 
 def main() -> None:
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 2:
         sys.exit(f"Usage: {sys.argv[0]} <src>")
 
     src = Path(sys.argv[1]).expanduser().resolve()
