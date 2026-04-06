@@ -47,11 +47,98 @@
           dir = "";
         };
         name = {
-          videos = "󱧺";
+          media = "󱍙";
           desktop = "󱋣";
           documents = "󰲂";
-          public = "󱞊";
           home = "󱂵";
+        };
+      };
+    };
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+      presets = ["no-runtime-versions"];
+      settings = {
+        add_newline = false;
+        format = lib.strings.concatStrings [
+          "($username"
+          "(@$hostname) )"
+          "\${custom.directory_icon}"
+          "$directory"
+          "$git_branch"
+          "$git_commit"
+          "$git_state"
+          "$git_status"
+          "$direnv"
+          "$env_var"
+          "$jobs"
+          "$shlvl"
+          "$character"
+        ];
+        # line_break.disabled = true;
+        git_branch = {
+          format = "[$symbol$branch(:$remote_branch)]($style) ";
+          symbol = " ";
+          style = "yellow";
+        };
+        git_status = {
+          format = "([$all_status$ahead_behind]($style))";
+          style = "yellow";
+          conflicted = "$count󱝽 ";
+          ahead = "$count󰶣 ";
+          behind = "$count󰶡 ";
+          diverged = "$ahead_count󰕒 $behind_count󰇚 ";
+          up_to_date = "";
+          untracked = "$count󱞃 ";
+          stashed = "$count󰎛 ";
+          modified = "$count󱞁 ";
+          staged = "$count󱝿 ";
+          renamed = "$count󰚸 ";
+          deleted = "$count󱙏 ";
+        };
+        direnv = {
+          disabled = false;
+          format = "[($loaded)]($style)";
+          # loaded_msg = "󰃖 ";
+          loaded_msg = "󱧶 ";
+          unloaded_msg = "󱧴 ";
+          style = "bright-purple";
+        };
+        directory = {
+          format = "[$read_only]($read_only_style)[$path]($style) ";
+          truncate_to_repo = false;
+          truncation_symbol = "…";
+          truncation_length = 3;
+          style = "bold blue";
+          read_only = "󰏮 ";
+          read_only_style = "bold blue";
+        };
+        username = {
+          format = "([ $user]($style))";
+          style_root = "bright-red";
+        };
+        hostname = {
+          format = "[($hostname)]($style)";
+        };
+        custom = {
+          directory_icon = {
+            when = true;
+            style = "blue";
+            command = "lsd -d $(pwd) --icon always | cut -c1-4";
+            format = "[$symbol($output )]($style)";
+          };
+        };
+        shlvl = {
+          disabled = false;
+          symbol = "❯";
+          style = "bright-green";
+          repeat = true;
+          repeat_offset = 1;
+          format = "[$symbol]($style)";
+        };
+        character = {
+          success_symbol = "[❯](bold bright-green)";
+          error_symbol = "[❯](bold bright-red)";
         };
       };
     };
@@ -66,18 +153,6 @@
           name = "grc";
           src = "${pkgs.grc}/etc";
           file = "grc.zsh";
-        }
-        {
-          name = "zsh-powerlevel10k";
-          src = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k";
-          file = "powerlevel10k.zsh-theme";
-        }
-        {
-          name = "p10k-prompt";
-          src = "${
-            pkgs.writeTextDir "share/zsh-powerlevel10k-prompt/prompt.zsh" (builtins.readFile ./prompt.zsh)
-          }/share/zsh-powerlevel10k-prompt";
-          file = "prompt.zsh";
         }
       ];
       shellAliases = {
