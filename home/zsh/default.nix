@@ -40,20 +40,7 @@
       nix-direnv.enable = true;
       silent = true;
     };
-    lsd = {
-      enable = true;
-      icons = {
-        filetype = {
-          dir = "";
-        };
-        name = {
-          media = "󱍙";
-          desktop = "󱋣";
-          documents = "󰲂";
-          home = "󱂵";
-        };
-      };
-    };
+    lsd.enable = true;
     starship = {
       enable = true;
       enableZshIntegration = true;
