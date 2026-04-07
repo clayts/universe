@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   style = import ./style.nix pkgs;
 in {
   # This allows gnome to use ghostty as a default terminal when running
@@ -14,24 +18,7 @@ in {
         background = "000000";
         cursor-color = "ffffff";
         foreground = "ffffff";
-        palette = [
-          "0=#000000" # black
-          "1=#c01c28" # red
-          "2=#10a793" # green
-          "3=#f29c14" # yellow
-          "4=#1e78e4" # blue
-          "5=#9841bb" # purple
-          "6=#10b0da" # cyan
-          "7=#86878b" # white
-          "8=#618399" # bright-black
-          "9=#ee5d43" # bright-red
-          "10=#00e8c6" # bright-green
-          "11=#f5c211" # bright-yellow
-          "12=#7cb7ff" # bright-blue
-          "13=#c74ded" # bright-purple
-          "14=#50ffff" # bright-cyan
-          "15=#f6f5f4" # bright-white
-        ];
+        palette = lib.imap0 (i: v: "${toString i}=${v}") style.colors;
         selection-background = "ffffff";
         selection-foreground = "5e5c64";
       };

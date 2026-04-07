@@ -7,8 +7,8 @@
 }: {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
-    ./editor.nix
-    ./banner
+    ./micro.nix
+    ./rizzlefetch
   ];
   home = {
     packages = with pkgs; [
@@ -69,24 +69,23 @@
           style = "yellow";
         };
         git_status = {
-          format = "([$all_status$ahead_behind]($style))";
+          format = "([$all_status$ahead_behind]($style)) ";
           style = "yellow";
-          conflicted = "$count󱝽 ";
+          conflicted = "$count󰩋 ";
           ahead = "$count󰶣 ";
           behind = "$count󰶡 ";
-          diverged = "$ahead_count󰕒 $behind_count󰇚 ";
+          diverged = "$ahead_count󰶣 $behind_count󰶡 ";
           up_to_date = "";
-          untracked = "$count󱞃 ";
-          stashed = "$count󰎛 ";
-          modified = "$count󱞁 ";
-          staged = "$count󱝿 ";
-          renamed = "$count󰚸 ";
-          deleted = "$count󱙏 ";
+          untracked = "$count󰱼 ";
+          stashed = "$count󱋡 ";
+          modified = "$count󱇧 ";
+          staged = "$count󰈖 ";
+          renamed = "$count󱈖 ";
+          deleted = "$count󱪡 ";
         };
         direnv = {
           disabled = false;
           format = "[($loaded)]($style)";
-          # loaded_msg = "󰃖 ";
           loaded_msg = "󱧶 ";
           unloaded_msg = "󱧴 ";
           style = "bright-purple";
