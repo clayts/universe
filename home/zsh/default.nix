@@ -64,12 +64,12 @@
         ];
         # line_break.disabled = true;
         git_branch = {
-          format = "[$symbol$branch(:$remote_branch)]($style) ";
+          format = "[($symbol$branch(:$remote_branch) )]($style)";
           symbol = " ";
           style = "yellow";
         };
         git_status = {
-          format = "([$all_status$ahead_behind]($style)) ";
+          format = "[($all_status$ahead_behind)]($style)";
           style = "yellow";
           conflicted = "$count󰩋 ";
           ahead = "$count󰶣 ";
