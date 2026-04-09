@@ -88,7 +88,7 @@
           format = "[($loaded)]($style)";
           loaded_msg = "󱧶 ";
           unloaded_msg = "󱧴 ";
-          style = "bright-purple";
+          style = "cyan";
         };
         directory = {
           format = "[$read_only]($read_only_style)[$path]($style) ";

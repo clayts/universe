@@ -8,16 +8,16 @@ palette:
   base02: "#555555"
   base03: "#777777"
   base04: "#999999"
-  base05: "#bbbbbb"
+  base05: "#cccccc"
   base06: "#dddddd"
-  base07: "#eceee0"
+  base07: "#fcfef0"
 
   base08: "#ff5370" # red Zips, properties
-  base09: "#ffd000" #  Bools, consts, numbers
+  base09: "#FFD157" #  Bools, consts, numbers
   base0A: "#ff9000" # yellow Warning triangles, rust classes
   base0B: "#2df4a0" # green Commands
-  base0D: "#239fff" # blue Folders
-  base0C: "#40ffff" # cyan Paths
+  base0D: "#41bbff" # blue Folders  #219cbc
+  base0C: "#40efff" # cyan Paths
   base0E: "#f012be" # purple Images, keywords
   base0F: "#ffffff" #  Brackets
 
