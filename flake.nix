@@ -24,6 +24,10 @@
         home-manager.follows = "";
       };
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs: let
     system = "x86_64-linux";

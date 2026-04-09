@@ -1,0 +1,60 @@
+system: "base16"
+name: "Colors"
+author: ""
+variant: "dark"
+palette:
+  base00: "#222226" # Black
+  base01: "#2E2E32"
+  base02: "#555555"
+  base03: "#777777"
+  base04: "#999999"
+  base05: "#bbbbbb"
+  base06: "#dddddd"
+  base07: "#eceee0"
+
+  base08: "#ff5370" # red Zips, properties
+  base09: "#ffd000" #  Bools, consts, numbers
+  base0A: "#ff9000" # yellow Warning triangles, rust classes
+  base0B: "#2df4a0" # green Commands
+  base0D: "#239fff" # blue Folders
+  base0C: "#40ffff" # cyan Paths
+  base0E: "#f012be" # purple Images, keywords
+  base0F: "#ffffff" #  Brackets
+
+
+# WHITE   BLACK
+# BLUE    LIGHT_BLUE
+# GREEN   LIGHT_GREEN
+# CYAN    LIGHT_CYAN
+# RED     LIGHT_RED
+# PURPLE  LIGHT_PURPLE
+# YELLOW  LIGHT_YELLOW
+# GRAY    LIGHT_GRAY
+
+#9fff00
+#f0dd00
+#ef43fa
+#ee5d43
+#85144b #ff9f43
+# #57c7ff #b994f1
+# #04d1f9
+#ffc777
+# base07: "#f1f1f0"
+# base08: "#ff5c57"
+# base09: "#ff9f43"
+# base0A: "#f3f99d"
+# base0B: "#5af78e"
+# base0C: "#9aedfe"
+# base0D: "#57c7ff"
+# base0E: "#ff6ac1"
+# base0F: "#b2643c"
+
+# base07: "#ffffff" # White
+# base08: "#ff4136" # Red
+# base09: "#ff851b" # Orange
+# base0A: "#ffdc00" # Yellow
+# base0B: "#3D9970" # Green
+# base0C: "#2ecc40" # Aqua
+# base0D: "#7fdbff" # Blue
+# base0E: "#0074d9" # Purple
+# base0F: "#b10dc9" # Maroon #85144b

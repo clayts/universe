@@ -4,11 +4,11 @@
   ...
 }: {
   imports = [
-    inputs.disko.nixosModules.default
     ./users.nix
     ./gnome.nix
     ./hardware.nix
     ./impermanence.nix
+    ./stylix
   ];
   environment.systemPackages = with pkgs; [
     # Hide CUPS
@@ -98,7 +98,6 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      joypixels.acceptLicense = true;
     };
     overlays = [
       (final: prev: {

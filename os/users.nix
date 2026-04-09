@@ -45,7 +45,7 @@
     };
   };
   home-manager = {
-    useGlobalPkgs = true;
+    # useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";

@@ -2,12 +2,16 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   hardware = config.hardware.facter.report.hardware;
 in
   with builtins;
-    lib.mkMerge [
+    {
+      imports = [inputs.disko.nixosModules.default];
+    }
+    // lib.mkMerge [
       (lib.mkIf ((elemAt hardware.monitor 0).device.hex == "4206")
         (let
           monitors = toFile "monitors.xml" ''

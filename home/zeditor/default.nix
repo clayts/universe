@@ -1,13 +1,13 @@
 {
   pkgs,
   lib,
+  config,
   ...
-}: let
-  style = import ../style.nix pkgs;
-in {
+}: {
   programs.zed-editor = {
     enable = true;
     extensions = [
+      "toml"
       "colored-zed-icons-theme"
       "superhtml"
       "nix"
@@ -18,12 +18,29 @@ in {
       paths = with pkgs; [
         zed-editor
         color-lsp
-        style.fonts.sans.package
-        style.fonts.mono.package
-        style.fonts.emoji.package
+        # style.fonts.sans.package
+        # style.fonts.mono.package
+        # style.fonts.emoji.package
       ];
     };
-    themes.custom = ./theme.json;
+    # themes.custom = {
+    #   "$schema" = "https://zed.dev/schema/themes/v0.1.0.json";
+    #   name = "custom";
+    #   author = "";
+    #   themes = [
+    #     {
+    #       name = "custom";
+    #       appearance = "dark";
+    #       style = let
+    #         color = n: builtins.elemAt n style.colors;
+    #       in {
+    #         # editor.background = ;
+
+    #         syntax.property.color = color 1;
+    #       };
+    #     }
+    #   ];
+    # };
     userSettings = {
       hard_tabs = true;
       git = {
@@ -70,22 +87,24 @@ in {
         quick_actions = true;
       };
       restore_on_startup = "empty_tab";
-      buffer_font_family = style.fonts.mono.name;
-      buffer_font_features = lib.genAttrs style.fonts.mono.features (f: true);
-      buffer_font_weight = 400;
-      buffer_font_size = style.fonts.mono.size * 4.0 / 3.0;
-      buffer_line_height.custom = 1.19;
-      ui_font_family = ".SystemUIFont"; #style.fonts.sans.name;
-      ui_font_size = style.fonts.sans.size * 8.0 / 5.0;
-      ui_font_weight = 400;
+      # buffer_font_family = style.fonts.mono.name;
+      # buffer_font_features = lib.genAttrs style.fonts.mono.features (f: true);
+      # buffer_font_weight = 400;
+      # buffer_font_size = style.fonts.mono.size * 4.0 / 3.0;
+      buffer_line_height.custom = 1.23;
+      # ui_font_family = lib.mkForce ".SystemUIFont"; #style.fonts.sans.name;
+      ui_font_size = lib.mkForce (config.stylix.fonts.sizes.applications * 3.0 / 2.0);
+      # ui_font_size = style.fonts.sans.size * 8.0 / 5.0;
+      # ui_font_weight = 400;
       soft_wrap = "none";
       preferred_line_length = 100;
       tabs.file_icons = true;
-      theme = {
-        mode = "dark";
-        light = "Ayu Light";
-        dark = "Custom";
-      };
+      # theme.mode = "dark";
+      # theme = {
+      #   mode = "dark";
+      #   # light = "Ayu Light";
+      #   dark = "Stylix";
+      # };
       node.path = "${pkgs.nodejs}/bin/node";
       languages = {
         Nix.language_servers = ["nixd" "!nil" "..."];

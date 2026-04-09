@@ -65,7 +65,7 @@
         # line_break.disabled = true;
         git_branch = {
           format = "[($symbol$branch(:$remote_branch) )]($style)";
-          symbol = " ";
+          symbol = "󰊢 ";
           style = "yellow";
         };
         git_status = {
