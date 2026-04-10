@@ -64,9 +64,4 @@ in
 
         boot.kernelParams = ["i915.enable_guc=3"];
       })
-      (lib.mkIf (
-          hardware.system.form_factor == "laptop" && (elemAt hardware.cpu 0).vendor_name == "GenuineIntel"
-        ) {
-          services.thermald.enable = true;
-        })
     ]
