@@ -50,9 +50,9 @@
             "ghost_element.active" = "${x2}ff";
             "ghost_element.selected" = "${x2}ff";
             "ghost_element.disabled" = "${x1}ff";
-            "text" = "${x5}ff";
-            "text.muted" = "${x4}ff";
-            "text.placeholder" = "${x3}ff";
+            "text" = "${x6}ff";
+            "text.muted" = "${x5}ff";
+            "text.placeholder" = "${x4}ff";
             "text.disabled" = "${x3}ff";
             "text.accent" = "${xD}ff";
             "icon" = "${x5}ff";

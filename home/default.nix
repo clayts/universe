@@ -6,12 +6,11 @@
 }: {
   imports = [
     ./earthpaper
-    ./scripts
-    ./zeditor
     ./zsh
     ./firefox.nix
     ./ghostty.nix
     ./gnome.nix
+    ./zeditor.nix
   ];
   home.packages = with pkgs;
     [

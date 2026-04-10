@@ -9,6 +9,7 @@
     inputs.nix-index-database.homeModules.nix-index
     ./micro.nix
     ./rizzlefetch
+    ./scripts
   ];
   home = {
     packages = with pkgs; [
