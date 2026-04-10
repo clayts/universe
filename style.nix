@@ -42,7 +42,7 @@ pkgs: {
     xC = "#40efff"; # Cyan
     xD = "#41bbff"; # Blue
     xE = "#e012be"; # Purple
-    xF = "#e0ffff"; # White
+    xF = "#f0ffff"; # White
   };
 }
 # black

@@ -45,7 +45,6 @@
           file = ".gitconfig";
           method = "symlink";
         }
-        ".nix-profile"
         {
           file = ".config/gh/hosts.yml";
           parentDirectory = {mode = "0751";};
@@ -79,28 +78,4 @@
       btrfs subvolume create /state/@present
       umount /state
     '';
-
-  # boot.initrd.postResumeCommands =
-  #   lib.mkAfter
-  #   ''
-  #     delete_subvolume() {
-  #      local path=$1
-  #      btrfs subvolume list -o "$path" | cut -f9 -d' ' | tac | while read -r sub; do
-  #      	 btrfs subvolume delete "$path/$sub"
-  #      done
-  #      btrfs subvolume delete "$path"
-  #     }
-
-  #     mkdir /state
-  #     mount /dev/disk/by-partlabel/disk-main-state /state
-
-  #     if [[ -f /state/impermanence.conf ]]; then
-  #       while IFS= read -r name; do
-  #         delete_subvolume "/state/$name"
-  #         btrfs subvolume create "/state/$name"
-  #       done < /state/impermanence.conf
-  #     fi
-
-  #     umount "/state"
-  #   '';
 }

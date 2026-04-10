@@ -2,6 +2,7 @@
   pkgs,
   style,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -35,8 +36,22 @@
       style.fonts.mono.package
       style.fonts.emoji.package
     ];
-  home.stateVersion = "25.05";
-  nixpkgs.config.allowUnfree = true;
+  home.stateVersion = "26.05";
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+      desktop = "${config.home.homeDirectory}/Desktop";
+      download = "${config.home.homeDirectory}/Desktop";
+      templates = "${config.home.homeDirectory}/.Templates";
+      publicShare = "${config.home.homeDirectory}/.Public";
+      documents = "${config.home.homeDirectory}/Documents";
+      music = "${config.home.homeDirectory}/Media";
+      pictures = "${config.home.homeDirectory}/Media";
+      videos = "${config.home.homeDirectory}/Media";
+    };
+  };
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {

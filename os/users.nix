@@ -5,25 +5,10 @@
   lib,
   ...
 }: {
-  environment = {
-    localBinInPath = true;
-    variables = {
-      XDG_CONFIG_HOME = "$HOME/.config";
-    };
+  imports = [
+    inputs.home-manager.nixosModules.default
+  ];
 
-    # [TODO]
-    # move to home manager?
-    etc."xdg/user-dirs.defaults".text = ''
-      DESKTOP=Desktop
-      DOWNLOAD=Desktop
-      TEMPLATES=.Templates
-      PUBLICSHARE=.Public
-      DOCUMENTS=Documents
-      MUSIC=Media
-      PICTURES=Media
-      VIDEOS=Media
-    '';
-  };
   users = {
     defaultUserShell = pkgs.zsh;
     mutableUsers = false;
@@ -44,12 +29,8 @@
     };
   };
 
-  imports = [
-    inputs.home-manager.nixosModules.default
-  ];
-
   home-manager = {
-    # useGlobalPkgs = true;
+    useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";

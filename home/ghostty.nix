@@ -14,7 +14,7 @@
     systemd.enable = true;
     themes = {
       "Custom" = {
-        background = style.colors.x0;
+        background = style.colors.x9;
         foreground = style.colors.x5;
         cursor-color = style.colors.x5;
         selection-background = style.colors.x2;

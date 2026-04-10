@@ -24,10 +24,6 @@
         home-manager.follows = "";
       };
     };
-    # stylix = {
-    #   url = "github:nix-community/stylix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
   outputs = inputs: let
     system = "x86_64-linux";
@@ -181,6 +177,7 @@
         python313Packages.terminaltexteffects
         toilet
         ruff
+        (pkgs.writeShellScriptBin "switch-test" ''nh os switch /etc/nixos -- --override-input universe path:.'')
       ];
     };
   };
