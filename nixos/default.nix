@@ -1,15 +1,21 @@
 {
-  inputs,
   pkgs,
+  inputs,
+  resources,
   ...
 }: {
   imports = [
-    ./users.nix
     ./gnome.nix
     ./hardware.nix
     ./impermanence.nix
+    ./users.nix
   ];
   environment.systemPackages = with pkgs; [
+    resources.persist
+    (pkgs.writeShellScriptBin "clean" ''nh clean all -k 3 && nix-store --optimise'')
+    (pkgs.writeShellScriptBin "switch" ''nh os switch /etc/nixos'')
+    (pkgs.writeShellScriptBin "update" ''cd /etc/nixos && sudo nix flake update'')
+
     # Hide CUPS
     (pkgs.makeDesktopItem {
       name = "cups";

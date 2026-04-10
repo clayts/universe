@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  style,
+  resources,
   ...
 }: let
   extensions = with pkgs.gnomeExtensions; [
@@ -13,6 +13,7 @@
     auto-power-profile
   ];
 in {
+  home.packages = with resources.style.fonts; [sans.package serif.package mono.package emoji.package];
   gtk = {
     enable = true;
     iconTheme = {
@@ -41,12 +42,32 @@ in {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
-
+  systemd.user.services."earthpaper" = {
+    Unit = {
+      Description = "Earthpaper switcher";
+      StartLimitBurst = 12; # Maximum retries
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${resources.earthpaper}/bin/earthpaper";
+      Restart = "on-failure";
+      RestartSec = 300; # seconds between retries
+    };
+  };
+  systemd.user.timers."earthpaper" = {
+    Unit.Description = "Timer for earthpaper service";
+    Timer = {
+      Unit = "earthpaper.service";
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+    Install.WantedBy = ["timers.target"];
+  };
   dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      font-name = "${style.fonts.sans.name} ${toString style.fonts.sans.size}";
-      document-font-name = "${style.fonts.serif.name} ${toString style.fonts.serif.size}";
-      monospace-font-name = "${style.fonts.mono.name} ${toString style.fonts.mono.size}";
+    "org/gnome/desktop/interface" = with resources.style.fonts; {
+      font-name = "${sans.name} ${toString sans.size}";
+      document-font-name = "${serif.name} ${toString serif.size}";
+      monospace-font-name = "${mono.name} ${toString mono.size}";
       gtk-enable-primary-paste = false; # Disable middle-click paste as it can accidentally paste stuff when scrolling
       enable-hot-corners = false;
       font-antialiasing = "greyscale";
@@ -72,6 +93,7 @@ in {
       "firefox.desktop"
       "org.gnome.Nautilus.desktop"
     ];
+    "org/gnome/shell/window-switcher".current-workspace-only = false;
     "org/gnome/settings-daemon/plugins/housekeeping".donation-reminder-enabled = false;
     "org/gnome/desktop/peripherals/touchpad".disable-while-typing = false; # Required for touchpad/keyboard games
     "org/gnome/evolution-data-server/calendar".notify-enable-audio = false; # Silences annoying daily beeps

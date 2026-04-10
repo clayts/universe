@@ -1,25 +1,25 @@
 {
   pkgs,
-  style,
+  resources,
   lib,
   config,
   ...
 }: {
   imports = [
-    ./earthpaper
-    ./zsh
     ./firefox.nix
     ./ghostty.nix
     ./gnome.nix
+    ./micro.nix
     ./zeditor.nix
+    ./zsh.nix
   ];
-  home.packages = with pkgs;
-    [
+  home = {
+    packages = with pkgs; [
+      # GUI
       gnome-firmware
       loupe
       file-roller
       gnome-calculator
-      resources
       gnome-characters
       gnome-logs
       gnome-clocks
@@ -29,13 +29,21 @@
       papers
       impression
       baobab
-    ]
-    ++ [
-      style.fonts.sans.package
-      style.fonts.serif.package
-      style.fonts.mono.package
-      style.fonts.emoji.package
+
+      # CLI
+      grc
+      fzf
+      lsd
+      fd
+      git
+      gh
     ];
+    sessionVariables = {
+      EDITOR = "micro";
+      GOPATH = "$HOME/.local/share/go";
+    };
+  };
+
   home.stateVersion = "26.05";
   xdg = {
     enable = true;
@@ -54,11 +62,11 @@
   };
   fonts.fontconfig = {
     enable = true;
-    defaultFonts = {
-      sansSerif = [style.fonts.sans.name "Noto Sans"];
-      serif = [style.fonts.serif.name "Noto Serif"];
-      monospace = [style.fonts.mono.name "Noto Mono"];
-      emoji = [style.fonts.emoji.name "Noto Color Emoji"];
+    defaultFonts = with resources.style.fonts; {
+      sansSerif = [sans.name "Noto Sans"];
+      serif = [serif.name "Noto Serif"];
+      monospace = [mono.name "Noto Mono"];
+      emoji = [emoji.name "Noto Color Emoji"];
     };
     configFile.features = {
       enable = true;
@@ -81,7 +89,7 @@
                   </edit>
                 </match>''
           )
-          style.fonts)}
+          resources.style.fonts)}
         </fontconfig>
       '';
     };

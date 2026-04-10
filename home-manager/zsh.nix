@@ -1,30 +1,14 @@
 {
   pkgs,
-  inputs,
   lib,
   config,
+  resources,
+  inputs,
   ...
 }: {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
-    ./micro.nix
-    ./rizzlefetch
-    ./scripts
   ];
-  home = {
-    packages = with pkgs; [
-      grc
-      fzf
-      lsd
-      fd
-      git
-      gh
-    ];
-    sessionVariables = {
-      EDITOR = "micro";
-      GOPATH = "$HOME/.local/share/go";
-    };
-  };
   programs = {
     nix-index = {
       enable = true;
@@ -160,7 +144,7 @@
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
       initContent = ''
-        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && rizzlefetch && echo
+        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${resources.rizzlefetch}/bin/rizzlefetch && echo
         echo
 
         # keybindings

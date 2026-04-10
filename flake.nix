@@ -25,145 +25,41 @@
       };
     };
   };
-  outputs = inputs: let
+  outputs = {
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
     system = "x86_64-linux";
-    pkgs = import inputs.nixpkgs {inherit system;};
-    style = import ./style.nix pkgs;
+    pkgs = import nixpkgs {inherit system;};
+    resources = import ./resources {inherit pkgs;};
   in {
     system = hostName: modules: {
       nixosConfigurations = {
-        ${hostName} = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs style;};
-          modules = [./os {networking = {inherit hostName;};}] ++ modules;
+        ${hostName} = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs resources;};
+          modules = [./nixos {networking = {inherit hostName;};}] ++ modules;
         };
       };
     };
     home = name: modules: {
       homeManagerConfigurations = {
-        ${name} = inputs.home-manager.lib.homeManagerConfiguration {
+        ${name} = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           useUserPackages = true;
-          extraSpecialArgs = {inherit inputs style;};
-          modules = [./home] ++ modules;
+          extraSpecialArgs = {inherit inputs resources;};
+          modules = [./home-manager] ++ modules;
         };
       };
     };
-    apps.${system} = let
-      scan =
-        pkgs.writeShellApplication {
-          name = "scan";
-          runtimeInputs = with pkgs; [nixos-facter jq alejandra];
-          text = "
-        	report=$(nixos-facter | jq '.hardware.disk |= map(select(.class_list | contains([\"usb\"]) | not))')
-							disk=$(echo \"$report\" | jq -r '
-								[ .hardware.disk[].unix_device_names
-								    | map(select(contains(\"/dev/disk/by-id/\")))
-								    | max_by(length) // empty ]
-								| if length == 1 then .[0] else \"\" end
-							')
-							swap=$(free -m | awk '/^Mem:/{print $2 * 2}')M
-          alejandra -q <<-EOF
-							{...}: {
-								fileSystems.\"/data\".neededForBoot = true;
-								disko.devices.disk.main = {
-					        device = \"$disk\";
-					        type = \"disk\";
-					        content = {
-					          type = \"gpt\";
-					          partitions = {
-					            boot = {
-					              type = \"EF00\";
-					              size = \"2G\";
-					              content = {
-					                type = \"filesystem\";
-					                format = \"vfat\";
-					                mountpoint = \"/boot\";
-					                mountOptions = [\"umask=0077\"];
-					              };
-					            };
-					            state = {
-					              size = \"6G\";
-					              content = {
-					                type = \"btrfs\";
-					                extraArgs = [ \"-f\" ];
-													mountpoint = \"/state\";
-					                mountOptions = [
-					                  \"compress=zstd\"
-					                  \"noatime\"
-					                ];
-													subvolumes.\"@present\" = {
-														mountpoint = \"/\";
-														mountOptions = [
-														\"compress=zstd\"
-														\"noatime\"
-														];
-													};
-					              };
-					            };
-					            data = {
-					              size = \"100%\";
-					              content = {
-					                type = \"filesystem\";
-					                format = \"xfs\";
-					                mountpoint = \"/data\";
-					              };
-					            };
-					            swap = {
-					              size = \"$swap\";
-					              content = {
-					                type = \"swap\";
-					                discardPolicy = \"both\";
-					                resumeDevice = true;
-					              };
-					            };
-					          };
-					        };
-					      };
-								hardware.facter.reportPath = builtins.toFile \"hardware.json\" ''
-									$report
-								'';
-							}
-							EOF
-							";
-        };
-    in {
+    apps.${system} = {
       scan = {
         type = "app";
-        program = "${scan}/bin/scan";
+        program = "${resources.scan}/bin/scan";
       };
       install = {
         type = "app";
-        program = "${pkgs.writeShellApplication {
-          name = "install";
-          runtimeInputs = with pkgs; [nixos-facter jq alejandra];
-          text = "
-          set -euo pipefail
-
-          if [ \"$#\" -ne 1 ]; then
-              echo \"Usage: $0 <hostname>\"
-              exit 1
-          fi
-
-          ${scan}/bin/scan > /tmp/hardware.nix
-          nix run --experimental-features \"nix-command flakes\" github:nix-community/disko/latest -- --mode destroy,format,mount /tmp/hardware.nix
-          mkdir -p /mnt/data/etc/nixos/passwords
-          echo root
-          mkpasswd > /mnt/data/etc/nixos/passwords/root
-          echo user
-          mkpasswd > /mnt/data/etc/nixos/passwords/user
-          echo guest
-          mkpasswd > /mnt/data/etc/nixos/passwords/guest
-          echo \"{
-            inputs.universe.url = \\\"github:clayts/universe\\\";
-            outputs = inputs: inputs.universe.system \\\"$1\\\" [./hardware.nix];
-          }\" > /mnt/data/etc/nixos/flake.nix
-          mv /tmp/hardware.nix /mnt/data/etc/nixos/
-          mkdir /mnt/nix
-          mkdir /mnt/data/nix
-          mount --bind /mnt/data/nix /mnt/nix
-          nixos-install --flake /mnt/data/etc/nixos#\"$1\"
-          ";
-        }}/bin/install";
+        program = "${resources.install}/bin/install";
       };
     };
     devShells.${system}.default = pkgs.mkShell {

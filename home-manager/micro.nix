@@ -1,6 +1,6 @@
 {
   pkgs,
-  style,
+  resources,
   ...
 }: {
   xdg.desktopEntries."micro" = {
@@ -25,7 +25,7 @@
       ruler = false;
     };
   };
-  home.file.".config/micro/colorschemes/custom.micro".text = with style.colors; ''
+  home.file.".config/micro/colorschemes/custom.micro".text = with resources.style.colors; ''
     color-link default "${xC}"
     color-link comment "${x4}"
     color-link identifier "${xC}"

@@ -1,4 +1,4 @@
-pkgs: {
+{pkgs, ...}: {
   fonts = {
     sans = {
       name = "DeepMind Sans Medium";
@@ -45,20 +45,3 @@ pkgs: {
     xF = "#f0ffff"; # White
   };
 }
-# black
-# red
-# green
-# yellow
-# blue
-# purple
-# cyan
-# white
-# bright-black
-# bright-red
-# bright-green
-# bright-yellow
-# bright-blue
-# bright-purple
-# bright-cyan
-# bright-white
-
