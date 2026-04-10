@@ -24,19 +24,20 @@
         home-manager.follows = "";
       };
     };
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # stylix = {
+    #   url = "github:nix-community/stylix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
   outputs = inputs: let
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};
+    style = import ./style.nix pkgs;
   in {
     system = hostName: modules: {
       nixosConfigurations = {
         ${hostName} = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs;};
+          specialArgs = {inherit inputs style;};
           modules = [./os {networking = {inherit hostName;};}] ++ modules;
         };
       };
@@ -45,7 +46,8 @@
       homeManagerConfigurations = {
         ${name} = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = {inherit inputs;};
+          useUserPackages = true;
+          extraSpecialArgs = {inherit inputs style;};
           modules = [./home] ++ modules;
         };
       };

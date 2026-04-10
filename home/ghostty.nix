@@ -1,5 +1,6 @@
 {
   pkgs,
+  style,
   # lib,
   ...
 }: {
@@ -11,31 +12,47 @@
     enable = true;
     enableZshIntegration = true;
     systemd.enable = true;
-    # themes = {
-    #   "Custom" = {
-    #     background = "000000";
-    #     cursor-color = "ffffff";
-    #     foreground = "ffffff";
-    #     palette = lib.imap0 (i: v: "${toString i}=${v}") style.colors;
-    #     selection-background = "ffffff";
-    #     selection-foreground = "5e5c64";
-    #   };
-    # };
+    themes = {
+      "Custom" = {
+        background = style.colors.x0;
+        foreground = style.colors.x5;
+        cursor-color = style.colors.x5;
+        selection-background = style.colors.x2;
+        selection-foreground = style.colors.x5;
+        palette = with style.colors; [
+          "0=${x0}"
+          "1=${x8}"
+          "2=${xB}"
+          "3=${xA}"
+          "4=${xD}"
+          "5=${xE}"
+          "6=${xC}"
+          "7=${x5}"
+          "8=${x3}"
+          "9=${x8}"
+          "10=${xB}"
+          "11=${xA}"
+          "12=${xD}"
+          "13=${xE}"
+          "14=${xC}"
+          "15=${x7}"
+        ];
+      };
+    };
     settings = {
       keybind = [
-        "ctrl+c=copy_to_clipboard"
+        "performable:ctrl+c=copy_to_clipboard"
         "ctrl+v=paste_from_clipboard"
-        ''ctrl+k=text:\x03''
       ];
-      # font-family = [
-      #   style.fonts.mono.name
-      #   style.fonts.emoji.name
-      # ];
-      # font-size = style.fonts.mono.size;
+      font-family = [
+        style.fonts.mono.name
+        style.fonts.emoji.name
+      ];
+      font-size = style.fonts.mono.size;
       adjust-cell-height = -2;
-      # font-feature = style.fonts.mono.features;
+      font-feature = style.fonts.mono.features;
       # theme = "${./theme}";
-      # theme = "Custom";
+      theme = "Custom";
       background = "000000";
       command = "SHLVL=0; zsh";
       window-theme = "ghostty";

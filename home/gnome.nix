@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  style,
   ...
 }: let
   extensions = with pkgs.gnomeExtensions; [
@@ -11,66 +12,7 @@
     just-perfection
     auto-power-profile
   ];
-  packages = with pkgs; [
-    gnome-firmware
-    loupe
-    file-roller
-    gnome-calculator
-    resources
-    gnome-characters
-    gnome-logs
-    gnome-clocks
-    eyedropper
-    celluloid
-    gitg
-    papers
-    impression
-    baobab
-  ];
 in {
-  home.packages = with pkgs;
-    [
-      # noto-fonts
-      # style.fonts.sans.package
-      # style.fonts.serif.package
-      # style.fonts.mono.package
-      # style.fonts.emoji.package
-    ]
-    ++ packages;
-  # fonts.fontconfig = {
-  #   enable = true;
-  #   defaultFonts = {
-  #     sansSerif = [style.fonts.sans.name "Noto Sans"];
-  #     serif = [style.fonts.serif.name "Noto Serif"];
-  #     monospace = [style.fonts.mono.name "Noto Mono"];
-  #     emoji = [style.fonts.emoji.name "Noto Color Emoji"];
-  #   };
-  #   configFile.features = {
-  #     enable = true;
-  #     text = ''
-  #       <?xml version="1.0" encoding="UTF-8"?>
-  #       <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
-  #       <fontconfig>
-  #         <description>Set features</description>
-  #         ${lib.concatStringsSep "\n" (lib.mapAttrsToList (
-  #           role: font:
-  #             if font.features == []
-  #             then ""
-  #             else ''
-  #               <match target="font">
-  #                 <test name="family" compare="eq">
-  #                   <string>${font.name}</string>
-  #                 </test>
-  #                 <edit name="fontfeatures" mode="append">
-  #                   ${lib.concatMapStrings (f: "<string>${f} on</string>") font.features}
-  #                 </edit>
-  #               </match>''
-  #         )
-  #         style.fonts)}
-  #       </fontconfig>
-  #     '';
-  #   };
-  # };
   gtk = {
     enable = true;
     iconTheme = {
@@ -102,9 +44,9 @@ in {
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      # font-name = "${style.fonts.sans.name} ${toString style.fonts.sans.size}";
-      # document-font-name = "${style.fonts.serif.name} ${toString style.fonts.serif.size}";
-      # monospace-font-name = "${style.fonts.mono.name} ${toString style.fonts.mono.size}";
+      font-name = "${style.fonts.sans.name} ${toString style.fonts.sans.size}";
+      document-font-name = "${style.fonts.serif.name} ${toString style.fonts.serif.size}";
+      monospace-font-name = "${style.fonts.mono.name} ${toString style.fonts.mono.size}";
       gtk-enable-primary-paste = false; # Disable middle-click paste as it can accidentally paste stuff when scrolling
       enable-hot-corners = false;
       font-antialiasing = "greyscale";

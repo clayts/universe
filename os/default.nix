@@ -8,7 +8,6 @@
     ./gnome.nix
     ./hardware.nix
     ./impermanence.nix
-    ./stylix
   ];
   environment.systemPackages = with pkgs; [
     # Hide CUPS

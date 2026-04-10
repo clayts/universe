@@ -66,11 +66,11 @@
         git_branch = {
           format = "[($symbol$branch(:$remote_branch) )]($style)";
           symbol = "󰊢 ";
-          style = "yellow";
+          style = "bright-white";
         };
         git_status = {
           format = "[($all_status$ahead_behind)]($style)";
-          style = "yellow";
+          style = "bright-white";
           conflicted = "$count󰩋 ";
           ahead = "$count󰶣 ";
           behind = "$count󰶡 ";
@@ -88,7 +88,7 @@
           format = "[($loaded)]($style)";
           loaded_msg = "󱧶 ";
           unloaded_msg = "󱧴 ";
-          style = "cyan";
+          style = "bold yellow";
         };
         directory = {
           format = "[$read_only]($read_only_style)[$path]($style) ";

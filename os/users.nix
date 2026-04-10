@@ -5,15 +5,14 @@
   lib,
   ...
 }: {
-  imports = [
-    inputs.home-manager.nixosModules.default
-  ];
-
   environment = {
     localBinInPath = true;
     variables = {
       XDG_CONFIG_HOME = "$HOME/.config";
     };
+
+    # [TODO]
+    # move to home manager?
     etc."xdg/user-dirs.defaults".text = ''
       DESKTOP=Desktop
       DOWNLOAD=Desktop
@@ -44,6 +43,11 @@
       "root".hashedPasswordFile = "/data/etc/nixos/passwords/root";
     };
   };
+
+  imports = [
+    inputs.home-manager.nixosModules.default
+  ];
+
   home-manager = {
     # useGlobalPkgs = true;
     useUserPackages = true;
