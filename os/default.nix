@@ -90,20 +90,10 @@
   documentation.nixos.enable = false;
   nix = {
     enable = true;
-    package = pkgs.lixPackageSets.stable.lix;
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     settings.experimental-features = ["nix-command" "flakes"];
   };
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-    overlays = [
-      (final: prev: {
-        inherit (prev.lixPackageSets.stable) nixpkgs-review nix-eval-jobs nix-fast-build colmena;
-      })
-    ];
-  };
+  nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;
   networking.networkmanager.enable = true;
 }
