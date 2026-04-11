@@ -9,12 +9,6 @@
   };
   programs.micro = {
     enable = true;
-    # package = lib.symlinkJoin {
-    #   name = "micro";
-    #   paths = [
-    #     pkgs.micro-full
-    #   ];
-    # };
     package = pkgs.micro-with-wl-clipboard;
     settings = {
       colorscheme = "custom";
@@ -28,15 +22,16 @@
   home.file.".config/micro/colorschemes/custom.micro".text = with resources.style.colors; ''
     color-link default "${xC}"
     color-link comment "${x4}"
-    color-link identifier "${xC}"
+    color-link identifier "bold ${xC}"
     color-link constant "${x8}"
     color-link constant.string "${xF}"
+    color-link constant.number "${x8}"
     color-link constant.string.char "${xF}"
     color-link statement "${xA}"
     color-link symbol.operator "${x5}"
     color-link preproc "${xF}"
     color-link type "${xD}"
-    color-link special "${xC}"
+    color-link special "${x9}"
     color-link underlined "${x8}"
     color-link error "bold ${x8}"
     color-link todo "bold ${x9}"
