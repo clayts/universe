@@ -50,7 +50,6 @@
       font-size = resources.style.fonts.mono.size;
       adjust-cell-height = -2;
       font-feature = resources.style.fonts.mono.features;
-      # theme = "${./theme}";
       theme = "Custom";
       background = "000000";
       command = "SHLVL=0; zsh";

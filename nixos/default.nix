@@ -14,13 +14,6 @@
     resources.persist
     resources.system
     resources.scan-hardware
-
-    # Hide CUPS
-    (pkgs.makeDesktopItem {
-      name = "cups";
-      desktopName = "";
-      noDisplay = true;
-    })
     (aspellWithDicts (dicts: [
       dicts.en
       dicts.en-computers
