@@ -27,7 +27,6 @@
     };
     users."user" = {
       directories = [
-        ".Public"
         {
           directory = ".cache";
           mode = "0700";
@@ -39,6 +38,7 @@
         "Documents"
         "Media"
         "Code"
+        ".Public"
       ];
       files = [
         {

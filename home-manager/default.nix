@@ -44,7 +44,6 @@
     };
   };
 
-  home.stateVersion = "26.05";
   xdg = {
     enable = true;
     userDirs = {
@@ -58,6 +57,9 @@
       music = "${config.home.homeDirectory}/Media";
       pictures = "${config.home.homeDirectory}/Media";
       videos = "${config.home.homeDirectory}/Media";
+      extraConfig = {
+        code = "${config.home.homeDirectory}/Code";
+      };
     };
   };
   fonts.fontconfig = {

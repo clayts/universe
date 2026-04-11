@@ -1,4 +1,6 @@
-report=$(nixos-facter | jq '.hardware.disk |= map(select(.class_list | contains(["usb"]) | not))')
+set -euo pipefail
+
+report=$(sudo nixos-facter | jq '.hardware.disk |= map(select(.class_list | contains(["usb"]) | not))')
 disk=$(echo "$report" | jq -r '
 	[ .hardware.disk[].unix_device_names
 	    | map(select(contains("/dev/disk/by-id/")))

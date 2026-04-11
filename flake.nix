@@ -24,42 +24,33 @@
         home-manager.follows = "";
       };
     };
-  };
-  outputs = {
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {inherit system;};
-    resources = import ./resources {inherit pkgs;};
-  in {
-    system = hostName: modules: {
-      nixosConfigurations = {
-        ${hostName} = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs resources;};
-          modules = [./nixos {networking = {inherit hostName;};}] ++ modules;
-        };
-      };
+    resources = {
+      url = "path:./resources";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    home = name: modules: {
+  };
+  outputs = inputs: let
+    system = "x86_64-linux";
+    pkgs = import inputs.nixpkgs {inherit system;};
+  in {
+    home = name: initialRelease: modules: {
       homeManagerConfigurations = {
-        ${name} = home-manager.lib.homeManagerConfiguration {
+        ${name} = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           useUserPackages = true;
-          extraSpecialArgs = {inherit inputs resources;};
+          extraSpecialArgs = {inherit inputs;};
           modules = [./home-manager] ++ modules;
         };
       };
     };
     apps.${system} = {
-      scan = {
+      scan-hardware = {
         type = "app";
-        program = "${resources.scan}/bin/scan";
+        program = "${inputs.resources.scan-hardware}/bin/scan-hardware";
       };
-      install = {
+      install-system = {
         type = "app";
-        program = "${resources.install}/bin/install";
+        program = "${inputs.resources.install-system}/bin/install-system";
       };
     };
     devShells.${system}.default = pkgs.mkShell {
@@ -73,7 +64,6 @@
         python313Packages.terminaltexteffects
         toilet
         ruff
-        (pkgs.writeShellScriptBin "switch-test" ''nh os switch /etc/nixos -- --override-input universe path:.'')
       ];
     };
   };

@@ -12,9 +12,7 @@
   ];
   environment.systemPackages = with pkgs; [
     resources.persist
-    (pkgs.writeShellScriptBin "clean" ''nh clean all -k 3 && nix-store --optimise'')
-    (pkgs.writeShellScriptBin "switch" ''nh os switch /etc/nixos'')
-    (pkgs.writeShellScriptBin "update" ''cd /etc/nixos && sudo nix flake update'')
+    resources.system
 
     # Hide CUPS
     (pkgs.makeDesktopItem {
@@ -30,7 +28,6 @@
     android-tools
   ];
   virtualisation.libvirtd.enable = true;
-  system.stateVersion = "24.11";
   boot = {
     tmp.useTmpfs = true;
     kernelPackages = pkgs.linuxPackages_latest;
