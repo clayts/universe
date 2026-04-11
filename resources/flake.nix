@@ -1,8 +1,11 @@
 {
   inputs.nixpkgs = {};
+  inputs.home-manager = {};
   outputs = inputs: let
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};
+    systemRelease = inputs.nixpkgs.lib.trivial.release;
+    homeRelease = (builtins.fromJSON (builtins.readFile "${inputs.home-manager}/release.json")).release;
   in rec {
     style =
       import ./style.nix {inherit pkgs;};
@@ -17,10 +20,16 @@
       text = builtins.readFile ./scan-hardware.sh;
     };
     install-system = pkgs.writeShellApplication {
-      name = "install";
-      runtimeEnv.release = inputs.nixpkgs.lib.trivial.release;
+      name = "install-system";
+      runtimeEnv = {inherit systemRelease homeRelease;};
       runtimeInputs = [scan-hardware];
       text = builtins.readFile ./install-system.sh;
+    };
+    install-home = pkgs.writeShellApplication {
+      name = "install-home";
+      runtimeEnv = {inherit homeRelease;};
+      runtimeInputs = [];
+      text = builtins.readFile ./install-home.sh;
     };
     system = pkgs.writeShellApplication {
       name = "system";

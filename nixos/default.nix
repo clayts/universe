@@ -13,6 +13,7 @@
   environment.systemPackages = with pkgs; [
     resources.persist
     resources.system
+    resources.scan-hardware
 
     # Hide CUPS
     (pkgs.makeDesktopItem {

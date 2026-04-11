@@ -27,31 +27,28 @@
     resources = {
       url = "path:./resources";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
   };
   outputs = inputs: let
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};
   in {
-    home = name: initialRelease: modules: {
-      homeManagerConfigurations = {
-        ${name} = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          useUserPackages = true;
-          extraSpecialArgs = {inherit inputs;};
-          modules = [./home-manager] ++ modules;
-        };
-      };
-    };
     apps.${system} = {
-      scan-hardware = {
-        type = "app";
-        program = "${inputs.resources.scan-hardware}/bin/scan-hardware";
-      };
       install-system = {
         type = "app";
         program = "${inputs.resources.install-system}/bin/install-system";
       };
+      install-home = {
+        type = "app";
+        program = "${inputs.resources.install-home}/bin/install-home";
+      };
+    };
+    nixosModules.default = {
+      imports = [./nixos];
+    };
+    homeManagerModules.default = {
+      imports = [./home-manager];
     };
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
@@ -61,8 +58,6 @@
         vscode-langservers-extracted
         superhtml
         basedpyright
-        python313Packages.terminaltexteffects
-        toilet
         ruff
       ];
     };

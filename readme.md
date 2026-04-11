@@ -6,6 +6,19 @@
 - theme colours
 - include persist as proper script in nix, get rid of copying
 - sort out guest background
+- sort out: 
+	```
+	home = name: initialRelease: modules: {
+      homeManagerConfigurations = {
+        ${name} = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          useUserPackages = true;
+          extraSpecialArgs = {inherit inputs;};
+          modules = [./home-manager] ++ modules;
+        };
+      };
+    };
+	```
 
 ## Terminal Color List
 ```

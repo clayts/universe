@@ -107,7 +107,7 @@ in {
       edge-tiling = true;
       workspaces-only-on-primary = true;
     };
-    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Super>z"];
+    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Super>Space"];
     "org/gnome/desktop/wm/keybindings" = {
       toggle-fullscreen = ["<Super>f"];
       close = ["<Super>q"];

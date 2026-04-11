@@ -6,7 +6,7 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
-  environment.persistence."/data" = {
+  environment.persistence."/system/data" = {
     allowTrash = true;
     hideMounts = true;
     directories = [
