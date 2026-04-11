@@ -42,26 +42,28 @@ in {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
-  systemd.user.services."earthpaper" = {
-    Unit = {
-      Description = "Earthpaper switcher";
-      StartLimitBurst = 12; # Maximum retries
+  systemd.user = {
+    services.earthpaper = {
+      Unit = {
+        Description = "Service for earthpaper";
+        StartLimitBurst = 12; # Maximum retries (12*5=60 mins)
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${resources.earthpaper}/bin/earthpaper";
+        Restart = "on-failure";
+        RestartSec = 300; # seconds between retries (5 mins)
+      };
     };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${resources.earthpaper}/bin/earthpaper";
-      Restart = "on-failure";
-      RestartSec = 300; # seconds between retries
+    timers.earthpaper = {
+      Unit.Description = "Timer for earthpaper";
+      Timer = {
+        Unit = "earthpaper.service";
+        OnCalendar = "daily";
+        Persistent = true;
+      };
+      Install.WantedBy = ["timers.target"];
     };
-  };
-  systemd.user.timers."earthpaper" = {
-    Unit.Description = "Timer for earthpaper service";
-    Timer = {
-      Unit = "earthpaper.service";
-      OnCalendar = "daily";
-      Persistent = true;
-    };
-    Install.WantedBy = ["timers.target"];
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = with resources.style.fonts; {
