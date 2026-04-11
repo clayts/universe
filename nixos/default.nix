@@ -34,7 +34,10 @@
     kernel.sysctl = {"vm.swappiness" = 10;};
     loader = {
       systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+      efi = {
+        efiSysMountPoint = "/system/boot";
+        canTouchEfiVariables = true;
+      };
       timeout = 0;
     };
     plymouth.enable = true;
