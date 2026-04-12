@@ -1,7 +1,7 @@
 set -uxeo pipefail
 hostName=$1
 hardware=$(scan-hardware)
-sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount <($hardware)
+sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount <(printf '%s' "$hardware")
 sudo mkdir -p /mnt/system/data/etc/nixos/passwords
 echo "Enter password for root:"
 mkpasswd | sudo tee /mnt/system/data/etc/nixos/passwords/root > /dev/null
@@ -11,7 +11,7 @@ echo "Enter password for guest:"
 mkpasswd | sudo tee /mnt/system/data/etc/nixos/passwords/guest > /dev/null
 sudo tee /mnt/system/data/etc/nixos/flake.nix > /dev/null <<-EOF
 	{
-	  inputs.universe.url = \"github:clayts/universe\";
+	  inputs.universe.url = "github:clayts/universe";
 	  outputs = inputs: {
 	    nixosConfigurations = {
 	      system = inputs.nixpkgs.lib.nixosSystem {
@@ -19,9 +19,9 @@ sudo tee /mnt/system/data/etc/nixos/flake.nix > /dev/null <<-EOF
 	        modules = [
 	          # System
 	          {
-	            networking.hostName = \"$hostName\";
-	            system.stateVersion = \"$systemRelease\";
-	            home-manager.sharedModules = [{ home.stateVersion = \"$homeRelease\"; }];
+	            networking.hostName = "$hostName";
+	            system.stateVersion = "$systemRelease";
+	            home-manager.sharedModules = [{ home.stateVersion = "$homeRelease"; }];
 	          }
 
 	          # Modules
@@ -33,7 +33,7 @@ sudo tee /mnt/system/data/etc/nixos/flake.nix > /dev/null <<-EOF
 	  };
 	}
 EOF
-echo "$hardware" | sudo tee /mnt/system/data/etc/nixos/hardware.nix > /dev/null
+printf '%s' "$hardware" | sudo tee /mnt/system/data/etc/nixos/hardware.nix > /dev/null
 sudo mkdir /mnt/nix
 sudo mkdir /mnt/system/data/nix
 sudo mount --bind /mnt/system/data/nix /mnt/nix
