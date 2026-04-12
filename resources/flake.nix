@@ -1,6 +1,8 @@
 {
-  inputs.nixpkgs = {};
-  inputs.home-manager = {};
+  inputs = {
+    nixpkgs = {};
+    home-manager = {};
+  };
   outputs = inputs: let
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};

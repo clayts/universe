@@ -13,6 +13,7 @@ case "${1:-}" in
  	nh clean all -k 3 && nix-store --optimise
     ;;
   *)
+  	echo "Usage: system [clean/update/test]"
   	exit 1
     ;;
 esac

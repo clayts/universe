@@ -25,9 +25,11 @@
       };
     };
     resources = {
-      url = "path:./resources";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+      url = ./resources;
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
   };
   outputs = inputs: let
@@ -59,6 +61,7 @@
         superhtml
         basedpyright
         ruff
+        inputs.resources.system
       ];
     };
   };
