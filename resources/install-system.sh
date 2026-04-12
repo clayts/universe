@@ -24,4 +24,4 @@ cat "$hardware" | sudo tee /mnt/system/data/etc/nixos/hardware.nix > /dev/null
 sudo mkdir /mnt/nix
 sudo mkdir /mnt/system/data/nix
 sudo mount --bind /mnt/system/data/nix /mnt/nix
-sudo nixos-install --flake /mnt/system/data/etc/nixos#system
+sudo nixos-install --flake /mnt/system/data/etc/nixos
