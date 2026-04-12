@@ -143,7 +143,7 @@
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
       initContent = ''
-        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${resources.rizzlefetch}/bin/rizzlefetch && echo
+        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${inputs.resources.rizzlefetch}/bin/rizzlefetch && echo
         echo
 
         # keybindings
