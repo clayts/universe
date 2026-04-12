@@ -1,6 +1,6 @@
 {
   pkgs,
-  resources,
+  inputs,
   lib,
   config,
   ...
@@ -64,7 +64,7 @@
   };
   fonts.fontconfig = {
     enable = true;
-    defaultFonts = with resources.style.fonts; {
+    defaultFonts = with inputs.resources.style.fonts; {
       sansSerif = [sans.name "Noto Sans"];
       serif = [serif.name "Noto Serif"];
       monospace = [mono.name "Noto Mono"];
@@ -91,7 +91,7 @@
                   </edit>
                 </match>''
           )
-          resources.style.fonts)}
+          inputs.resources.style.fonts)}
         </fontconfig>
       '';
     };
