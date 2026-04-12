@@ -1,7 +1,7 @@
 {
   pkgs,
   inputs,
-  resources,
+  inputs,
   ...
 }: {
   imports = [
@@ -11,9 +11,9 @@
     ./users.nix
   ];
   environment.systemPackages = with pkgs; [
-    resources.persist
-    resources.system
-    resources.scan-hardware
+    inputs.resources.persist
+    inputs.resources.system
+    inputs.resources.scan-hardware
     (aspellWithDicts (dicts: [
       dicts.en
       dicts.en-computers
