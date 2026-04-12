@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  resources,
+  inputs,
   ...
 }: let
   extensions = with pkgs.gnomeExtensions; [
@@ -13,7 +13,7 @@
     auto-power-profile
   ];
 in {
-  home.packages = with resources.style.fonts; [sans.package serif.package mono.package emoji.package];
+  home.packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
   gtk = {
     enable = true;
     iconTheme = {
@@ -51,7 +51,7 @@ in {
       };
       Service = {
         Type = "oneshot";
-        ExecStart = "${resources.earthpaper}/bin/earthpaper";
+        ExecStart = "${inputs.resources.earthpaper}/bin/earthpaper";
         Restart = "on-failure";
         RestartSec = 300; # seconds between retries (5 mins)
       };
@@ -67,7 +67,7 @@ in {
     };
   };
   dconf.settings = {
-    "org/gnome/desktop/interface" = with resources.style.fonts; {
+    "org/gnome/desktop/interface" = with inputs.resources.style.fonts; {
       font-name = "${sans.name} ${toString sans.size}";
       document-font-name = "${serif.name} ${toString serif.size}";
       monospace-font-name = "${mono.name} ${toString mono.size}";
