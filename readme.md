@@ -6,10 +6,11 @@
 - theme colours
 - include persist as proper script in nix, get rid of copying
 - sort out guest background
+- homeConfiguration = args: {...} to mirror nixosSystem = args: {...} in flake.nix
 - sort out: 
 	```
 	home = name: initialRelease: modules: {
-      homeManagerConfigurations = {
+      homeConfigurations = {
         ${name} = inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           useUserPackages = true;

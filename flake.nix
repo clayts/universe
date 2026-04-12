@@ -46,11 +46,25 @@
         program = "${inputs.resources.install-home}/bin/install-home";
       };
     };
-    nixosModules.default = {
-      imports = [./nixos];
-    };
-    homeManagerModules.default = {
-      imports = [./home-manager];
+    nixosSystem = args: {
+      nixosConfigurations = {
+        "${args.name}" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {inputs = inputs // (args.inputs or {});};
+          modules = [
+            {
+              networking.hostName = "${args.name}";
+              system.stateVersion = "${args.foundation.system}";
+              home-manager.sharedModules = [{home.stateVersion = "${args.foundation.homes}";}];
+              imports =
+                [
+                  ./nixos
+                  args.hardware
+                ]
+                ++ (args.modules or []);
+            }
+          ];
+        };
+      };
     };
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
