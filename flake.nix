@@ -61,7 +61,6 @@
         superhtml
         basedpyright
         ruff
-        inputs.resources.system
       ];
     };
   };
