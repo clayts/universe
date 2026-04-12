@@ -9,6 +9,7 @@
     systemRelease = inputs.nixpkgs.lib.trivial.release;
     homeRelease = (builtins.fromJSON (builtins.readFile "${inputs.home-manager}/release.json")).release;
   in rec {
+    create-state-script = builtins.readFile ./create-state.sh;
     style =
       import ./style.nix {inherit pkgs;};
     earthpaper = pkgs.writeShellApplication {
