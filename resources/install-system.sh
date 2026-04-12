@@ -1,7 +1,7 @@
 set -uxeo pipefail
 hostName=$1
-sudo scan-hardware > /tmp/hardware.nix
-sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount /tmp/hardware.nix
+hardware=$(scan-hardware)
+sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount <($hardware)
 sudo mkdir -p /mnt/system/data/etc/nixos/passwords
 echo "Enter password for root:"
 mkpasswd | sudo tee /mnt/system/data/etc/nixos/passwords/root > /dev/null
@@ -33,7 +33,7 @@ sudo tee /mnt/system/data/etc/nixos/flake.nix > /dev/null <<-EOF
 	  };
 	}
 EOF
-sudo mv /tmp/hardware.nix /mnt/system/data/etc/nixos/
+echo "$hardware" | sudo tee /mnt/system/data/etc/nixos/hardware.nix > /dev/null
 sudo mkdir /mnt/nix
 sudo mkdir /mnt/system/data/nix
 sudo mount --bind /mnt/system/data/nix /mnt/nix

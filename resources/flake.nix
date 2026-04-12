@@ -17,7 +17,7 @@
       text = builtins.readFile ./earthpaper.sh;
     };
     scan-hardware = pkgs.writeShellApplication {
-      name = "scan";
+      name = "scan-hardware";
       runtimeInputs = with pkgs; [nixos-facter jq alejandra];
       text = builtins.readFile ./scan-hardware.sh;
     };
