@@ -16,7 +16,7 @@ sudo tee /mnt/system/data/etc/nixos/flake.nix > /dev/null <<-EOF
 	      system = "$systemRelease";
 	      homes = "$homeRelease";
 	    };
-		hardware = ./hardware.nix;
+	    hardware = ./hardware.nix;
 	  };
 	}
 EOF
