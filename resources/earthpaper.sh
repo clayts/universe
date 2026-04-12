@@ -1,4 +1,6 @@
-target_dir="$HOME/.local/share/earthpaper"
+set -ueo pipefail
+
+target="$1"
 
 tmp_dir=$(mktemp -d)
 
@@ -15,9 +17,7 @@ read -r latitude longitude elevation country attribution < \
 	<(jq -r '.lat, .lng, .elevation, .geocode.country, .attribution' "$tmp_dir/data.json" | tr '\n' ' ')
 url="https://maps.google.com/?q=$latitude,$longitude"
 
-mkdir -p "$target_dir"
-
-jq -r '.dataUri' "$tmp_dir/data.json" | sed 's/^data:image\/jpeg;base64,//' | base64 -d > "$target_dir/image.jpeg"
+jq -r '.dataUri' "$tmp_dir/data.json" | sed 's/^data:image\/jpeg;base64,//' | base64 -d > "$target"
 
 echo "ID:          $id
 Country:     $country
@@ -25,14 +25,9 @@ Latitude:    $latitude
 Longitude:   $longitude
 Elevation:   $elevation
 Map URL:     $url
-Attribution: $attribution" > "$target_dir/info.txt"
-
-cat "$target_dir/info.txt"
+Attribution: $attribution"
 
 rm -Rf "$tmp_dir"
-
-dconf write /org/gnome/desktop/background/picture-uri "'none'" &&
-dconf write /org/gnome/desktop/background/picture-uri "'$target_dir/image.jpeg'"
 
 if true; then exit 0; fi
 

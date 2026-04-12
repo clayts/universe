@@ -13,7 +13,13 @@
     auto-power-profile
   ];
 in {
-  home.packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
+  home = {
+    packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
+    activation.resetEarthpaperTimer = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      mkdir -p "${config.xdg.dataHome}/systemd/timers"
+      touch -d "@0" "${config.xdg.dataHome}/systemd/timers/stamp-earthpaper-switcher.timer"
+    '';
+  };
   gtk = {
     enable = true;
     iconTheme = {
@@ -44,22 +50,28 @@ in {
     extensions = map (extension: {package = extension;}) extensions;
   };
   systemd.user = {
-    services.earthpaper = {
+    services.earthpaper-switcher = {
       Unit = {
-        Description = "Service for earthpaper";
+        Description = "Service for earthpaper-switcher";
         StartLimitBurst = 12; # Maximum retries (12*5=60 mins)
       };
       Service = {
         Type = "oneshot";
-        ExecStart = "${inputs.resources.earthpaper}/bin/earthpaper";
+        ExecStart = pkgs.writeShellScript "earthpaper-switcher" ''
+          set -euo pipefail
+          mkdir -p ~/.local/share/earthpaper
+          ${inputs.resources.earthpaper}/bin/earthpaper ~/.local/share/earthpaper/image.jpeg
+          dconf write /org/gnome/desktop/background/picture-uri "'none'"
+          dconf write /org/gnome/desktop/background/picture-uri "'~/.local/share/earthpaper/image.jpeg'"
+        '';
         Restart = "on-failure";
         RestartSec = 300; # seconds between retries (5 mins)
       };
     };
-    timers.earthpaper = {
-      Unit.Description = "Timer for earthpaper";
+    timers.earthpaper-switcher = {
+      Unit.Description = "Timer for earthpaper-switcher";
       Timer = {
-        Unit = "earthpaper.service";
+        Unit = "earthpaper-switcher.service";
         OnCalendar = "daily";
         Persistent = true;
       };
