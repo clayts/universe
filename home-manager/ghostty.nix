@@ -1,6 +1,6 @@
 {
   pkgs,
-  resources,
+  inputs,
   ...
 }: {
   # This allows gnome to use ghostty as a default terminal when running
@@ -12,7 +12,7 @@
     enableZshIntegration = true;
     systemd.enable = true;
     themes = {
-      "Custom" = with resources.style.colors; {
+      "Custom" = with inputs.resources.style.colors; {
         background = x9;
         foreground = x5;
         cursor-color = x5;
@@ -43,13 +43,13 @@
         "performable:ctrl+c=copy_to_clipboard"
         "ctrl+v=paste_from_clipboard"
       ];
-      font-family = with resources.style.fonts; [
+      font-family = with inputs.resources.style.fonts; [
         mono.name
         emoji.name
       ];
-      font-size = resources.style.fonts.mono.size;
+      font-size = inputs.resources.style.fonts.mono.size;
       adjust-cell-height = -2;
-      font-feature = resources.style.fonts.mono.features;
+      font-feature = inputs.resources.style.fonts.mono.features;
       theme = "Custom";
       background = "000000";
       command = "SHLVL=0; zsh";
