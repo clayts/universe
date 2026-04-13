@@ -75,6 +75,7 @@
         superhtml
         basedpyright
         ruff
+        inputs.resources.earthpaper
       ];
     };
   };

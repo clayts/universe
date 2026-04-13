@@ -3,11 +3,10 @@ set -ueo pipefail
 case "${1:-}" in
   test)
 	path=$2
-	nh os switch -- --override-input "universe" "path:$path"
+	nh os switch -Q -- --override-input "universe" "path:$path"
     ;;
   update)
-  	sudo nix flake update --flake /etc/nixos
-    nh os switch
+    nh os switch -Qu
     ;;
   clean)
  	nh clean all --optimise -K 7d

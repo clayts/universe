@@ -16,7 +16,7 @@
       name = "zed-editor-bundle";
       paths = [
         pkgs.zed-editor
-       inputs.resources.style.fonts.sans.package
+        inputs.resources.style.fonts.sans.package
         inputs.resources.style.fonts.mono.package
         inputs.resources.style.fonts.emoji.package
       ];
@@ -59,13 +59,16 @@
         folds = false;
       };
       tab_bar = {
-        show = false;
+        show = true;
         show_nav_history_buttons = true;
         show_tab_bar_buttons = true;
       };
       toolbar = {
-        breadcrumbs = true;
-        quick_actions = true;
+        breadcrumbs = false;
+        quick_actions = false;
+        selections_menu = false;
+        agent_review = false;
+        code_actions = false;
       };
       restore_on_startup = "empty_tab";
       buffer_font_family = inputs.resources.style.fonts.mono.name;
@@ -108,25 +111,25 @@
           "name" = "custom";
           "appearance" = "dark";
           "style" = {
-            "border" = "${x2}00";
-            "border.variant" = "${x1}ff";
-            "border.focused" = "${xD}ff";
-            "border.selected" = "${x2}ff";
+            "border" = "00000050";
+            "border.variant" = "${x0}30";
+            "border.focused" = "${x0}30";
+            "border.selected" = "${x0}30";
             "border.transparent" = "#00000000";
-            "border.disabled" = "${x3}ff";
+            "border.disabled" = "${x0}30";
             "elevated_surface.background" = "${x1}ff";
             "surface.background" = "${x1}ff";
-            "background" = "${x1}ff";
-            "element.background" = "${x1}ff";
-            "element.hover" = "${x2}ff";
-            "element.active" = "${x2}ff";
-            "element.selected" = "${x2}ff";
-            "element.disabled" = "${x1}ff";
-            "drop_target.background" = "${x3}80";
+            "background" = "${x2}ff";
+            "element.background" = "${x3}ff";
+            "element.hover" = "${x3}ff";
+            "element.active" = "${x3}ff";
+            "element.selected" = "${x3}ff";
+            "element.disabled" = "${x3}ff";
+            "drop_target.background" = "${x4}80";
             "ghost_element.background" = "#00000000";
-            "ghost_element.hover" = "${x2}ff";
-            "ghost_element.active" = "${x2}ff";
-            "ghost_element.selected" = "${x2}ff";
+            "ghost_element.hover" = "${x3}ff";
+            "ghost_element.active" = "${x3}ff";
+            "ghost_element.selected" = "${x3}ff";
             "ghost_element.disabled" = "${x1}ff";
             "text" = "${x6}ff";
             "text.muted" = "${x5}ff";
@@ -135,19 +138,19 @@
             "text.accent" = "${xD}ff";
             "icon" = "${x5}ff";
             "icon.muted" = "${x4}ff";
-            "icon.disabled" = "${x3}ff";
+            "icon.disabled" = "${x4}ff";
             "icon.placeholder" = "${x4}ff";
             "icon.accent" = "${xD}ff";
-            "status_bar.background" = "${x1}ff";
-            "title_bar.background" = "${x1}ff";
-            "title_bar.inactive_background" = "${x1}ff";
+            "status_bar.background" = "${x2}ff";
+            "title_bar.background" = "${x2}ff";
+            "title_bar.inactive_background" = "${x2}ff";
             "toolbar.background" = "${x1}ff";
-            "tab_bar.background" = "${x1}ff";
-            "tab.inactive_background" = "${x1}ff";
+            "tab_bar.background" = "${x2}ff";
+            "tab.inactive_background" = "${x2}ff";
             "tab.active_background" = "${x0}ff";
             "search.match_background" = "${xA}66";
             "search.active_match_background" = "${x9}66";
-            "panel.background" = "${x1}ff";
+            "panel.background" = "${x2}ff";
             "panel.focused_border" = null;
             "pane.focused_border" = null;
             "scrollbar.thumb.background" = "${x4}4c";

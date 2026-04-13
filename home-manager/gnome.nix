@@ -15,10 +15,6 @@
 in {
   home = {
     packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
-    activation.resetEarthpaperTimer = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p "${config.xdg.dataHome}/systemd/timers"
-      touch -d "@0" "${config.xdg.dataHome}/systemd/timers/stamp-earthpaper-switcher.timer"
-    '';
   };
   gtk = {
     enable = true;
@@ -49,6 +45,15 @@ in {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
+  xdg.configFile."autostart/earthpaper-init.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Exec=${pkgs.writeShellScript "earthpaper-init" ''
+      [ ! -f "$HOME/.local/share/earthpaper/image.jpeg" ] && systemctl --user start earthpaper-switcher.service
+    ''}
+    X-GNOME-Autostart-enabled=true
+    NoDisplay=true
+  '';
   systemd.user = {
     services.earthpaper-switcher = {
       Unit = {
@@ -62,7 +67,7 @@ in {
           mkdir -p ~/.local/share/earthpaper
           ${inputs.resources.earthpaper}/bin/earthpaper ~/.local/share/earthpaper/image.jpeg
           dconf write /org/gnome/desktop/background/picture-uri "'none'"
-          dconf write /org/gnome/desktop/background/picture-uri "'~/.local/share/earthpaper/image.jpeg'"
+          dconf write /org/gnome/desktop/background/picture-uri "'${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg'"
         '';
         Restart = "on-failure";
         RestartSec = 300; # seconds between retries (5 mins)
@@ -116,13 +121,12 @@ in {
     "org/gnome/desktop/peripherals/touchpad".speed = 0.1;
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = false;
     "org/gnome/nautilus/icon-view".default-zoom-level = "medium";
-    "org/gnome/desktop/background".picture-uri = ".local/share/earthpaper/image.jpeg";
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
       workspaces-only-on-primary = true;
     };
-    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Super>Space"];
+    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Super>space"];
     "org/gnome/desktop/wm/keybindings" = {
       toggle-fullscreen = ["<Super>f"];
       close = ["<Super>q"];

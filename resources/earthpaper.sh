@@ -14,7 +14,7 @@ if [ ! -f "$tmp_dir/data.json" ]; then
 fi
 
 read -r latitude longitude elevation country attribution < \
-	<(jq -r '.lat, .lng, .elevation, .geocode.country, .attribution' "$tmp_dir/data.json" | tr '\n' ' ')
+	<(jq -r '.lat, .lng, .elevation, .geocode.country, .attribution' "$tmp_dir/data.json" | tr '\n' ' ') || true
 url="https://maps.google.com/?q=$latitude,$longitude"
 
 jq -r '.dataUri' "$tmp_dir/data.json" | sed 's/^data:image\/jpeg;base64,//' | base64 -d > "$target"
