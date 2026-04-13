@@ -42,6 +42,9 @@
       EDITOR = "micro";
       GOPATH = "$HOME/.local/share/go";
     };
+    file = {
+      "${config.xdg.userDirs.templates}".source = inputs.resources.templates;
+    };
   };
 
   xdg = {
@@ -62,6 +65,7 @@
       };
     };
   };
+
   fonts.fontconfig = {
     enable = true;
     defaultFonts = with inputs.resources.style.fonts; {

@@ -90,7 +90,10 @@
   nix = {
     enable = true;
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-    settings.experimental-features = ["nix-command" "flakes"];
+    settings = {
+      download-buffer-size = 256 * 1024 * 1024;
+      experimental-features = ["nix-command" "flakes"];
+    };
   };
   nixpkgs.config.allowUnfree = true;
   hardware.enableAllFirmware = true;

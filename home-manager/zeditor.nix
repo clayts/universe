@@ -59,16 +59,16 @@
         folds = false;
       };
       tab_bar = {
-        show = true;
+        show = false;
         show_nav_history_buttons = true;
         show_tab_bar_buttons = true;
       };
       toolbar = {
-        breadcrumbs = false;
-        quick_actions = false;
-        selections_menu = false;
+        breadcrumbs = true;
+        quick_actions = true;
+        selections_menu = true;
         agent_review = false;
-        code_actions = false;
+        code_actions = true;
       };
       restore_on_startup = "empty_tab";
       buffer_font_family = inputs.resources.style.fonts.mono.name;
@@ -77,7 +77,6 @@
       buffer_font_size = inputs.resources.style.fonts.mono.size * 4.0 / 3.0;
       buffer_line_height.custom = 1.23;
       ui_font_family = lib.mkForce ".SystemUIFont"; #style.fonts.sans.name;
-      # ui_font_size = lib.mkForce (config.stylix.fonts.sizes.applications * 3.0 / 2.0);
       ui_font_size = inputs.resources.style.fonts.sans.size * 3.0 / 2.0;
       ui_font_weight = 400;
       soft_wrap = "none";
@@ -111,7 +110,7 @@
           "name" = "custom";
           "appearance" = "dark";
           "style" = {
-            "border" = "#00000050";
+            "border" = "${x4}25";
             "border.variant" = "${x0}30";
             "border.focused" = "${x0}30";
             "border.selected" = "${x0}30";
@@ -144,13 +143,13 @@
             "status_bar.background" = "${x2}ff";
             "title_bar.background" = "${x2}ff";
             "title_bar.inactive_background" = "${x2}ff";
-            "toolbar.background" = "${x1}ff";
+            "toolbar.background" = "${x0}ff";
             "tab_bar.background" = "${x2}ff";
             "tab.inactive_background" = "${x2}ff";
             "tab.active_background" = "${x0}ff";
             "search.match_background" = "${xA}66";
             "search.active_match_background" = "${x9}66";
-            "panel.background" = "${x2}ff";
+            "panel.background" = "${x0}ff";
             "panel.focused_border" = null;
             "pane.focused_border" = null;
             "scrollbar.thumb.background" = "${x4}4c";
