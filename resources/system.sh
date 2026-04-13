@@ -3,10 +3,10 @@ set -ueo pipefail
 case "${1:-}" in
   test)
 	path=$2
-	nh os switch -Q -- --override-input "universe" "path:$path"
+	nh os switch -- --quiet --override-input "universe" "path:$path"
     ;;
   update)
-    nh os switch -Qu
+    nh os switch -u -- --quiet
     ;;
   clean)
  	nh clean all --optimise -K 7d

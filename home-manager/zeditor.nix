@@ -111,7 +111,7 @@
           "name" = "custom";
           "appearance" = "dark";
           "style" = {
-            "border" = "00000050";
+            "border" = "#00000050";
             "border.variant" = "${x0}30";
             "border.focused" = "${x0}30";
             "border.selected" = "${x0}30";
