@@ -6,7 +6,8 @@ case "${1:-}" in
 	nh os switch -- --quiet --override-input "universe" "path:$path"
     ;;
   update)
-    nh os switch -u -- --quiet
+  	sudo nix flake update --flake /etc/nixos
+    nh os switch -- --quiet
     ;;
   clean)
  	nh clean all --optimise -K 7d
