@@ -11,6 +11,7 @@
       "colored-zed-icons-theme"
       "superhtml"
       "nix"
+      "git-firefly"
     ];
     package = pkgs.symlinkJoin {
       name = "zed-editor-bundle";
