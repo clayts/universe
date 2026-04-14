@@ -16,6 +16,7 @@
       "user" = {
         description = "User";
         isNormalUser = true;
+        uid = 1000;
         extraGroups = ["wheel" "libvirtd" "networkmanager"];
         hashedPasswordFile = "/system/data/etc/nixos/passwords/user";
       };
