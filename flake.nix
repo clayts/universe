@@ -70,12 +70,15 @@
       packages = with pkgs; [
         nixd
         alejandra
+
         package-version-server
+
         vscode-langservers-extracted
+
         superhtml
         basedpyright
         ruff
-        inputs.resources.earthpaper
+        (python313.withPackages (ps: with ps; [terminaltexteffects]))
       ];
     };
   };
