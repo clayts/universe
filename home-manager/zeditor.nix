@@ -24,7 +24,7 @@
     };
 
     userSettings = {
-      hard_tabs = true;
+      # hard_tabs = true;
       git = {
         inline_blame = {
           show_commit_summary = true;

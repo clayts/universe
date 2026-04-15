@@ -1,8 +1,4 @@
-{
-  lib,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
@@ -53,5 +49,16 @@
     };
   };
 
-  boot.initrd.postResumeCommands = lib.mkAfter inputs.resources.create-state-script;
+  boot.initrd.systemd.services.create-state = {
+    description = "Create system state";
+    wantedBy = ["initrd.target"];
+    after = ["initrd-root-device.target"];
+    before = ["sysroot.mount"];
+    unitConfig.DefaultDependencies = false;
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = inputs.resources.create-state-script;
+  };
 }

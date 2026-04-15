@@ -15,6 +15,7 @@
 in {
   home = {
     packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
+    file."${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg".source = pkgs.nixos-artwork.wallpapers.simple-blue;
   };
   gtk = {
     enable = true;
@@ -45,15 +46,6 @@ in {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
-  xdg.configFile."autostart/earthpaper-init.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Exec=${pkgs.writeShellScript "earthpaper-init" ''
-      [ ! -f "$HOME/.local/share/earthpaper/image.jpeg" ] && systemctl --user start earthpaper-switcher.service
-    ''}
-    X-GNOME-Autostart-enabled=true
-    NoDisplay=true
-  '';
   systemd.user = {
     services.earthpaper-switcher = {
       Unit = {
@@ -121,6 +113,7 @@ in {
     "org/gnome/desktop/peripherals/touchpad".speed = 0.1;
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = false;
     "org/gnome/nautilus/icon-view".default-zoom-level = "medium";
+    "org/gnome/desktop/background".picture-uri = "${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg";
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
