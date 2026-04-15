@@ -15,7 +15,13 @@
 in {
   home = {
     packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
-    file."${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg".source = pkgs.nixos-artwork.wallpapers.simple-blue;
+    activation.initialWallpaper = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ ! -f ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg ]; then
+        mkdir -p ${config.home.homeDirectory}/.local/share/earthpaper
+        ln -s ${pkgs.nixos-artwork.wallpapers.simple-blue}/share/wallpapers/simple-blue/contents/images/nix-wallpaper-simple-blue.png \
+          ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg
+      fi
+    '';
   };
   gtk = {
     enable = true;
@@ -55,11 +61,10 @@ in {
       Service = {
         Type = "oneshot";
         ExecStart = pkgs.writeShellScript "earthpaper-switcher" ''
-          set -euo pipefail
-          mkdir -p ~/.local/share/earthpaper
+          if [ -h ~/.local/share/earthpaper/image.jpeg ]; then
+              rm ~/.local/share/earthpaper/image.jpeg
+          fi
           ${inputs.resources.earthpaper}/bin/earthpaper ~/.local/share/earthpaper/image.jpeg
-          dconf write /org/gnome/desktop/background/picture-uri "'none'"
-          dconf write /org/gnome/desktop/background/picture-uri "'${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg'"
         '';
         Restart = "on-failure";
         RestartSec = 300; # seconds between retries (5 mins)
