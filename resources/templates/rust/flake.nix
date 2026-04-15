@@ -9,6 +9,7 @@
         packages = with pkgs; [
           nixd
           alejandra
+
           rustc
           cargo
           rustfmt
