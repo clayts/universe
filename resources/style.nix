@@ -41,7 +41,7 @@
     xB = "#2df4a0"; # Green
     xC = "#40efff"; # Cyan
     xD = "#41bbff"; # Blue
-    xE = "#e012be"; # Purple
+    xE = "#9F46F6"; # Purple
     xF = "#f0ffff"; # White
   };
 }
