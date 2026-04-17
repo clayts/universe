@@ -18,17 +18,15 @@ in {
     activation.initialWallpaper = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -f ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg ]; then
         mkdir -p ${config.home.homeDirectory}/.local/share/earthpaper
-        ln -s ${pkgs.nixos-artwork.wallpapers.simple-blue}/share/wallpapers/simple-blue/contents/images/nix-wallpaper-simple-blue.png \
+        ln -s \
+          ${pkgs.nixos-artwork.wallpapers.simple-blue}/share/wallpapers/simple-blue/contents/images/nix-wallpaper-simple-blue.png \
           ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg
       fi
     '';
   };
   gtk = {
     enable = true;
-    iconTheme = {
-      package = pkgs.morewaita-icon-theme;
-      name = "MoreWaita";
-    };
+    iconTheme = inputs.resources.style.icons;
     gtk4.theme = null;
     gtk3 = {
       theme = {
@@ -124,7 +122,7 @@ in {
       edge-tiling = true;
       workspaces-only-on-primary = true;
     };
-    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Super>space"];
+    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Shift><Super>F23"];
     "org/gnome/desktop/wm/keybindings" = {
       toggle-fullscreen = ["<Super>f"];
       close = ["<Super>q"];

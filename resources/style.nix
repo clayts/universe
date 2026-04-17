@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  icons = {
+    package = pkgs.morewaita-icon-theme;
+    name = "MoreWaita";
+  };
   fonts = {
     sans = {
       name = "DeepMind Sans Medium";
@@ -7,9 +11,9 @@
       features = [];
     };
     serif = {
-      name = "Merriweather";
+      name = "Libre Baskerville";
       size = 10;
-      package = pkgs.merriweather;
+      package = pkgs.libre-baskerville;
       features = [];
     };
     mono = {
@@ -35,9 +39,9 @@
     x6 = "#d0dddd"; #
     x7 = "#e0eeee"; # Light
 
-    x8 = "#ff5370"; # Red
+    x8 = "#ed5b00"; # Red #ff5370
     x9 = "#ffd157"; # Yellow
-    xA = "#ff9000"; # Gold
+    xA = "#ff9000"; # Gold #ed5b00
     xB = "#2df4a0"; # Green
     xC = "#40efff"; # Cyan
     xD = "#41bbff"; # Blue
