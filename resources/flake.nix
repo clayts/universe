@@ -10,7 +10,15 @@
     homeRelease = (builtins.fromJSON (builtins.readFile "${inputs.home-manager}/release.json")).release;
   in rec {
     templates = "${./templates}";
-    create-state-script = builtins.readFile ./create-state.sh;
+    reincarnate = pkgs.writeShellApplication {
+      name = "reincarnate";
+      text = builtins.readFile ./reincarnate.sh;
+    };
+    safe = pkgs.writeShellApplication {
+      name = "safe";
+      runtimeInputs = with pkgs; [cryfs];
+      text = builtins.readFile ./safe.sh;
+    };
     style =
       import ./style.nix {inherit pkgs;};
     earthpaper = pkgs.writeShellApplication {

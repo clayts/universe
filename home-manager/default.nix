@@ -31,6 +31,7 @@
       baobab
 
       # CLI
+      inputs.resources.safe
       grc
       fzf
       lsd

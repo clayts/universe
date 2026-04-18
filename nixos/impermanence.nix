@@ -44,8 +44,8 @@
     };
   };
 
-  boot.initrd.systemd.services.create-state = {
-    description = "Create system state";
+  boot.initrd.systemd.services.incarnation = {
+    description = "Incarnation";
     wantedBy = ["initrd.target"];
     after = ["initrd-root-device.target"];
     before = ["sysroot.mount"];
@@ -54,6 +54,6 @@
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    script = inputs.resources.create-state-script;
+    script = builtins.readFile "${inputs.resources.reincarnate}/bin/reincarnate";
   };
 }
