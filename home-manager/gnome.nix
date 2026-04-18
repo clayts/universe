@@ -117,8 +117,8 @@ in {
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = false;
     "org/gnome/nautilus/icon-view".default-zoom-level = "medium";
     "org/gnome/desktop/background".picture-uri = "${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg";
-    "org/gnome/nautilus/list-view/use-tree-view" = true;
-    "org/gnome/nautilus/preferences/show-delete-permanently" = true;
+    "org/gnome/nautilus/list-view".use-tree-view = true;
+    "org/gnome/nautilus/preferences".show-delete-permanently = true;
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
