@@ -12,6 +12,7 @@
       "superhtml"
       "nix"
       "git-firefly"
+      "color-highlight"
     ];
     package = pkgs.symlinkJoin {
       name = "zed-editor-bundle";
