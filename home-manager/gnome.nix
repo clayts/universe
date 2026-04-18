@@ -119,6 +119,8 @@ in {
     "org/gnome/desktop/background".picture-uri = "${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg";
     "org/gnome/nautilus/list-view".use-tree-view = true;
     "org/gnome/nautilus/preferences".show-delete-permanently = true;
+    "org/gnome/desktop/privacy".remove-old-trash-files = true;
+    "org/gnome/desktop/privacy".old-files-age = lib.gvariant.mkUint32 1;
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
       edge-tiling = true;
