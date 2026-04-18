@@ -12,7 +12,7 @@
   environment.systemPackages = with pkgs; [
     inputs.resources.persist
     inputs.resources.system
-    inputs.resources.scan-hardware
+    inputs.resources.scan
     (aspellWithDicts (dicts: [
       dicts.en
       dicts.en-computers

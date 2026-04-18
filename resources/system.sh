@@ -10,20 +10,9 @@ case "${1:-}" in
     nh os switch -- --quiet
     ;;
   clean)
- 	nh clean all --optimise -K 7d
-
-	echo "Cleaning /system/state"
-	delete_subvolume_recursively() {
-	    local IFS=$'\n'
-	    for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-	        delete_subvolume_recursively "/system/state/$i"
-	    done
-	    btrfs subvolume delete "$1"
-	}
-	while IFS= read -r -d '' i; do
-	    delete_subvolume_recursively "$i"
-		echo "removed: $i"
-	done < <(find /system/state/ -maxdepth 1 -mtime +7 -print0)
+ 	nh clean all --optimise # -K 7d
+	echo "Cleaning /system/state/past"
+	sudo rm -rf /system/state/past/*
     ;;
   *)
   	echo "Usage: system [clean/update/test]"

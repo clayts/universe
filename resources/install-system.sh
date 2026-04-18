@@ -1,7 +1,7 @@
 set -uxeo pipefail
 name="$1"
 hardware=$(mktemp)
-scan-hardware > "$hardware"
+scan > "$hardware"
 sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount "$hardware"
 sudo mkdir -p /mnt/system/data/etc/nixos/passwords
 mkpasswd | sudo tee /mnt/system/data/etc/nixos/passwords/root > /dev/null

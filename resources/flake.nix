@@ -26,15 +26,15 @@
       runtimeInputs = with pkgs; [jq curl dconf];
       text = builtins.readFile ./earthpaper.sh;
     };
-    scan-hardware = pkgs.writeShellApplication {
-      name = "scan-hardware";
+    scan = pkgs.writeShellApplication {
+      name = "scan";
       runtimeInputs = with pkgs; [nixos-facter jq alejandra];
-      text = builtins.readFile ./scan-hardware.sh;
+      text = builtins.readFile ./scan.sh;
     };
     install-system = pkgs.writeShellApplication {
       name = "install-system";
       runtimeEnv = {inherit systemRelease homeRelease;};
-      runtimeInputs = [scan-hardware];
+      runtimeInputs = [scan];
       text = builtins.readFile ./install-system.sh;
     };
     install-home = pkgs.writeShellApplication {
