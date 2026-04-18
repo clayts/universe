@@ -2,7 +2,7 @@ set -ueo pipefail
 
 case "${1:-}" in
   sync)
-    if [ -n "$2" ]; then
+    if [ "$#" -ge 2 ]; then
         echo "Universe sync with path override: $2..."
         nh os switch -- --quiet --override-input "universe" "path:$2"
     else
