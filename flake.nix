@@ -71,6 +71,8 @@
         nixd
         alejandra
 
+        color-lsp
+
         package-version-server
 
         vscode-langservers-extracted
