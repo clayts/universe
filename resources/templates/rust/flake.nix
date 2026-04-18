@@ -5,7 +5,7 @@
       system = "x86_64-linux";
       pkgs = import inputs.nixpkgs {inherit system;};
     in {
-      default = pkgs.mkShell {
+      "${system}".default = pkgs.mkShell {
         packages = with pkgs; [
           nixd
           alejandra
