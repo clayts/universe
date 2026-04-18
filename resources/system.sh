@@ -4,11 +4,11 @@ case "${1:-}" in
   sync)
     if [ "$#" -ge 2 ]; then
         echo "Universe sync with path override: $2..."
-        nh os switch -- --quiet --override-input "universe" "path:$2"
+        nh os switch /etc/nixos -- --quiet --override-input "universe" "path:$2"
     else
         echo "Universe sync..."
        	sudo nix flake update --flake /etc/nixos
-        nh os switch -- --quiet
+        nh os switch /etc/nixos -- --quiet
     fi
     ;;
   clean)
