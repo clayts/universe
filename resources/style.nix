@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  icons = {
-    package = pkgs.morewaita-icon-theme;
-    name = "MoreWaita";
-  };
   fonts = {
     sans = {
       name = "DeepMind Sans Medium";

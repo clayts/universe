@@ -26,7 +26,10 @@ in {
   };
   gtk = {
     enable = true;
-    iconTheme = inputs.resources.style.icons;
+    iconTheme = {
+      package = pkgs.morewaita-icon-theme;
+      name = "MoreWaita";
+    };
     gtk4.theme = null;
     gtk3 = {
       theme = {
