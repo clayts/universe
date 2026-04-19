@@ -10,10 +10,6 @@
     homeRelease = (builtins.fromJSON (builtins.readFile "${inputs.home-manager}/release.json")).release;
   in rec {
     templates = "${./templates}";
-    reincarnate = pkgs.writeShellApplication {
-      name = "reincarnate";
-      text = builtins.readFile ./reincarnate.sh;
-    };
     safe = pkgs.writeShellApplication {
       name = "safe";
       runtimeInputs = with pkgs; [cryfs];

@@ -34,7 +34,7 @@
     loader = {
       systemd-boot.enable = true;
       efi = {
-        efiSysMountPoint = "/system/boot";
+        efiSysMountPoint = "/boot";
         canTouchEfiVariables = true;
       };
       timeout = 0;

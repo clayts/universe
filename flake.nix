@@ -60,7 +60,7 @@
                   ./nixos
                   args.hardware
                 ]
-                ++ (args.modules or []);
+                ++ (args.imports or []);
             }
           ];
         };

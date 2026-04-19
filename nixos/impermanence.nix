@@ -2,7 +2,7 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
-  environment.persistence."/system/data" = {
+  environment.persistence."/data" = {
     allowTrash = true;
     hideMounts = true;
     directories = [
@@ -40,20 +40,8 @@
           file = ".config/gh/hosts.yml";
           parentDirectory = {mode = "0751";};
         }
+        ".config/goa-1.0/accounts.conf"
       ];
     };
-  };
-
-  boot.initrd.systemd.services.incarnation = {
-    description = "Incarnation";
-    wantedBy = ["initrd.target"];
-    after = ["initrd-root-device.target"];
-    before = ["sysroot.mount"];
-    unitConfig.DefaultDependencies = false;
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = builtins.readFile "${inputs.resources.reincarnate}/bin/reincarnate";
   };
 }

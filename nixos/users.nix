@@ -18,15 +18,15 @@
         isNormalUser = true;
         uid = 1000;
         extraGroups = ["wheel" "libvirtd" "networkmanager"];
-        hashedPasswordFile = "/system/data/etc/nixos/passwords/user";
+        hashedPasswordFile = "/data/etc/nixos/passwords/user";
       };
       "guest" = {
         description = "Guest";
         isNormalUser = true;
         extraGroups = [];
-        hashedPasswordFile = "/system/data/etc/nixos/passwords/guest";
+        hashedPasswordFile = "/data/etc/nixos/passwords/guest";
       };
-      "root".hashedPasswordFile = "/system/data/etc/nixos/passwords/root";
+      "root".hashedPasswordFile = "/data/etc/nixos/passwords/root";
     };
   };
 
