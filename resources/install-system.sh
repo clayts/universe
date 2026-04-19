@@ -1,5 +1,8 @@
 set -uxeo pipefail
 name="$1"
+clear
+toilet -f future "Welcome to the Universe"
+toilet -f future --gay "$name"
 hardware=$(mktemp)
 scan > "$hardware"
 sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount "$hardware"
@@ -24,4 +27,4 @@ cat "$hardware" | sudo tee /mnt/data/etc/nixos/hardware.nix > /dev/null
 sudo mkdir /mnt/nix
 sudo mkdir /mnt/data/nix
 sudo mount --bind /mnt/data/nix /mnt/nix
-sudo nixos-install --no-root-password --flake /mnt/data/etc/nixos
+sudo nixos-install --no-channel-copy --no-root-password --flake /mnt/data/etc/nixos

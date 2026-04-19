@@ -30,7 +30,7 @@
     install-system = pkgs.writeShellApplication {
       name = "install-system";
       runtimeEnv = {inherit systemRelease homeRelease;};
-      runtimeInputs = [scan];
+      runtimeInputs = [scan pkgs.toilet];
       text = builtins.readFile ./install-system.sh;
     };
     install-home = pkgs.writeShellApplication {
