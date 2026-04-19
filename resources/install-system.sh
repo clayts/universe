@@ -1,8 +1,9 @@
-set -uxeo pipefail
+set -ueo pipefail
 name="$1"
 clear
 toilet -f future "Welcome to the Universe"
 toilet -f future --gay "$name"
+set -x
 hardware=$(mktemp)
 scan > "$hardware"
 sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko/latest -- --mode destroy,format,mount "$hardware"
