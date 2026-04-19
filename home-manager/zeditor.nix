@@ -18,6 +18,7 @@
       name = "zed-editor-bundle";
       paths = [
         pkgs.zed-editor
+        pkgs.color-lsp
         inputs.resources.style.fonts.sans.package
         inputs.resources.style.fonts.mono.package
         inputs.resources.style.fonts.emoji.package
