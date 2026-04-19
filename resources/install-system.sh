@@ -29,4 +29,4 @@ sudo mkdir /mnt/nix
 sudo mkdir /mnt/data/nix
 sudo mount --bind /mnt/data/nix /mnt/nix
 sudo nix --experimental-features "nix-command flakes" flake update --flake /mnt/data/etc/nixos
-sudo nixos-install --no-channel-copy --no-root-password --flake /mnt/data/etc/nixos#$name
+sudo nixos-install --no-channel-copy --no-root-password --flake /mnt/data/etc/nixos#"$name"
