@@ -26,7 +26,7 @@ case "${1:-}" in
  	nh clean all --optimise
     ;;
   *)
-  	echo "Usage: system [sync|clean]"
+  	echo "Usage: system [sync|sync-next-boot|clean]"
   	exit 1
     ;;
 esac

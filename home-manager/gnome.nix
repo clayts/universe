@@ -37,11 +37,10 @@ in {
         package = pkgs.adw-gtk3;
       };
       bookmarks = [
+        "file://${config.home.homeDirectory}/Code Code"
         "file://${config.home.homeDirectory}/Documents"
         "file://${config.home.homeDirectory}/Media"
         "file://${config.home.homeDirectory}/Desktop Desktop"
-        "file://${config.home.homeDirectory}/Code Code"
-        "file:///system System"
       ];
     };
     cursorTheme = {

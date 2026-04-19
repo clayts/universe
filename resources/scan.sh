@@ -16,6 +16,7 @@ alejandra -q <<-EOF
         fsType = "tmpfs";
         mountOptions = [
           "size=128M"
+          "mode=755"
         ];
       };
     };
