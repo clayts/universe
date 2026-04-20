@@ -2,6 +2,11 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
+  fileSystems."/" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = ["defaults" "size=64M" "mode=755"];
+  };
   environment.persistence."/data" = {
     allowTrash = true;
     hideMounts = true;

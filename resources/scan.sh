@@ -11,15 +11,6 @@ alejandra -q <<-EOF
 {...}: {
   fileSystems."/data".neededForBoot = true;
   disko.devices = {
-    nodev = {
-      "/" = {
-        fsType = "tmpfs";
-        mountOptions = [
-          "size=128M"
-          "mode=755"
-        ];
-      };
-    };
     disk.main = {
       device = "$disk";
       type = "disk";

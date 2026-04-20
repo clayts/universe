@@ -2,7 +2,6 @@
 
 ## To Do
 - homeConfiguration = args: {...} to mirror nixosSystem = args: {...} in flake.nix
-- hm
 - sort out: 
 	```
 	home = name: initialRelease: modules: {

@@ -20,7 +20,6 @@
     ]))
     android-tools
   ];
-  virtualisation.libvirtd.enable = true;
   boot = {
     tmp.useTmpfs = true;
     kernelPackages = pkgs.linuxPackages_latest;
@@ -43,6 +42,7 @@
     initrd.verbose = false;
     consoleLogLevel = 0;
   };
+  virtualisation.libvirtd.enable = true;
   time.timeZone = "Europe/London";
   console.useXkbConfig = true;
   services = {
