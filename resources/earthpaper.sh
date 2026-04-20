@@ -19,7 +19,8 @@ url="https://maps.google.com/?q=$latitude,$longitude"
 
 jq -r '.dataUri' "$tmp_dir/data.json" | sed 's/^data:image\/jpeg;base64,//' | base64 -d > "$target"
 
-echo "ID:          $id
+echo "Writing wallpaper to: $target
+ID:          $id
 Country:     $country
 Latitude:    $latitude
 Longitude:   $longitude

@@ -49,7 +49,10 @@ in {
     Type=Application
     Exec=${pkgs.writeShellScript "autostart-earthpaper" ''
       mkdir -p ${config.home.homeDirectory}/.local/share/earthpaper
-      ${inputs.resources.earthpaper}/bin/earthpaper ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg
+      for i in {1..10}; do
+        ${inputs.resources.earthpaper}/bin/earthpaper ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg && break
+        sleep 1
+      done
     ''}
     X-GNOME-Autostart-enabled=true
     NoDisplay=true
