@@ -3,13 +3,6 @@
     nautilus
     nautilus-python
     yelp
-
-    # Hide CUPS
-    (pkgs.makeDesktopItem {
-      name = "cups";
-      desktopName = "";
-      noDisplay = true;
-    })
   ];
   services = {
     desktopManager.gnome.enable = true;

@@ -13,15 +13,9 @@
     auto-power-profile
   ];
 in {
-  home = {
-    packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
-  };
   gtk = {
     enable = true;
-    iconTheme = {
-      package = pkgs.morewaita-icon-theme;
-      name = "MoreWaita";
-    };
+    iconTheme = inputs.resources.style.icons;
     gtk4.theme = null;
     gtk3 = {
       theme = {
@@ -35,23 +29,12 @@ in {
         "file://${config.home.homeDirectory}/Desktop Desktop"
       ];
     };
-    cursorTheme = {
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
-    };
+    cursorTheme = inputs.resources.style.cursors;
   };
   programs.gnome-shell = {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
-  xdg.configFile."autostart/earthpaper-rotator.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Earthpaper Rotator
-    Exec=${inputs.resources.earthpaper}/bin/earthpaper
-    X-GNOME-Autostart-enabled=true
-    NoDisplay=true
-  '';
   dconf.settings = {
     "org/gnome/desktop/interface" = with inputs.resources.style.fonts; {
       font-name = "${sans.name} ${toString sans.size}";
@@ -78,10 +61,7 @@ in {
       support-notifier-showed-version = pkgs.gnomeExtensions.just-perfection.version;
       support-notifier-type = 0;
     };
-    "org/gnome/shell".favorite-apps = [
-      "firefox.desktop"
-      "org.gnome.Nautilus.desktop"
-    ];
+    "org/gnome/shell".favorite-apps = ["firefox.desktop" "org.gnome.Nautilus.desktop"];
     "org/gnome/shell/window-switcher".current-workspace-only = false;
     "org/gnome/settings-daemon/plugins/housekeeping".donation-reminder-enabled = false;
     "org/gnome/desktop/peripherals/touchpad".disable-while-typing = false; # Required for touchpad/keyboard games

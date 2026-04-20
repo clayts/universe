@@ -1,4 +1,12 @@
 {pkgs, ...}: {
+  icons = {
+    name = "MoreWaita";
+    package = pkgs.morewaita-icon-theme;
+  };
+  cursors = {
+    name = "Bibata-Modern-Classic";
+    package = pkgs.bibata-cursors;
+  };
   fonts = {
     sans = {
       name = "DeepMind Sans Medium";

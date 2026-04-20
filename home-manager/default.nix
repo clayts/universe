@@ -14,26 +14,35 @@
     ./zsh.nix
   ];
   home = {
-    packages = with pkgs; [
-      gnome-firmware
-      loupe
-      file-roller
-      gnome-calculator
-      gnome-characters
-      gnome-logs
-      gnome-clocks
-      eyedropper
-      celluloid
-      gitg
-      papers
-      impression
-      baobab
-      gnome-disk-utility
+    packages = let
+      applications = with pkgs; [
+        gnome-firmware
+        loupe
+        file-roller
+        gnome-calculator
+        gnome-characters
+        gnome-logs
+        gnome-clocks
+        eyedropper
+        celluloid
+        gitg
+        papers
+        impression
+        baobab
+        gnome-disk-utility
 
-      inputs.resources.safe
-      inputs.resources.earthpaper
-      grc
-    ];
+        inputs.resources.safe
+        inputs.resources.earthpaper
+        grc
+      ];
+      fonts = with inputs.resources.style.fonts; [
+        sans.package
+        serif.package
+        mono.package
+        emoji.package
+      ];
+    in
+      applications ++ fonts;
     sessionVariables = {
       EDITOR = "micro";
       GOPATH = "$HOME/.local/share/go";
@@ -59,15 +68,26 @@
         code = "${config.home.homeDirectory}/Code";
       };
     };
+    desktopEntries.cups = {
+      name = "";
+      noDisplay = true;
+    };
+    configFile."autostart/earthpaper-rotator.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Earthpaper Rotator
+      Exec=${inputs.resources.earthpaper}/bin/earthpaper
+      X-GNOME-Autostart-enabled=true
+      NoDisplay=true
+    '';
   };
-
   fonts.fontconfig = {
     enable = true;
     defaultFonts = with inputs.resources.style.fonts; {
-      sansSerif = [sans.name "Noto Sans"];
-      serif = [serif.name "Noto Serif"];
-      monospace = [mono.name "Noto Mono"];
-      emoji = [emoji.name "Noto Color Emoji"];
+      sansSerif = [sans.name emoji.name];
+      serif = [serif.name emoji.name];
+      monospace = [mono.name emoji.name];
+      emoji = [emoji.name emoji.name];
     };
     configFile.features = {
       enable = true;

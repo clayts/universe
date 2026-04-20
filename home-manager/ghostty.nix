@@ -54,7 +54,7 @@
       background = "000000";
       command = "SHLVL=0; zsh";
       window-theme = "ghostty";
-      adw-toolbar-style = "raised";
+      gtk-toolbar-style = "flat";
       window-padding-x = 9;
       window-padding-y = 3;
       confirm-close-surface = false;
