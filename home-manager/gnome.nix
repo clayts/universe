@@ -48,6 +48,7 @@ in {
     [Desktop Entry]
     Type=Application
     Exec=${pkgs.writeShellScript "autostart-earthpaper" ''
+      mkdir -p ${config.home.homeDirectory}/.local/share/earthpaper
       ${inputs.resources.earthpaper}/bin/earthpaper ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg
     ''}
     X-GNOME-Autostart-enabled=true
