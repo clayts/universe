@@ -52,34 +52,15 @@ in {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
-  systemd.user = {
-    services.earthpaper-switcher = {
-      Unit = {
-        Description = "Service for earthpaper-switcher";
-        StartLimitBurst = 12; # Maximum retries (12*5=60 mins)
-      };
-      Service = {
-        Type = "oneshot";
-        ExecStart = pkgs.writeShellScript "earthpaper-switcher" ''
-          if [ -h ~/.local/share/earthpaper/image.jpeg ]; then
-              rm ~/.local/share/earthpaper/image.jpeg
-          fi
-          ${inputs.resources.earthpaper}/bin/earthpaper ~/.local/share/earthpaper/image.jpeg
-        '';
-        Restart = "on-failure";
-        RestartSec = 300; # seconds between retries (5 mins)
-      };
-    };
-    timers.earthpaper-switcher = {
-      Unit.Description = "Timer for earthpaper-switcher";
-      Timer = {
-        Unit = "earthpaper-switcher.service";
-        OnCalendar = "daily";
-        Persistent = true;
-      };
-      Install.WantedBy = ["timers.target"];
-    };
-  };
+  xdg.configFile."autostart/autostart-earthpaper.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Exec=${pkgs.writeShellScript "autostart-earthpaper" ''
+      ${inputs.resources.earthpaper}/bin/earthpaper ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg
+    ''}
+    X-GNOME-Autostart-enabled=true
+    NoDisplay=true
+  '';
   dconf.settings = {
     "org/gnome/desktop/interface" = with inputs.resources.style.fonts; {
       font-name = "${sans.name} ${toString sans.size}";

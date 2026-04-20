@@ -33,15 +33,17 @@
       ];
       files = [
         {
-          file = ".gitconfig";
-          method = "symlink";
-        }
-        {
           file = ".config/gh/hosts.yml";
           parentDirectory = {mode = "0751";};
         }
         ".config/goa-1.0/accounts.conf"
+        ".gitconfig"
       ];
     };
+  };
+  system.activationScripts.fix-config-files = {
+    text = ''
+      touch /data/home/user/.config/goa-1.0/accounts.conf
+    '';
   };
 }

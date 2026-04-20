@@ -29,15 +29,11 @@
       papers
       impression
       baobab
+      gnome-disk-utility
 
       # CLI
       inputs.resources.safe
       grc
-      fzf
-      lsd
-      fd
-      git
-      gh
     ];
     sessionVariables = {
       EDITOR = "micro";
@@ -47,7 +43,6 @@
       "${config.xdg.userDirs.templates}".source = inputs.resources.templates;
     };
   };
-
   xdg = {
     enable = true;
     userDirs = {

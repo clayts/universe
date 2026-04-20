@@ -24,7 +24,14 @@
       nix-direnv.enable = true;
       silent = true;
     };
+    git.enable = true;
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     lsd.enable = true;
+    gh.enable = true;
+    fd.enable = true;
     starship = {
       enable = true;
       enableZshIntegration = true;
