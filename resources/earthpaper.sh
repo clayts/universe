@@ -1,17 +1,24 @@
 set -ueo pipefail
 
-target="$1"
+target="${1:-$HOME/.local/share/earthpaper/image.jpeg}"
 
 tmp_dir=$(mktemp -d)
 
 id=$(jq -r '.[]' <(awk '/^__BEGIN_IDS__$/{f=1;next}/^__END_IDS__$/{f=0}f' "$0") | shuf -n 1)
 
-curl -s "https://www.gstatic.com/prettyearth/assets/data/v3/$id.json" -o "$tmp_dir/data.json"
 
-if [ ! -f "$tmp_dir/data.json" ]; then
-   	echo "Could not fetch data"
-   	exit 1
-fi
+mkdir -p "$(dirname "$target")"
+for i in {0..4}; do
+    echo "Fetching image data..."
+    curl -s "https://www.gstatic.com/prettyearth/assets/data/v3/$id.json" -o "$tmp_dir/data.json" && break
+    if [ "$i" -eq 4 ]; then
+       	echo "Could not fetch image data"
+       	exit 1
+    fi
+    delay=$((2 ** i))
+    echo "Retrying in $delay seconds..."
+    sleep $delay
+done
 
 read -r latitude longitude elevation country attribution < \
 	<(jq -r '.lat, .lng, .elevation, .geocode.country, .attribution' "$tmp_dir/data.json" | tr '\n' ' ') || true
@@ -19,7 +26,7 @@ url="https://maps.google.com/?q=$latitude,$longitude"
 
 jq -r '.dataUri' "$tmp_dir/data.json" | sed 's/^data:image\/jpeg;base64,//' | base64 -d > "$target"
 
-echo "Writing wallpaper to: $target
+echo "Writing image: $target
 ID:          $id
 Country:     $country
 Latitude:    $latitude

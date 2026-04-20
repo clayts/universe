@@ -15,7 +15,6 @@
   ];
   home = {
     packages = with pkgs; [
-      # GUI
       gnome-firmware
       loupe
       file-roller
@@ -31,8 +30,8 @@
       baobab
       gnome-disk-utility
 
-      # CLI
       inputs.resources.safe
+      inputs.resources.earthpaper
       grc
     ];
     sessionVariables = {

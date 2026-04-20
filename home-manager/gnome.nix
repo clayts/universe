@@ -44,16 +44,11 @@ in {
     enable = true;
     extensions = map (extension: {package = extension;}) extensions;
   };
-  xdg.configFile."autostart/autostart-earthpaper.desktop".text = ''
+  xdg.configFile."autostart/earthpaper-rotator.desktop".text = ''
     [Desktop Entry]
     Type=Application
-    Exec=${pkgs.writeShellScript "autostart-earthpaper" ''
-      mkdir -p ${config.home.homeDirectory}/.local/share/earthpaper
-      for i in {1..10}; do
-        ${inputs.resources.earthpaper}/bin/earthpaper ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg && break
-        sleep 1
-      done
-    ''}
+    Name=Earthpaper Rotator
+    Exec=${inputs.resources.earthpaper}/bin/earthpaper
     X-GNOME-Autostart-enabled=true
     NoDisplay=true
   '';
