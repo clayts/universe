@@ -31,4 +31,4 @@ sudo mount --bind /mnt/data/nix /mnt/nix
 sudo nix --experimental-features "nix-command flakes" flake update --flake /mnt/data/etc/nixos
 sudo nixos-install --no-channel-copy --no-root-password --flake /mnt/data/etc/nixos#"$name"
 sudo mkdir -p /mnt/data/etc/NetworkManager
-sudo cp /etc/NetworkManager/system-connections /mnt/data/etc/NetworkManager/
+sudo cp -r /etc/NetworkManager/system-connections /mnt/data/etc/NetworkManager/
