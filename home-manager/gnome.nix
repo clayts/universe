@@ -15,14 +15,6 @@
 in {
   home = {
     packages = with inputs.resources.style.fonts; [sans.package serif.package mono.package emoji.package];
-    activation.initialWallpaper = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if [ ! -f ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg ]; then
-        mkdir -p ${config.home.homeDirectory}/.local/share/earthpaper
-        ln -s \
-          ${pkgs.nixos-artwork.wallpapers.simple-blue}/share/wallpapers/simple-blue/contents/images/nix-wallpaper-simple-blue.png \
-          ${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg
-      fi
-    '';
   };
   gtk = {
     enable = true;
