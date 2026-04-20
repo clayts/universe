@@ -36,8 +36,14 @@
           file = ".config/gh/hosts.yml";
           parentDirectory = {mode = "0751";};
         }
-        ".config/goa-1.0/accounts.conf"
-        ".gitconfig"
+        {
+          file = ".gitconfig";
+          method = "symlink";
+        }
+        {
+          file = ".config/goa-1.0/accounts.conf";
+          method = "symlink";
+        }
       ];
     };
   };
