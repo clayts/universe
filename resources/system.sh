@@ -1,32 +1,26 @@
 set -ueo pipefail
 
 case "${1:-}" in
-  sync-next-boot)
-    if [ "$#" -ge 2 ]; then
-        echo "Universe sync next boot with path override: $2"
-        nh os boot /etc/nixos -- --quiet --override-input "universe" "path:$2"
+  test)
+    if [ "$#" -ge 3 ]; then
+        echo "Test $2 at $3"
+        nh os switch /etc/nixos -- --quiet --override-input "$2" "path:$3"
     else
-        echo "Universe sync next boot"
-        sudo nix flake update --flake /etc/nixos
-        nh os boot /etc/nixos -- --quiet
+        echo "Test"
+        nh os switch /etc/nixos -- --quiet
     fi
     ;;
   sync)
-    if [ "$#" -ge 2 ]; then
-        echo "Universe sync with path override: $2"
-        nh os switch /etc/nixos -- --quiet --override-input "universe" "path:$2"
-    else
-        echo "Universe sync"
-       	sudo nix flake update --flake /etc/nixos
-        nh os switch /etc/nixos -- --quiet
-    fi
+    echo "Sync"
+   	sudo nix flake update --flake /etc/nixos
+    nh os switch /etc/nixos -- --quiet
     ;;
   clean)
     echo "Clean"
  	nh clean all --optimise
     ;;
   *)
-  	echo "Usage: system [sync|sync-next-boot|clean]"
+  	echo "Usage: system <sync [path] | clean>"
   	exit 1
     ;;
 esac
