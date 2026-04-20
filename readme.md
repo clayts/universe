@@ -1,9 +1,6 @@
 # Universe
 
 ## To Do
-- hardware stuff
-	- swap play key binding to win+z
-- sort out guest background
 - homeConfiguration = args: {...} to mirror nixosSystem = args: {...} in flake.nix
 - sort out: 
 	```
