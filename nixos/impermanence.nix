@@ -44,6 +44,7 @@
   system.activationScripts.fix-config-files = {
     text = ''
       touch /data/home/user/.config/goa-1.0/accounts.conf
+      touch /data/home/user/.gitconfig
     '';
   };
 }
