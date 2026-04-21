@@ -1,5 +1,24 @@
 {
   "nodes": {
+    "assets": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "assets",
+        "type": "path"
+      },
+      "original": {
+        "path": "assets",
+        "type": "path"
+      },
+      "parent": []
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -113,34 +132,15 @@
         "type": "github"
       }
     },
-    "resources": {
-      "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "resources",
-        "type": "path"
-      },
-      "original": {
-        "path": "resources",
-        "type": "path"
-      },
-      "parent": []
-    },
     "root": {
       "inputs": {
+        "assets": "assets",
         "disko": "disko",
         "firefox-theme": "firefox-theme",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs",
-        "resources": "resources"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

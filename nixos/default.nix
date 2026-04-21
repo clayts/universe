@@ -10,9 +10,9 @@
     ./users.nix
   ];
   environment.systemPackages = with pkgs; [
-    inputs.resources.persist
-    inputs.resources.system
-    inputs.resources.scan
+    inputs.assets.persist
+    inputs.assets.system
+    inputs.assets.scan
     (aspellWithDicts (dicts: [
       dicts.en
       dicts.en-computers

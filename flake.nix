@@ -24,8 +24,8 @@
         home-manager.follows = "";
       };
     };
-    resources = {
-      url = ./resources;
+    assets = {
+      url = ./assets;
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
@@ -39,11 +39,11 @@
     apps.${system} = {
       install-system = {
         type = "app";
-        program = "${inputs.resources.install-system}/bin/install-system";
+        program = "${inputs.assets.install-system}/bin/install-system";
       };
       install-home = {
         type = "app";
-        program = "${inputs.resources.install-home}/bin/install-home";
+        program = "${inputs.assets.install-home}/bin/install-home";
       };
     };
     nixosSystem = args: {

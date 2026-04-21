@@ -31,11 +31,11 @@
         baobab
         gnome-disk-utility
 
-        inputs.resources.safe
-        inputs.resources.earthpaper
+        inputs.assets.safe
+        inputs.assets.earthpaper
         grc
       ];
-      fonts = with inputs.resources.style.fonts; [
+      fonts = with inputs.assets.style.fonts; [
         sans.package
         serif.package
         mono.package
@@ -48,7 +48,7 @@
       GOPATH = "$HOME/.local/share/go";
     };
     file = {
-      "${config.xdg.userDirs.templates}".source = inputs.resources.templates;
+      "${config.xdg.userDirs.templates}".source = inputs.assets.templates;
     };
   };
   xdg = {
@@ -74,14 +74,14 @@
       [Desktop Entry]
       Type=Application
       Name=Earthpaper Rotator
-      Exec=${inputs.resources.earthpaper}/bin/earthpaper
+      Exec=${inputs.assets.earthpaper}/bin/earthpaper
       X-GNOME-Autostart-enabled=true
       NoDisplay=true
     '';
   };
   fonts.fontconfig = {
     enable = true;
-    defaultFonts = with inputs.resources.style.fonts; {
+    defaultFonts = with inputs.assets.style.fonts; {
       sansSerif = [sans.name emoji.name];
       serif = [serif.name emoji.name];
       monospace = [mono.name emoji.name];
@@ -108,7 +108,7 @@
                   </edit>
                 </match>''
           )
-          inputs.resources.style.fonts)}
+          inputs.assets.style.fonts)}
         </fontconfig>
       '';
     };

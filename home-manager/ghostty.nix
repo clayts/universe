@@ -12,7 +12,7 @@
     enableZshIntegration = true;
     systemd.enable = true;
     themes = {
-      "Custom" = with inputs.resources.style.colors; {
+      "Custom" = with inputs.assets.style.colors; {
         background = x9;
         foreground = x5;
         cursor-color = x5;
@@ -43,13 +43,13 @@
         "performable:ctrl+c=copy_to_clipboard"
         "ctrl+v=paste_from_clipboard"
       ];
-      font-family = with inputs.resources.style.fonts; [
+      font-family = with inputs.assets.style.fonts; [
         mono.name
         emoji.name
       ];
-      font-size = inputs.resources.style.fonts.mono.size;
+      font-size = inputs.assets.style.fonts.mono.size;
       adjust-cell-height = -2;
-      font-feature = inputs.resources.style.fonts.mono.features;
+      font-feature = inputs.assets.style.fonts.mono.features;
       theme = "Custom";
       background = "000000";
       command = "SHLVL=0; zsh";

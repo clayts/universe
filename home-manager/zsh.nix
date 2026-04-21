@@ -29,7 +29,17 @@
       enable = true;
       enableZshIntegration = true;
     };
-    lsd.enable = true;
+    lsd = {
+      enable = true;
+      enableZshIntegration = true;
+      icons = {
+        name = {
+          "works" = "";
+          "desk" = "";
+          "${config.home.username}" = "";
+        };
+      };
+    };
     gh.enable = true;
     fd.enable = true;
     starship = {
@@ -150,7 +160,7 @@
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
       initContent = ''
-        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${inputs.resources.rizzlefetch}/bin/rizzlefetch && echo
+        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${inputs.assets.rizzlefetch}/bin/rizzlefetch && echo
         echo
 
         # keybindings
