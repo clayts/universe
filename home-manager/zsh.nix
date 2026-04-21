@@ -63,7 +63,6 @@
           "$shlvl"
           "$character"
         ];
-        # line_break.disabled = true;
         git_branch = {
           format = "[($symbol$branch(:$remote_branch) )]($style)";
           symbol = "󰊢 ";
