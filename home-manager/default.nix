@@ -56,17 +56,15 @@
     userDirs = {
       enable = true;
       createDirectories = true;
-      desktop = "${config.home.homeDirectory}/Desktop";
-      download = "${config.home.homeDirectory}/Desktop";
       templates = "${config.home.homeDirectory}/.Templates";
       publicShare = "${config.home.homeDirectory}/.Public";
-      documents = "${config.home.homeDirectory}/Documents";
+      desktop = "${config.home.homeDirectory}/Desk";
+      download = "${config.home.homeDirectory}/Desk";
       music = "${config.home.homeDirectory}/Media";
       pictures = "${config.home.homeDirectory}/Media";
       videos = "${config.home.homeDirectory}/Media";
-      extraConfig = {
-        code = "${config.home.homeDirectory}/Code";
-      };
+      projects = "${config.home.homeDirectory}/Works";
+      documents = "${config.home.homeDirectory}/Works";
     };
     desktopEntries.cups = {
       name = "";

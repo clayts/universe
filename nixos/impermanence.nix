@@ -30,11 +30,10 @@
         ".local"
         ".mozilla"
         ".steam"
-        "Desktop"
-        "Documents"
-        "Media"
-        "Code"
         ".Public"
+        "Desk"
+        "Media"
+        "Works"
 
         {
           directory = ".config/gh";
