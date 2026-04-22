@@ -13,6 +13,7 @@
       "nix"
       "git-firefly"
       "color-highlight"
+      "xml"
     ];
     package = pkgs.symlinkJoin {
       name = "zed-editor-bundle";

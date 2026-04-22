@@ -30,10 +30,7 @@
         impression
         baobab
         gnome-disk-utility
-
-        inputs.assets.safe
-        inputs.assets.earthpaper
-        grc
+        ascii-draw
       ];
       fonts = with inputs.assets.style.fonts; [
         sans.package
@@ -70,10 +67,10 @@
       name = "";
       noDisplay = true;
     };
-    configFile."autostart/earthpaper-rotator.desktop".text = ''
+    configFile."autostart/earthpaper.desktop".text = ''
       [Desktop Entry]
       Type=Application
-      Name=Earthpaper Rotator
+      Name=Earthpaper
       Exec=${inputs.assets.earthpaper}/bin/earthpaper
       X-GNOME-Autostart-enabled=true
       NoDisplay=true

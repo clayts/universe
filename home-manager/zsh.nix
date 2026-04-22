@@ -8,7 +8,24 @@
   imports = [
     inputs.nix-index-database.homeModules.nix-index
   ];
+  home.packages = with pkgs; [
+    inputs.assets.earthpaper
+    inputs.assets.safe
+    grc
+  ];
   programs = {
+    ripgrep-all = {
+      enable = true;
+    };
+    bat = {
+      enable = true;
+      extraPackages = with pkgs.bat-extras; [batdiff batman batpipe batwatch];
+      config = {
+        style = "plain";
+        pager = "never";
+        theme = "base16";
+      };
+    };
     nix-index = {
       enable = true;
       enableZshIntegration = false; # slow - just use comma
@@ -149,6 +166,9 @@
         lt = lib.mkForce "lsd --tree --long --git --group-dirs first --no-symlink --date relative";
         ssh = "TERM='xterm-256color' ssh";
         cd = "z";
+        diff = "batdiff";
+        man = "batman --pager less";
+        cat = "bat";
       };
       sessionVariables = {
         GREP_OPTIONS = "--color=auto";
@@ -168,6 +188,9 @@
         bindkey  "^[[H"   beginning-of-line
         bindkey  "^[[F"   end-of-line
         bindkey  "^[[3~"  delete-char
+
+        # batpipe
+        eval "$(batpipe)"
       '';
     };
   };
