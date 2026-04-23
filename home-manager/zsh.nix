@@ -11,6 +11,7 @@
   home.packages = with pkgs; [
     inputs.assets.earthpaper
     inputs.assets.safe
+    inputs.assets.sing
     grc
   ];
   programs = {
