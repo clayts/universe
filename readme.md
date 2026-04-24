@@ -1,6 +1,7 @@
 # Universe
 
 ## To Do
+- rename data -> static
 - homeConfiguration = args: {...} to mirror nixosSystem = args: {...} in flake.nix
 - sort out: 
 	```
