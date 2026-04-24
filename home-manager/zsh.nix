@@ -144,6 +144,10 @@
           success_symbol = "[❯](bold bright-green)";
           error_symbol = "[❯](bold bright-red)";
         };
+        jobs = {
+          symbol = "󰒲";
+          style = "purple";
+        };
       };
     };
     zsh = {
