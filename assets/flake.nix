@@ -13,7 +13,7 @@
     sing = pkgs.writeShellApplication {
       name = "sing";
       runtimeEnv = {mpris = pkgs.mpvScripts.mpris;};
-      runtimeInputs = with pkgs; [mpv];
+      runtimeInputs = with pkgs; [yt-dlp mpv cava];
       text = builtins.readFile ./sing.sh;
     };
     safe = pkgs.writeShellApplication {
