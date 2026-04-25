@@ -60,7 +60,6 @@
         }
       ];
       files = [
-        ".local/state/lesshst"
         ".local/share/recently-used.xbel"
         {
           file = ".gitconfig";
