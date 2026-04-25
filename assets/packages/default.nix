@@ -9,7 +9,7 @@ in rec {
   sing = pkgs.writeShellApplication {
     name = "sing";
     runtimeEnv = {mpris = pkgs.mpvScripts.mpris;};
-    runtimeInputs = with pkgs; [yt-dlp mpv cava];
+    runtimeInputs = with pkgs; [yt-dlp mpv];
     text = builtins.readFile ./sing.sh;
   };
   safe = pkgs.writeShellApplication {
