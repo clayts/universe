@@ -40,21 +40,27 @@
         program = "${assets.packages.install-home}/bin/install-home";
       };
     };
-    nixosSystem = args: {
+    nixosSystem = {
+      name,
+      foundation,
+      hardware,
+      imports ? {},
+      specialArgs ? {},
+    }: {
       nixosConfigurations = {
-        "${args.name}" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs assets;} // (args.specialArgs or {});
+        "${name}" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs assets;} // specialArgs;
           modules = [
             {
-              networking.hostName = "${args.name}";
-              system.stateVersion = "${args.foundation.system}";
-              home-manager.sharedModules = [{home.stateVersion = "${args.foundation.homes}";}];
+              networking.hostName = "${name}";
+              system.stateVersion = "${foundation.system}";
+              home-manager.sharedModules = [{home.stateVersion = "${foundation.homes}";}];
               imports =
                 [
                   ./nixos
-                  args.hardware
+                  hardware
                 ]
-                ++ (args.imports or []);
+                ++ imports;
             }
           ];
         };
