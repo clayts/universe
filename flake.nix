@@ -44,7 +44,7 @@
       name,
       foundation,
       hardware,
-      imports ? {},
+      imports ? [],
       specialArgs ? {},
     }: {
       nixosConfigurations = {
