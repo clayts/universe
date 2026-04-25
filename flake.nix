@@ -81,8 +81,6 @@
         basedpyright
         ruff
         (python313.withPackages (ps: with ps; [terminaltexteffects]))
-
-        assets.packages.sing2
       ];
     };
   };
