@@ -1,6 +1,6 @@
 {
   pkgs,
-  inputs,
+  assets,
   ...
 }: {
   xdg.desktopEntries."micro" = {
@@ -19,7 +19,7 @@
       ruler = false;
     };
   };
-  home.file.".config/micro/colorschemes/custom.micro".text = with inputs.assets.style.colors; ''
+  home.file.".config/micro/colorschemes/custom.micro".text = with assets.style.colors; ''
     color-link default "${xC}"
     color-link comment "${x4}"
     color-link identifier "bold ${xC}"

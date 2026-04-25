@@ -24,32 +24,26 @@
         home-manager.follows = "";
       };
     };
-    assets = {
-      url = ./assets;
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
   };
   outputs = inputs: let
     system = "x86_64-linux";
     pkgs = import inputs.nixpkgs {inherit system;};
+    assets = import ./assets {inherit inputs pkgs;};
   in {
     apps.${system} = {
       install-system = {
         type = "app";
-        program = "${inputs.assets.install-system}/bin/install-system";
+        program = "${assets.packages.install-system}/bin/install-system";
       };
       install-home = {
         type = "app";
-        program = "${inputs.assets.install-home}/bin/install-home";
+        program = "${assets.packages.install-home}/bin/install-home";
       };
     };
     nixosSystem = args: {
       nixosConfigurations = {
         "${args.name}" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {inputs = inputs // (args.inputs or {});};
+          specialArgs = {inherit inputs assets;} // (args.specialArgs or {});
           modules = [
             {
               networking.hostName = "${args.name}";

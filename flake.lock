@@ -1,24 +1,5 @@
 {
   "nodes": {
-    "assets": {
-      "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "assets",
-        "type": "path"
-      },
-      "original": {
-        "path": "assets",
-        "type": "path"
-      },
-      "parent": []
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -134,7 +115,6 @@
     },
     "root": {
       "inputs": {
-        "assets": "assets",
         "disko": "disko",
         "firefox-theme": "firefox-theme",
         "home-manager": "home-manager",

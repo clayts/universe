@@ -3,15 +3,16 @@
   lib,
   config,
   inputs,
+  assets,
   ...
 }: {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
   ];
   home.packages = with pkgs; [
-    inputs.assets.earthpaper
-    inputs.assets.safe
-    inputs.assets.sing
+    assets.packages.earthpaper
+    assets.packages.safe
+    assets.packages.sing
     grc
   ];
   programs = {
@@ -184,7 +185,7 @@
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
       initContent = ''
-        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${inputs.assets.rizzlefetch}/bin/rizzlefetch && echo
+        [[ -o interactive ]] && [[ -n $DISPLAY ]] && [[ $SHLVL -eq 1 ]] && ${assets.packages.rizzlefetch}/bin/rizzlefetch && echo
         echo
 
         # keybindings

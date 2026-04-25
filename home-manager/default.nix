@@ -1,6 +1,6 @@
 {
   pkgs,
-  inputs,
+  assets,
   lib,
   config,
   ...
@@ -32,7 +32,7 @@
         gnome-disk-utility
         ascii-draw
       ];
-      fonts = with inputs.assets.style.fonts; [
+      fonts = with assets.style.fonts; [
         sans.package
         serif.package
         mono.package
@@ -45,7 +45,7 @@
       GOPATH = "$HOME/.local/share/go";
     };
     file = {
-      "${config.xdg.userDirs.templates}".source = inputs.assets.templates;
+      "${config.xdg.userDirs.templates}".source = assets.templates;
     };
   };
   xdg = {
@@ -71,14 +71,14 @@
       [Desktop Entry]
       Type=Application
       Name=Earthpaper
-      Exec=${inputs.assets.earthpaper}/bin/earthpaper
+      Exec=${assets.packages.earthpaper}/bin/earthpaper
       X-GNOME-Autostart-enabled=true
       NoDisplay=true
     '';
   };
   fonts.fontconfig = {
     enable = true;
-    defaultFonts = with inputs.assets.style.fonts; {
+    defaultFonts = with assets.style.fonts; {
       sansSerif = [sans.name emoji.name];
       serif = [serif.name emoji.name];
       monospace = [mono.name emoji.name];
@@ -105,7 +105,7 @@
                   </edit>
                 </match>''
           )
-          inputs.assets.style.fonts)}
+          assets.style.fonts)}
         </fontconfig>
       '';
     };
