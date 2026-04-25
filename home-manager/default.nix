@@ -30,7 +30,7 @@
         impression
         baobab
         gnome-disk-utility
-        ascii-draw
+        assets.packages.sabaki
       ];
       fonts = with assets.style.fonts; [
         sans.package

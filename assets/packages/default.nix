@@ -5,6 +5,7 @@
   systemRelease = inputs.nixpkgs.lib.trivial.release;
   homeRelease = (builtins.fromJSON (builtins.readFile "${inputs.home-manager}/release.json")).release;
 in rec {
+  sabaki = import ./sabaki.nix {inherit pkgs;};
   sing = pkgs.writeShellApplication {
     name = "sing";
     runtimeEnv = {mpris = pkgs.mpvScripts.mpris;};

@@ -89,7 +89,14 @@ in {
       switch-applications-backward = ["<Shift><Alt>Tab"];
     };
     "org/gnome/desktop/app-folders" = {
-      folder-children = lib.gvariant.mkEmptyArray lib.gvariant.type.string;
+      folder-children = lib.gvariant.mkArray ["Game"];
+    };
+    "org/gnome/desktop/app-folders/folders/Game" = {
+      name = "Game";
+      apps = [
+        "steam.desktop"
+        "sabaki.desktop"
+      ];
     };
   };
 }
