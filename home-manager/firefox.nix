@@ -50,7 +50,7 @@
           "browser.aboutConfig.showWarning" = false;
           # "browser.cache.disk.enable" = false; # Be kind to hard drive
           "browser.cache.disk.enable" = true;
-          "browser.cache.disk.capacity" = 65536;
+          "browser.cache.disk.capacity" = 256 * 1024;
           "browser.cache.disk.parent_directory" = "/run/user/${toString config.home.uid}/firefox";
           "gnomeTheme.hideSingleTab" = true;
           "browser.uiCustomization.state" = {
