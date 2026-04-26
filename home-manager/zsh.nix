@@ -9,11 +9,10 @@
   imports = [
     inputs.nix-index-database.homeModules.nix-index
   ];
-  home.packages = with pkgs; [
+  home.packages = [
     assets.packages.earthpaper
     assets.packages.safe
     assets.packages.sing
-    grc
   ];
   programs = {
     ripgrep-all = {
