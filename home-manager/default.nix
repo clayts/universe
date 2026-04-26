@@ -30,6 +30,9 @@
         impression
         baobab
         gnome-disk-utility
+        nautilus
+        nautilus-python
+        yelp
         assets.packages.sabaki
       ];
       fonts = with assets.style.fonts; [

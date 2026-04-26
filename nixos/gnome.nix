@@ -1,9 +1,4 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    nautilus
-    nautilus-python
-    yelp
-  ];
   services = {
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
