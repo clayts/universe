@@ -38,7 +38,6 @@
         settings = {
           # "browser.display.use_document_fonts" = 0;
           #
-          asdafsdfasdfasd = "fasdfasdfasdf";
           "browser.tabs.groups.enabled" = false;
           "extensions.pocket.enabled" = false;
           "browser.newtabpage.pinned" = "";
