@@ -11,11 +11,11 @@
     allowTrash = true;
     hideMounts = true;
     directories = [
-      "/nix"
-      "/var"
-      "/etc/NetworkManager/system-connections"
-      "/etc/ssh"
-      "/etc/nixos"
+      "/nix/"
+      "/var/"
+      "/etc/NetworkManager/system-connections/"
+      "/etc/ssh/"
+      "/etc/nixos/"
     ];
     files = [
       "/etc/machine-id"
@@ -27,7 +27,6 @@
         "Media/"
         "Works/"
 
-        ".mozilla/"
         ".steam/"
         ".Public/"
         ".local/state/comma/"
@@ -49,6 +48,7 @@
         ".local/share/safe/"
         ".local/share/zed/"
         ".local/share/zoxide/"
+        ".config/mozilla/"
         ".config/goa-1.0/"
         {
           directory = ".cache/";
