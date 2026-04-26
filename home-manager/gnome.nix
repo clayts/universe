@@ -85,8 +85,7 @@ in {
       close = ["<Super>q"];
       switch-windows = ["<Super>Tab"];
       switch-windows-backward = ["<Shift><Super>Tab"];
-      switch-applications = ["<Alt>Tab"];
-      switch-applications-backward = ["<Shift><Alt>Tab"];
+      move-to-center = ["<Super>c"];
     };
     "org/gnome/desktop/app-folders" = {
       folder-children = lib.gvariant.mkArray ["Game"];
