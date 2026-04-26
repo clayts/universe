@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   home.file.".mozilla/managed-storage/uBlock0@raymondhill.net.json".text = builtins.toJSON {
     name = "uBlock0@raymondhill.net";
     description = "_";
@@ -9,7 +13,6 @@
       ];
     };
   };
-
   programs.firefox = {
     enable = true;
     # package = pkgs.firefox-beta;
@@ -34,6 +37,8 @@
         extraConfig = builtins.readFile "${inputs.firefox-theme}/configuration/user.js";
         settings = {
           # "browser.display.use_document_fonts" = 0;
+          #
+          asdafsdfasdfasd = "fasdfasdfasdf";
           "browser.tabs.groups.enabled" = false;
           "extensions.pocket.enabled" = false;
           "browser.newtabpage.pinned" = "";
@@ -44,7 +49,10 @@
           "browser.toolbars.bookmarks.visibility" = "never";
           "media.ffmpeg.vaapi.enabled" = true;
           "browser.aboutConfig.showWarning" = false;
-          "browser.cache.disk.enable" = false; # Be kind to hard drive
+          # "browser.cache.disk.enable" = false; # Be kind to hard drive
+          "browser.cache.disk.enable" = true;
+          "browser.cache.disk.capacity" = 65536;
+          "browser.cache.disk.parent_directory" = "/run/user/${toString config.home.uid}/firefox";
           "gnomeTheme.hideSingleTab" = true;
           "browser.uiCustomization.state" = {
             "placements" = {

@@ -55,12 +55,7 @@
               networking.hostName = "${name}";
               system.stateVersion = "${foundation.system}";
               home-manager.sharedModules = [{home.stateVersion = "${foundation.homes}";}];
-              imports =
-                [
-                  ./nixos
-                  hardware
-                ]
-                ++ imports;
+              imports = [./nixos hardware] ++ imports;
             }
           ];
         };
