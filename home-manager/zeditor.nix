@@ -2,8 +2,10 @@
   pkgs,
   lib,
   assets,
+  osConfig,
   ...
-}: {
+}:
+{
   programs.zed-editor = {
     enable = true;
     extensions = [
@@ -80,7 +82,7 @@
       buffer_font_weight = 400;
       buffer_font_size = assets.style.fonts.mono.size * 4.0 / 3.0;
       buffer_line_height.custom = 1.23;
-      ui_font_family = lib.mkForce ".SystemUIFont"; #style.fonts.sans.name;
+      ui_font_family = lib.mkForce ".SystemUIFont"; # style.fonts.sans.name;
       ui_font_size = assets.style.fonts.sans.size * 3.0 / 2.0;
       ui_font_weight = 400;
       soft_wrap = "none";
@@ -93,15 +95,35 @@
       };
       node.path = "${pkgs.nodejs}/bin/node";
       languages = {
-        Nix.language_servers = ["nixd" "!nil" "..."];
+        Nix.language_servers = [
+          "nixd"
+          "!nil"
+          "..."
+        ];
         HTML = {
-          language_servers = ["superhtml" "..."];
+          language_servers = [
+            "superhtml"
+            "..."
+          ];
           formatter.language_server.name = "superhtml";
         };
       };
       lsp_document_colors = "background";
       lsp = {
-        nixd.settings.formatting.command = ["alejandra"];
+        nixd.settings =
+          let
+            myFlake = ''(builtins.getFlake "/etc/nixos")'';
+            nixosOpts = "${myFlake}.nixosConfigurations.${osConfig.networking.hostName}.options";
+          in
+          {
+            args = [ "--semantic-tokens=true" ];
+            nixpkgs.expr = "import ${myFlake}.inputs.nixpkgs { }";
+            formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
+            options = {
+              nixos.expr = nixosOpts;
+              home-manager.expr = "${nixosOpts}.home-manager.users.type.getSubOptions []";
+            };
+          };
         rust-analyzer.initialization_options.check.command = "clippy";
       };
     };
