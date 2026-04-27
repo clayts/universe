@@ -112,16 +112,16 @@
       lsp = {
         nixd.settings =
           let
-            myFlake = ''(builtins.getFlake "/etc/nixos")'';
-            nixosOpts = "${myFlake}.nixosConfigurations.${osConfig.networking.hostName}.options";
+            system-flake = ''(builtins.getFlake "/etc/nixos")'';
+            nixos-options = "${system-flake}.nixosConfigurations.${osConfig.networking.hostName}.options";
           in
           {
             args = [ "--semantic-tokens=true" ];
-            nixpkgs.expr = "import ${myFlake}.inputs.nixpkgs { }";
-            formatting.command = [ "${lib.getExe pkgs.nixfmt}" ];
+            nixpkgs.expr = "import ${system-flake}.inputs.nixpkgs { }";
+            formatting.command = [ "nixfmt" ];
             options = {
-              nixos.expr = nixosOpts;
-              home-manager.expr = "${nixosOpts}.home-manager.users.type.getSubOptions []";
+              nixos.expr = nixos-options;
+              home-manager.expr = "${nixos-options}.home-manager.users.type.getSubOptions []";
             };
           };
         rust-analyzer.initialization_options.check.command = "clippy";

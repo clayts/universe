@@ -76,7 +76,7 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           nixd
-          alejandra
+          nixfmt
 
           color-lsp
 
