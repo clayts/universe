@@ -3,7 +3,8 @@
   inputs,
   assets,
   ...
-}: {
+}:
+{
   imports = [
     ./gnome.nix
     ./hardware.nix
@@ -30,7 +31,9 @@
       "rd.udev.log_level=3"
       "udev.log_priority=3"
     ];
-    kernel.sysctl = {"vm.swappiness" = 10;};
+    kernel.sysctl = {
+      "vm.swappiness" = 10;
+    };
     loader = {
       systemd-boot.enable = true;
       efi = {
@@ -83,17 +86,20 @@
   security = {
     sudo = {
       wheelNeedsPassword = false;
-      extraConfig = ''Defaults:root,%wheel env_keep+=SHLVL'';
+      extraConfig = "Defaults:root,%wheel env_keep+=SHLVL";
     };
     rtkit.enable = true;
   };
   documentation.nixos.enable = false;
   nix = {
     enable = true;
-    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     settings = {
       download-buffer-size = 256 * 1024 * 1024;
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
   };
   nixpkgs.config.allowUnfree = true;

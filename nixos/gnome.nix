@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   services = {
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
@@ -10,8 +11,11 @@
   };
   environment = {
     sessionVariables.NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4";
-    pathsToLink = ["/share/nautilus-python/extensions"];
-    gnome.excludePackages = with pkgs; [gnome-tour gnome-screenshot];
+    pathsToLink = [ "/share/nautilus-python/extensions" ];
+    gnome.excludePackages = with pkgs; [
+      gnome-tour
+      gnome-screenshot
+    ];
   };
   security.pam.services = {
     gdm-fingerprint.fprintAuth = true;
@@ -19,6 +23,8 @@
   };
   programs.dconf = {
     enable = true;
-    profiles.gdm.databases = [{settings."org/gnome/login-screen".enable-fingerprint-authentication = false;}];
+    profiles.gdm.databases = [
+      { settings."org/gnome/login-screen".enable-fingerprint-authentication = false; }
+    ];
   };
 }

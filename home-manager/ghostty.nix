@@ -2,10 +2,11 @@
   pkgs,
   assets,
   ...
-}: {
+}:
+{
   # This allows gnome to use ghostty as a default terminal when running
   # .desktop files that require a terminal
-  home.packages = [(pkgs.writeShellScriptBin "xterm" ''${pkgs.ghostty} $*'')];
+  home.packages = [ (pkgs.writeShellScriptBin "xterm" "${pkgs.ghostty} $*") ];
 
   programs.ghostty = {
     enable = true;

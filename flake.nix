@@ -25,58 +25,70 @@
       };
     };
   };
-  outputs = inputs: let
-    system = "x86_64-linux";
-    pkgs = import inputs.nixpkgs {inherit system;};
-    assets = import ./assets {inherit inputs pkgs;};
-  in {
-    apps.${system} = {
-      install-system = {
-        type = "app";
-        program = "${assets.packages.install-system}/bin/install-system";
-      };
-      install-home = {
-        type = "app";
-        program = "${assets.packages.install-home}/bin/install-home";
-      };
-    };
-    nixosSystem = {
-      name,
-      foundation,
-      hardware,
-      imports ? [],
-      specialArgs ? {},
-    }: {
-      nixosConfigurations = {
-        "${name}" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs assets;} // specialArgs;
-          modules = [
-            {
-              networking.hostName = "${name}";
-              system.stateVersion = "${foundation.system}";
-              home-manager.sharedModules = [{home.stateVersion = "${foundation.homes}";}];
-              imports = [./nixos hardware] ++ imports;
-            }
-          ];
+  outputs =
+    inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = import inputs.nixpkgs { inherit system; };
+      assets = import ./assets { inherit inputs pkgs; };
+    in
+    {
+      apps.${system} = {
+        install-system = {
+          type = "app";
+          program = "${assets.packages.install-system}/bin/install-system";
+        };
+        install-home = {
+          type = "app";
+          program = "${assets.packages.install-home}/bin/install-home";
         };
       };
+      nixosSystem =
+        {
+          name,
+          foundation,
+          hardware,
+          imports ? [ ],
+          specialArgs ? { },
+        }:
+        {
+          nixosConfigurations = {
+            "${name}" = inputs.nixpkgs.lib.nixosSystem {
+              specialArgs = {
+                inherit inputs assets;
+              }
+              // specialArgs;
+              modules = [
+                {
+                  networking.hostName = "${name}";
+                  system.stateVersion = "${foundation.system}";
+                  home-manager.sharedModules = [ { home.stateVersion = "${foundation.homes}"; } ];
+                  imports = [
+                    ./nixos
+                    hardware
+                  ]
+                  ++ imports;
+                }
+              ];
+            };
+          };
+        };
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          nixd
+          alejandra
+
+          color-lsp
+
+          package-version-server
+
+          vscode-langservers-extracted
+
+          superhtml
+          basedpyright
+          ruff
+          (python313.withPackages (ps: with ps; [ terminaltexteffects ]))
+        ];
+      };
     };
-    devShells.${system}.default = pkgs.mkShell {
-      packages = with pkgs; [
-        nixd
-        alejandra
-
-        color-lsp
-
-        package-version-server
-
-        vscode-langservers-extracted
-
-        superhtml
-        basedpyright
-        ruff
-        (python313.withPackages (ps: with ps; [terminaltexteffects]))
-      ];
-    };
-  };
 }

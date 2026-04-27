@@ -2,14 +2,18 @@
   inputs,
   config,
   ...
-}: {
+}:
+{
   home.file.".mozilla/managed-storage/uBlock0@raymondhill.net.json".text = builtins.toJSON {
     name = "uBlock0@raymondhill.net";
     description = "_";
     type = "storage";
     data = {
       userSettings = [
-        ["prefetchingDisabled" "false"]
+        [
+          "prefetchingDisabled"
+          "false"
+        ]
       ];
     };
   };
@@ -55,13 +59,30 @@
           "gnomeTheme.hideSingleTab" = true;
           "browser.uiCustomization.state" = {
             "placements" = {
-              "widget-overflow-fixed-list" = [];
-              "unified-extensions-area" = ["ublock0_raymondhill_net-browser-action"];
-              "nav-bar" = ["back-button" "forward-button" "stop-reload-button" "customizableui-special-spring1" "firefox-view-button" "urlbar-container" "new-tab-button" "customizableui-special-spring2" "downloads-button" "unified-extensions-button"];
-              "toolbar-menubar" = ["menubar-items"];
-              "TabsToolbar" = ["tabbrowser-tabs" "alltabs-button"];
-              "vertical-tabs" = [];
-              "PersonalToolbar" = ["import-button" "personal-bookmarks"];
+              "widget-overflow-fixed-list" = [ ];
+              "unified-extensions-area" = [ "ublock0_raymondhill_net-browser-action" ];
+              "nav-bar" = [
+                "back-button"
+                "forward-button"
+                "stop-reload-button"
+                "customizableui-special-spring1"
+                "firefox-view-button"
+                "urlbar-container"
+                "new-tab-button"
+                "customizableui-special-spring2"
+                "downloads-button"
+                "unified-extensions-button"
+              ];
+              "toolbar-menubar" = [ "menubar-items" ];
+              "TabsToolbar" = [
+                "tabbrowser-tabs"
+                "alltabs-button"
+              ];
+              "vertical-tabs" = [ ];
+              "PersonalToolbar" = [
+                "import-button"
+                "personal-bookmarks"
+              ];
             };
             "currentVersion" = 20;
           };

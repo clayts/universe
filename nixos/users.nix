@@ -4,7 +4,8 @@
   specialArgs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.default
   ];
@@ -17,13 +18,17 @@
         description = "User";
         isNormalUser = true;
         uid = 1000;
-        extraGroups = ["wheel" "libvirtd" "networkmanager"];
+        extraGroups = [
+          "wheel"
+          "libvirtd"
+          "networkmanager"
+        ];
         hashedPasswordFile = "/data/etc/nixos/passwords/user";
       };
       "guest" = {
         description = "Guest";
         isNormalUser = true;
-        extraGroups = [];
+        extraGroups = [ ];
         hashedPasswordFile = "/data/etc/nixos/passwords/guest";
       };
       "root".hashedPasswordFile = "/data/etc/nixos/passwords/root";
@@ -35,7 +40,8 @@
     useUserPackages = true;
     extraSpecialArgs = specialArgs;
     backupFileExtension = "home-manager-backup";
-    users =
-      lib.genAttrs ["root" "user" "guest"] (user: {imports = [../home-manager];});
+    users = lib.genAttrs [ "root" "user" "guest" ] (user: {
+      imports = [ ../home-manager ];
+    });
   };
 }

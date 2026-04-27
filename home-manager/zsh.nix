@@ -5,7 +5,8 @@
   inputs,
   assets,
   ...
-}: {
+}:
+{
   imports = [
     inputs.nix-index-database.homeModules.nix-index
   ];
@@ -21,7 +22,12 @@
     };
     bat = {
       enable = true;
-      extraPackages = with pkgs.bat-extras; [batdiff batman batpipe batwatch];
+      extraPackages = with pkgs.bat-extras; [
+        batdiff
+        batman
+        batpipe
+        batwatch
+      ];
       config = {
         style = "plain";
         pager = "never";
@@ -64,7 +70,7 @@
     starship = {
       enable = true;
       enableZshIntegration = true;
-      presets = ["no-runtime-versions"];
+      presets = [ "no-runtime-versions" ];
       settings = {
         add_newline = false;
         format = lib.strings.concatStrings [

@@ -4,7 +4,8 @@
   config,
   assets,
   ...
-}: let
+}:
+let
   extensions = with pkgs.gnomeExtensions; [
     grand-theft-focus
     appindicator
@@ -12,7 +13,8 @@
     just-perfection
     auto-power-profile
   ];
-in {
+in
+{
   gtk = {
     enable = true;
     iconTheme = assets.style.icons;
@@ -32,7 +34,7 @@ in {
   };
   programs.gnome-shell = {
     enable = true;
-    extensions = map (extension: {package = extension;}) extensions;
+    extensions = map (extension: { package = extension; }) extensions;
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = with assets.style.fonts; {
@@ -45,9 +47,7 @@ in {
       font-hinting = "slight";
     };
     "org/gnome/shell".disable-user-extensions = false;
-    "org/gnome/shell".enabled-extensions =
-      map (extension: extension.extensionUuid)
-      extensions;
+    "org/gnome/shell".enabled-extensions = map (extension: extension.extensionUuid) extensions;
     "org/gnome/shell/extensions/just-perfection" = {
       panel = false;
       panel-in-overview = true;
@@ -60,7 +60,10 @@ in {
       support-notifier-showed-version = pkgs.gnomeExtensions.just-perfection.version;
       support-notifier-type = 0;
     };
-    "org/gnome/shell".favorite-apps = ["firefox.desktop" "org.gnome.Nautilus.desktop"];
+    "org/gnome/shell".favorite-apps = [
+      "firefox.desktop"
+      "org.gnome.Nautilus.desktop"
+    ];
     "org/gnome/shell/window-switcher".current-workspace-only = false;
     "org/gnome/settings-daemon/plugins/housekeeping".donation-reminder-enabled = false;
     "org/gnome/desktop/peripherals/touchpad".disable-while-typing = false; # Required for touchpad/keyboard games
@@ -69,7 +72,8 @@ in {
     "org/gnome/desktop/peripherals/touchpad".speed = 0.1;
     "org/gnome/desktop/peripherals/touchpad".tap-to-click = false;
     "org/gnome/nautilus/icon-view".default-zoom-level = "medium";
-    "org/gnome/desktop/background".picture-uri = "${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg";
+    "org/gnome/desktop/background".picture-uri =
+      "${config.home.homeDirectory}/.local/share/earthpaper/image.jpeg";
     "org/gnome/nautilus/list-view".use-tree-view = true;
     "org/gnome/nautilus/preferences".show-delete-permanently = true;
     "org/gnome/desktop/privacy".remove-old-trash-files = true;
@@ -79,16 +83,16 @@ in {
       edge-tiling = true;
       workspaces-only-on-primary = true;
     };
-    "org/gnome/settings-daemon/plugins/media-keys".play = ["<Shift><Super>F23"];
+    "org/gnome/settings-daemon/plugins/media-keys".play = [ "<Shift><Super>F23" ];
     "org/gnome/desktop/wm/keybindings" = {
-      toggle-fullscreen = ["<Super>f"];
-      close = ["<Super>q"];
-      switch-windows = ["<Super>Tab"];
-      switch-windows-backward = ["<Shift><Super>Tab"];
-      move-to-center = ["<Super>c"];
+      toggle-fullscreen = [ "<Super>f" ];
+      close = [ "<Super>q" ];
+      switch-windows = [ "<Super>Tab" ];
+      switch-windows-backward = [ "<Shift><Super>Tab" ];
+      move-to-center = [ "<Super>c" ];
     };
     "org/gnome/desktop/app-folders" = {
-      folder-children = lib.gvariant.mkArray ["Game"];
+      folder-children = lib.gvariant.mkArray [ "Game" ];
     };
     "org/gnome/desktop/app-folders/folders/Game" = {
       name = "Game";

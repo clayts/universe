@@ -1,11 +1,16 @@
-{inputs, ...}: {
+{ inputs, ... }:
+{
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
-    options = ["defaults" "size=32M" "mode=755"];
+    options = [
+      "defaults"
+      "size=32M"
+      "mode=755"
+    ];
   };
   environment.persistence."/data" = {
     allowTrash = true;

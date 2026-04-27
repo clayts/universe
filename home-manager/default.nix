@@ -4,7 +4,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./firefox.nix
     ./ghostty.nix
@@ -14,34 +15,35 @@
     ./zsh.nix
   ];
   home = {
-    packages = let
-      applications = with pkgs; [
-        gnome-firmware
-        loupe
-        file-roller
-        gnome-calculator
-        gnome-characters
-        gnome-logs
-        gnome-clocks
-        eyedropper
-        celluloid
-        gitg
-        papers
-        impression
-        baobab
-        gnome-disk-utility
-        nautilus
-        nautilus-python
-        yelp
-        assets.packages.sabaki
-      ];
-      fonts = with assets.style.fonts; [
-        sans.package
-        serif.package
-        mono.package
-        emoji.package
-      ];
-    in
+    packages =
+      let
+        applications = with pkgs; [
+          gnome-firmware
+          loupe
+          file-roller
+          gnome-calculator
+          gnome-characters
+          gnome-logs
+          gnome-clocks
+          eyedropper
+          celluloid
+          gitg
+          papers
+          impression
+          baobab
+          gnome-disk-utility
+          nautilus
+          nautilus-python
+          yelp
+          assets.packages.sabaki
+        ];
+        fonts = with assets.style.fonts; [
+          sans.package
+          serif.package
+          mono.package
+          emoji.package
+        ];
+      in
       applications ++ fonts;
     sessionVariables = {
       EDITOR = "micro";
@@ -82,10 +84,22 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = with assets.style.fonts; {
-      sansSerif = [sans.name emoji.name];
-      serif = [serif.name emoji.name];
-      monospace = [mono.name emoji.name];
-      emoji = [emoji.name emoji.name];
+      sansSerif = [
+        sans.name
+        emoji.name
+      ];
+      serif = [
+        serif.name
+        emoji.name
+      ];
+      monospace = [
+        mono.name
+        emoji.name
+      ];
+      emoji = [
+        emoji.name
+        emoji.name
+      ];
     };
     configFile.features = {
       enable = true;
@@ -94,21 +108,23 @@
         <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
         <fontconfig>
           <description>Set features</description>
-          ${lib.concatStringsSep "\n" (lib.mapAttrsToList (
-            role: font:
-              if font.features == []
-              then ""
-              else ''
-                <match target="font">
-                  <test name="family" compare="eq">
-                    <string>${font.name}</string>
-                  </test>
-                  <edit name="fontfeatures" mode="append">
-                    ${lib.concatMapStrings (f: "<string>${f} on</string>") font.features}
-                  </edit>
-                </match>''
-          )
-          assets.style.fonts)}
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (
+              role: font:
+              if font.features == [ ] then
+                ""
+              else
+                ''
+                  <match target="font">
+                    <test name="family" compare="eq">
+                      <string>${font.name}</string>
+                    </test>
+                    <edit name="fontfeatures" mode="append">
+                      ${lib.concatMapStrings (f: "<string>${f} on</string>") font.features}
+                    </edit>
+                  </match>''
+            ) assets.style.fonts
+          )}
         </fontconfig>
       '';
     };
