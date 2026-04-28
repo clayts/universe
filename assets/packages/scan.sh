@@ -7,8 +7,9 @@ disk=$(echo "$report" | jq -r '
 	| if length == 1 then .[0] else "" end
 ')
 swap=$(free -m | awk '/^Mem:/{print $2 * 2}')M
-alejandra -q <<-EOF
-{...}: {
+cat <<-EOF
+{ ... }:
+{
   fileSystems."/data".neededForBoot = true;
   disko.devices = {
     disk.main = {
@@ -24,7 +25,7 @@ alejandra -q <<-EOF
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = ["umask=0077"];
+              mountOptions = [ "umask=0077" ];
             };
           };
           swap = {

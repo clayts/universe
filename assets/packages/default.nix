@@ -8,6 +8,17 @@ let
 in
 rec {
   sabaki = import ./sabaki.nix { inherit pkgs; };
+  scan = pkgs.writeShellApplication {
+    name = "scan";
+    runtimeInputs = with pkgs; [
+      nixos-facter
+      jq
+    ];
+    runtimeEnv = {
+      template = ./template.nix;
+    };
+    text = builtins.readFile ./scan.sh;
+  };
   sing = pkgs.writeShellApplication {
     name = "sing";
     runtimeEnv = {
@@ -32,15 +43,6 @@ rec {
       dconf
     ];
     text = builtins.readFile ./earthpaper.sh;
-  };
-  scan = pkgs.writeShellApplication {
-    name = "scan";
-    runtimeInputs = with pkgs; [
-      nixos-facter
-      jq
-      alejandra
-    ];
-    text = builtins.readFile ./scan.sh;
   };
   install-system = pkgs.writeShellApplication {
     name = "install-system";
