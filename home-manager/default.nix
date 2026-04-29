@@ -65,8 +65,8 @@
       music = "${config.home.homeDirectory}/Media";
       pictures = "${config.home.homeDirectory}/Media";
       videos = "${config.home.homeDirectory}/Media";
-      projects = "${config.home.homeDirectory}/Works";
-      documents = "${config.home.homeDirectory}/Works";
+      projects = "${config.home.homeDirectory}/Code";
+      documents = "${config.home.homeDirectory}/Documents";
     };
     desktopEntries.cups = {
       name = "";

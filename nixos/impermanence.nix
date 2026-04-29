@@ -30,7 +30,8 @@
       directories = [
         "Desk/"
         "Media/"
-        "Works/"
+        "Code/"
+        "Documents/"
 
         ".steam/"
         ".Public/"

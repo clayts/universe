@@ -27,7 +27,8 @@ in
       bookmarks = [
         "file://${config.home.homeDirectory}/Desk"
         "file://${config.home.homeDirectory}/Media"
-        "file://${config.home.homeDirectory}/Works"
+        "file://${config.home.homeDirectory}/Code"
+        "file://${config.home.homeDirectory}/Documents"
       ];
     };
     cursorTheme = assets.style.cursors;

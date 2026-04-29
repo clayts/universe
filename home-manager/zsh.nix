@@ -59,8 +59,9 @@
       enableZshIntegration = true;
       icons = {
         name = {
-          "works" = "";
-          "desk" = "";
+          "desk" = "󱈹";
+          "code" = "";
+          "universe" = "";
           "${config.home.username}" = "";
         };
       };
