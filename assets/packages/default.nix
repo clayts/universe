@@ -26,6 +26,7 @@ rec {
     };
     runtimeInputs = with pkgs; [
       yt-dlp
+      jq
       mpv
     ];
     text = builtins.readFile ./sing.sh;
