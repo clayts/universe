@@ -4,6 +4,6 @@
 }:
 {
   templates = "${./templates}";
-  style = import ./style.nix { inherit pkgs; };
+  style = import ./style { inherit pkgs; };
   packages = import ./packages { inherit pkgs inputs; };
 }
