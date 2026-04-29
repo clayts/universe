@@ -21,7 +21,7 @@
     };
   };
   home.file.".config/micro/colorschemes/custom.micro".text = with assets.style.colors; ''
-    color-link default "${xC}"
+    color-link default "${x5}"
     color-link comment "${x4}"
     color-link identifier "bold ${xC}"
     color-link constant "${x8}"
