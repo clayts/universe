@@ -33,7 +33,6 @@
         "Code/"
         "Documents/"
 
-        ".steam/"
         ".Public/"
         ".local/state/comma/"
         ".local/state/zsh/"
@@ -52,6 +51,7 @@
         ".local/share/nautilus/"
         ".local/share/pki/"
         ".local/share/safe/"
+        ".local/share/Steam"
         ".local/share/zed/"
         ".local/share/zoxide/"
         ".config/mozilla/"
