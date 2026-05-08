@@ -100,6 +100,7 @@ in
       apps = [
         "steam.desktop"
         "sabaki.desktop"
+        "Sid Meier's Civilization V.desktop"
       ];
     };
   };
