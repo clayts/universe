@@ -42,6 +42,22 @@
         settings = {
           # "browser.display.use_document_fonts" = 0;
           #
+          "browser.uiCustomization.navBarWhenVerticalTabs" = [
+            "sidebar-button"
+            "back-button"
+            "forward-button"
+            "stop-reload-button"
+            "customizableui-special-spring1"
+            "vertical-spacer"
+            "firefox-view-button"
+            "urlbar-container"
+            "customizableui-special-spring2"
+            "downloads-button"
+            "unified-extensions-button"
+            "alltabs-button"
+          ];
+          "sidebar.verticalTabs" = true;
+          "sidebar.main.tools" = "";
           "browser.tabs.groups.enabled" = false;
           "extensions.pocket.enabled" = false;
           "browser.newtabpage.pinned" = "";
@@ -62,6 +78,7 @@
               "widget-overflow-fixed-list" = [ ];
               "unified-extensions-area" = [ "ublock0_raymondhill_net-browser-action" ];
               "nav-bar" = [
+                "sidebar-button"
                 "back-button"
                 "forward-button"
                 "stop-reload-button"
