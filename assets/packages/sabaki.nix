@@ -65,10 +65,10 @@ let
       ${sabaki-unwrapped}/bin/sabaki "$@"
     '';
   };
-  desktopItem = pkgs.makeDesktopItem {
+  sabaki-desktop = pkgs.makeDesktopItem {
     name = "sabaki";
     desktopName = "Sabaki";
-    exec = "${sabaki}/bin/sabaki %U";
+    exec = "sabaki %U";
     icon = "sabaki";
     comment = "Elegant goban";
     categories = [ "Game" ];
@@ -78,7 +78,7 @@ in
   name = "sabaki";
   paths = [
     sabaki
-    desktopItem
+    sabaki-desktop
   ];
   postBuild = ''
     install -Dm644 ${sabaki-icon} \
