@@ -58,6 +58,7 @@
           ];
           "sidebar.verticalTabs" = true;
           "sidebar.main.tools" = "";
+          "sidebar.revamp.round-content-area" = false;
           "browser.tabs.groups.enabled" = false;
           "extensions.pocket.enabled" = false;
           "browser.newtabpage.pinned" = "";
