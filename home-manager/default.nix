@@ -36,6 +36,7 @@
           nautilus-python
           yelp
           resources
+          snapshot
           assets.packages.sabaki
         ];
         fonts = with assets.style.fonts; [

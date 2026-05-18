@@ -67,4 +67,17 @@ with builtins;
 
     boot.kernelParams = [ "i915.enable_guc=3" ];
   })
+  (lib.mkIf
+    (builtins.any (
+      d:
+      d ? driver_module
+      && builtins.elem d.driver_module [
+        "intel_ipu7"
+      ]
+    ) hardware.pci)
+    {
+      hardware.ipu6.enable = true;
+      hardware.ipu6.platform = "ipu6";
+    }
+  )
 ]
