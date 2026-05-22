@@ -4,7 +4,7 @@
   ...
 }:
 {
-  home.file.".mozilla/managed-storage/uBlock0@raymondhill.net.json".text = builtins.toJSON {
+  home.file.".config/mozilla/managed-storage/uBlock0@raymondhill.net.json".text = builtins.toJSON {
     name = "uBlock0@raymondhill.net";
     description = "_";
     type = "storage";
@@ -36,7 +36,12 @@
         id = 0;
         name = "default";
         isDefault = true;
-        userChrome = ''@import "${inputs.firefox-theme}/userChrome.css";'';
+        userChrome = ''
+          @import "${inputs.firefox-theme}/userChrome.css";
+          #nav-bar-overflow-button {
+            display: none !important;
+          }
+        '';
         userContent = ''@import "${inputs.firefox-theme}/userContent.css";'';
         extraConfig = builtins.readFile "${inputs.firefox-theme}/configuration/user.js";
         settings = {
