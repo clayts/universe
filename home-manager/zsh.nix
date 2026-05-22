@@ -136,7 +136,7 @@
           directory_icon = {
             when = true;
             style = "blue";
-            command = "lsd -d $(pwd) --icon always | cut -c1-4";
+            command = "lsd -d $(pwd) --icon always | cut -c1-2";
             format = "[$symbol($output )]($style)";
           };
         };

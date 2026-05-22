@@ -18,7 +18,7 @@ with builtins;
       monitors = toFile "monitors.xml" ''
         <monitors version="2">
           <configuration>
-            <layoutmode>physical</layoutmode>
+            <layoutmode>logical</layoutmode>
             <logicalmonitor>
               <x>0</x>
               <y>0</y>
@@ -35,6 +35,7 @@ with builtins;
                   <width>2880</width>
                   <height>1800</height>
                   <rate>120.000</rate>
+                  <ratemode>variable</ratemode>
                 </mode>
               </monitor>
             </logicalmonitor>
