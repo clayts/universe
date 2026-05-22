@@ -25,6 +25,7 @@
           gnome-characters
           gnome-logs
           gnome-clocks
+          gnome-calendar
           eyedropper
           celluloid
           gitg
