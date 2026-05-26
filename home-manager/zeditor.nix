@@ -85,7 +85,7 @@
       ui_font_family = lib.mkForce ".SystemUIFont"; # style.fonts.sans.name;
       ui_font_size = assets.style.fonts.sans.size * 3.0 / 2.0;
       ui_font_weight = 400;
-      soft_wrap = "none";
+      soft_wrap = "editor_width";
       preferred_line_length = 100;
       tabs.file_icons = true;
       theme = {
