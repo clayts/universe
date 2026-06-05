@@ -73,7 +73,7 @@
       ];
     };
   };
-  systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "24h";
   programs = {
     zsh.enable = true;
     nh.enable = true;
