@@ -61,7 +61,7 @@
             "unified-extensions-button"
             "alltabs-button"
           ];
-          "sidebar.verticalTabs" = false;
+          "sidebar.verticalTabs" = true;
           "sidebar.main.tools" = "";
           "sidebar.revamp.round-content-area" = false;
           "browser.tabs.groups.enabled" = false;
