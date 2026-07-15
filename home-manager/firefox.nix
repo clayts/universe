@@ -62,7 +62,7 @@
             "alltabs-button"
           ];
 
-          "sidebar.verticalTabs" = true;
+          "sidebar.verticalTabs" = false;
           "sidebar.main.tools" = "";
           "sidebar.revamp.round-content-area" = false;
           "browser.tabs.groups.enabled" = false;
