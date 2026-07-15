@@ -85,7 +85,6 @@
               "widget-overflow-fixed-list" = [ ];
               "unified-extensions-area" = [ "ublock0_raymondhill_net-browser-action" ];
               "nav-bar" = [
-                "sidebar-button"
                 "back-button"
                 "forward-button"
                 "stop-reload-button"
