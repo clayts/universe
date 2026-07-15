@@ -17,7 +17,7 @@ case "${1:-}" in
  	nh clean all --optimise
     ;;
   *)
-  	echo "Usage: system <sync [path] | clean>"
+  	echo "Usage: system <test INPUT DIR | sync | clean>"
   	exit 1
     ;;
 esac
