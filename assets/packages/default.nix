@@ -33,7 +33,7 @@ rec {
   };
   safe = pkgs.writeShellApplication {
     name = "safe";
-    runtimeInputs = with pkgs; [ cryfs ];
+    runtimeInputs = with pkgs; [ gocryptfs ];
     text = builtins.readFile ./safe.sh;
   };
   earthpaper = pkgs.writeShellApplication {
