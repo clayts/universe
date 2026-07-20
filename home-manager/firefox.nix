@@ -64,6 +64,7 @@
 
           "sidebar.verticalTabs" = false;
           "sidebar.main.tools" = "";
+          "sidebar.revamp" = false;
           "sidebar.revamp.round-content-area" = false;
           "browser.tabs.groups.enabled" = false;
           "extensions.pocket.enabled" = false;
