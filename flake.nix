@@ -89,7 +89,7 @@
           ruff
           (python313.withPackages (ps: with ps; [ terminaltexteffects ]))
           (writeShellScriptBin "update" ''
-                nix flake update;git add flake.lock;git commit -am "Update flake.lock";git push;sleep 1s;system sync
+                nix flake update;git add flake.lock;git commit -m "Update flake.lock";git push;sleep 1s;system sync
           '')
         ];
       };
