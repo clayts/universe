@@ -103,6 +103,8 @@ in
         "sabaki.desktop"
         "Sid Meier's Civilization V.desktop"
         "Journey.desktop"
+        "Noita.desktop"
+        "Samorost 1.desktop"
       ];
     };
   };
