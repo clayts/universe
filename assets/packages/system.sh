@@ -4,7 +4,7 @@ set -euo pipefail
 usage() {
     cat <<EOF
 Usage:
-  system --sync [--boot] [--from <input>:<path>] [--update] [--push]
+  system --sync [--boot] [--from <input>:<path>] [--update]
   system --clean
 
 Options:
@@ -13,12 +13,10 @@ Options:
   --boot                    (sync only) Apply on next boot instead of switching now
   --from <input>:<path>     (sync only) Override a flake input with a local path,
                             e.g. --from nixpkgs:/home/me/nixpkgs
-  --update                  (requires --from) Update the flake.lock of the
-                            path given to --from
-  --push                    (requires --update) Verify the --from repo is
-                            clean, update its flake.lock, commit and push it,
-                            then run an official sync of the main flake
-                            (no override) to pick up the new commit
+  --update                  (requires --from) Verify the --from repo is clean,
+                            update its flake.lock, commit and push it, then
+                            run an official sync of the main flake (no
+                            override) to pick up the new commit
 EOF
 }
 
@@ -26,7 +24,6 @@ MODE=""
 BOOT=0
 FROM=""
 UPDATE=0
-PUSH=0
 
 # --- parse args -------------------------------------------------------
 while [[ $# -gt 0 ]]; do
@@ -55,10 +52,6 @@ while [[ $# -gt 0 ]]; do
             UPDATE=1
             shift
             ;;
-        --push)
-            PUSH=1
-            shift
-            ;;
         -h|--help)
             usage
             exit 0
@@ -79,19 +72,14 @@ if [[ -z "$MODE" ]]; then
 fi
 
 if [[ "$MODE" == "clean" ]]; then
-    if [[ $BOOT -eq 1 || -n "$FROM" || $UPDATE -eq 1 || $PUSH -eq 1 ]]; then
-        echo "Error: --boot, --from, --update, and --push are only valid with --sync" >&2
+    if [[ $BOOT -eq 1 || -n "$FROM" || $UPDATE -eq 1 ]]; then
+        echo "Error: --boot, --from, and --update are only valid with --sync" >&2
         exit 1
     fi
 fi
 
 if [[ $UPDATE -eq 1 && -z "$FROM" ]]; then
     echo "Error: --update requires --from" >&2
-    exit 1
-fi
-
-if [[ $PUSH -eq 1 && $UPDATE -eq 0 ]]; then
-    echo "Error: --push requires --update" >&2
     exit 1
 fi
 
@@ -114,7 +102,7 @@ push_flake_update() {
     local repo="$1"
 
     if [[ -n "$(git -C "$repo" status --porcelain)" ]]; then
-        echo "Error: $repo has uncommitted changes; commit or stash them before using --push" >&2
+        echo "Error: $repo has uncommitted changes; commit or stash them before using --update" >&2
         exit 1
     fi
 
@@ -137,16 +125,11 @@ do_sync() {
 
     if [[ -n "$FROM" ]]; then
         if [[ $UPDATE -eq 1 ]]; then
-            if [[ $PUSH -eq 1 ]]; then
-                push_flake_update "$FROM_PATH"
-                echo "Running official sync of $FLAKE_DIR..."
-                sudo nix flake update --flake "$FLAKE_DIR"
-                nh os "$subcmd" "$FLAKE_DIR" -- --quiet
-                return
-            else
-                echo "Updating flake.lock in $FROM_PATH..."
-                nix flake update --flake "$FROM_PATH"
-            fi
+            push_flake_update "$FROM_PATH"
+            echo "Running official sync of $FLAKE_DIR..."
+            sudo nix flake update --flake "$FLAKE_DIR"
+            nh os "$subcmd" "$FLAKE_DIR" -- --quiet
+            return
         fi
 
         echo "Overriding $FROM_INPUT with path:$FROM_PATH"
