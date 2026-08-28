@@ -4,26 +4,27 @@ set -euo pipefail
 usage() {
     cat <<EOF
 Usage:
-  system --sync [--boot] [--from <input>:<path>] [--update]
+  system --sync [--boot] [--input <input> <path> | --update-input <path>]
   system --clean
 
 Options:
-  --sync                    Rebuild the system (via nh os)
-  --clean                   Run garbage collection / store optimisation
-  --boot                    (sync only) Apply on next boot instead of switching now
-  --from <input>:<path>     (sync only) Override a flake input with a local path,
-                            e.g. --from nixpkgs:/home/me/nixpkgs
-  --update                  (requires --from) Verify the --from repo is clean,
-                            update its flake.lock, commit and push it, then
-                            run an official sync of the main flake (no
-                            override) to pick up the new commit
+  --sync                   Rebuild the system (via nh os)
+  --clean                  Run garbage collection / store optimisation
+  --boot                   (sync only) Apply on next boot instead of switching now
+  --input <input> <path>   (sync only) Override a flake input with a local path,
+                           e.g. --input nixpkgs ~/nixpkgs
+  --update-input <path>    (sync only) Verify the flake repo at <path> is
+                           clean, update its flake.lock, commit and push it,
+                           then run a plain official sync of the main flake.
+                           Mutually exclusive with --input.
 EOF
 }
 
 MODE=""
 BOOT=0
-FROM=""
-UPDATE=0
+INPUT_NAME=""
+INPUT_PATH=""
+UPDATE_INPUT_PATH=""
 
 # --- parse args -------------------------------------------------------
 while [[ $# -gt 0 ]]; do
@@ -40,17 +41,22 @@ while [[ $# -gt 0 ]]; do
             BOOT=1
             shift
             ;;
-        --from)
-            if [[ -z "${2:-}" || "$2" == --* ]]; then
-                echo "Error: --from requires a value in the form <input>:<path>" >&2
+        --input)
+            if [[ -z "${2:-}" || "$2" == --* || -z "${3:-}" || "$3" == --* ]]; then
+                echo "Error: --input requires two values: <input> <path>" >&2
                 exit 1
             fi
-            FROM="$2"
-            shift 2
+            INPUT_NAME="$2"
+            INPUT_PATH="$3"
+            shift 3
             ;;
-        --update)
-            UPDATE=1
-            shift
+        --update-input)
+            if [[ -z "${2:-}" || "$2" == --* ]]; then
+                echo "Error: --update-input requires a path" >&2
+                exit 1
+            fi
+            UPDATE_INPUT_PATH="$2"
+            shift 2
             ;;
         -h|--help)
             usage
@@ -72,27 +78,18 @@ if [[ -z "$MODE" ]]; then
 fi
 
 if [[ "$MODE" == "clean" ]]; then
-    if [[ $BOOT -eq 1 || -n "$FROM" || $UPDATE -eq 1 ]]; then
-        echo "Error: --boot, --from, and --update are only valid with --sync" >&2
+    if [[ $BOOT -eq 1 || -n "$INPUT_NAME" || -n "$UPDATE_INPUT_PATH" ]]; then
+        echo "Error: --boot, --input, and --update-input are only valid with --sync" >&2
         exit 1
     fi
 fi
 
-if [[ $UPDATE -eq 1 && -z "$FROM" ]]; then
-    echo "Error: --update requires --from" >&2
+if [[ -n "$INPUT_NAME" && -n "$UPDATE_INPUT_PATH" ]]; then
+    echo "Error: --input and --update-input are mutually exclusive" >&2
     exit 1
 fi
 
 FLAKE_DIR="/etc/nixos"
-
-if [[ -n "$FROM" ]]; then
-    if [[ "$FROM" != *:* ]]; then
-        echo "Error: --from must be in the form <input>:<path>" >&2
-        exit 1
-    fi
-    FROM_INPUT="${FROM%%:*}"
-    FROM_PATH="${FROM#*:}"
-fi
 
 # --- actions --------------------------------------------------------
 
@@ -102,7 +99,7 @@ push_flake_update() {
     local repo="$1"
 
     if [[ -n "$(git -C "$repo" status --porcelain)" ]]; then
-        echo "Error: $repo has uncommitted changes; commit or stash them before using --update" >&2
+        echo "Error: $repo has uncommitted changes; commit or stash them before using --update-input" >&2
         exit 1
     fi
 
@@ -123,17 +120,14 @@ do_sync() {
     local subcmd="switch"
     [[ $BOOT -eq 1 ]] && subcmd="boot"
 
-    if [[ -n "$FROM" ]]; then
-        if [[ $UPDATE -eq 1 ]]; then
-            push_flake_update "$FROM_PATH"
-            echo "Running official sync of $FLAKE_DIR..."
-            sudo nix flake update --flake "$FLAKE_DIR"
-            nh os "$subcmd" "$FLAKE_DIR" -- --quiet
-            return
-        fi
-
-        echo "Overriding $FROM_INPUT with path:$FROM_PATH"
-        nh os "$subcmd" "$FLAKE_DIR" -- --quiet --override-input "$FROM_INPUT" "path:$FROM_PATH"
+    if [[ -n "$INPUT_NAME" ]]; then
+        echo "Overriding $INPUT_NAME with path:$INPUT_PATH"
+        nh os "$subcmd" "$FLAKE_DIR" -- --quiet --override-input "$INPUT_NAME" "path:$INPUT_PATH"
+    elif [[ -n "$UPDATE_INPUT_PATH" ]]; then
+        push_flake_update "$UPDATE_INPUT_PATH"
+        echo "Running official sync of $FLAKE_DIR..."
+        sudo nix flake update --flake "$FLAKE_DIR"
+        nh os "$subcmd" "$FLAKE_DIR" -- --quiet
     else
         nh os "$subcmd" "$FLAKE_DIR" -- --quiet
     fi
