@@ -129,6 +129,7 @@ do_sync() {
         sudo nix flake update --flake "$FLAKE_DIR"
         nh os "$subcmd" "$FLAKE_DIR" -- --quiet
     else
+        sudo nix flake update --flake "$FLAKE_DIR"
         nh os "$subcmd" "$FLAKE_DIR" -- --quiet
     fi
 }
