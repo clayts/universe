@@ -97,15 +97,7 @@ in
     };
     "org/gnome/desktop/app-folders/folders/Game" = {
       name = "Game";
-      categories = "Game";
-      apps = [
-        "steam.desktop"
-        "sabaki.desktop"
-        "Sid Meier's Civilization V.desktop"
-        "Journey.desktop"
-        "Noita.desktop"
-        "Samorost 1.desktop"
-      ];
+      categories = ["Game"];
     };
   };
 }
