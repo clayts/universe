@@ -53,6 +53,7 @@
     sessionVariables = {
       EDITOR = "micro";
       GOPATH = "$HOME/.local/share/go";
+      npm_config_cache = "$HOME/.cache/npm";
     };
     file = {
       "${config.xdg.userDirs.templates}".source = assets.templates;
