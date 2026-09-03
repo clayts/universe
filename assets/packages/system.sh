@@ -136,6 +136,7 @@ do_sync() {
 
 do_clean() {
     nh clean all --optimise
+    nh os boot
 }
 
 case "$MODE" in
