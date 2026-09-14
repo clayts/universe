@@ -14,8 +14,9 @@ Options:
   --input <input> <path>   (sync only) Override a flake input with a local path,
                            e.g. --input nixpkgs ~/nixpkgs
   --update-input <path>    (sync only) Verify the flake repo at <path> is
-                           clean, update its flake.lock, commit and push it,
-                           then run a plain official sync of the main flake.
+                           clean and in sync with its upstream, update its
+                           flake.lock, commit and push it, then run a plain
+                           official sync of the main flake.
                            Mutually exclusive with --input.
 EOF
 }
@@ -93,13 +94,36 @@ FLAKE_DIR="/etc/nixos"
 
 # --- actions --------------------------------------------------------
 
-# Checks that $1 (a local flake repo) is clean, updates its flake.lock,
-# commits, and pushes it. Aborts if the repo has uncommitted changes.
+# Checks that $1 (a local flake repo) is clean and in sync with its upstream,
+# updates its flake.lock, commits, and pushes it. Aborts on uncommitted
+# changes or on commits that exist locally but not on the remote, so the
+# main flake is never locked against a stale remote.
 push_flake_update() {
     local repo="$1"
 
     if [[ -n "$(git -C "$repo" status --porcelain)" ]]; then
         echo "Error: $repo has uncommitted changes; commit or stash them before using --update-input" >&2
+        exit 1
+    fi
+
+    local upstream
+    upstream="$(git -C "$repo" rev-parse --abbrev-ref --symbolic-full-name '@{u}')" || {
+        echo "Error: no upstream configured for the current branch in $repo" >&2
+        exit 1
+    }
+
+    git -C "$repo" fetch
+
+    if [[ -n "$(git -C "$repo" log --oneline "$upstream"..HEAD)" ]]; then
+        echo "Error: $repo has unpushed commits; push or reset them before using --update-input" >&2
+        git -C "$repo" log --oneline "$upstream"..HEAD >&2
+        exit 1
+    fi
+
+    # Drop this block if you'd rather let the push fail on non-fast-forward.
+    if [[ -n "$(git -C "$repo" log --oneline HEAD.."$upstream")" ]]; then
+        echo "Error: $repo is behind $upstream; pull before using --update-input" >&2
+        git -C "$repo" log --oneline HEAD.."$upstream" >&2
         exit 1
     fi
 
@@ -113,12 +137,14 @@ push_flake_update() {
 
     git -C "$repo" add flake.lock
     git -C "$repo" commit -m "Update flake.lock"
-    git -C "$repo" push
+    git -C "$repo" push origin HEAD
 }
 
 do_sync() {
     local subcmd="switch"
-    [[ $BOOT -eq 1 ]] && subcmd="boot"
+    if [[ $BOOT -eq 1 ]]; then
+        subcmd="boot"
+    fi
 
     if [[ -n "$INPUT_NAME" ]]; then
         echo "Overriding $INPUT_NAME with path:$INPUT_PATH"
@@ -126,10 +152,12 @@ do_sync() {
     elif [[ -n "$UPDATE_INPUT_PATH" ]]; then
         push_flake_update "$UPDATE_INPUT_PATH"
         echo "Running official sync of $FLAKE_DIR..."
-        sudo nix flake update --flake "$FLAKE_DIR"
+        # --refresh: without it, nix may reuse a cached resolution (tarball-ttl,
+        # root's cache under sudo) and lock to the pre-push revision.
+        sudo nix flake update --refresh --flake "$FLAKE_DIR"
         nh os "$subcmd" "$FLAKE_DIR" -- --quiet
     else
-        sudo nix flake update --flake "$FLAKE_DIR"
+        sudo nix flake update --refresh --flake "$FLAKE_DIR"
         nh os "$subcmd" "$FLAKE_DIR" -- --quiet
     fi
 }
