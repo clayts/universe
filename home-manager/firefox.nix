@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   ...
 }:
 {
@@ -46,7 +47,9 @@
         extraConfig = builtins.readFile "${inputs.firefox-theme}/configuration/user.js";
         settings = {
           # "browser.display.use_document_fonts" = 0;
-          #
+          "spellchecker.dictionary_path" = "${pkgs.hunspellDicts.en_GB-ize}/share/hunspell";
+          "spellchecker.dictionary" = "en-GB";
+          "intl.accept_languages" = "en-GB,en";
           "browser.uiCustomization.navBarWhenVerticalTabs" = [
             "sidebar-button"
             "back-button"
