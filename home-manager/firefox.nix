@@ -48,7 +48,7 @@
         settings = {
           # "browser.display.use_document_fonts" = 0;
           "spellchecker.dictionary_path" = "${pkgs.hunspellDicts.en_GB-ize}/share/hunspell";
-          "spellchecker.dictionary" = "en-GB";
+          "spellchecker.dictionary" = "en-GB,en_GB";
           "intl.accept_languages" = "en-GB,en";
           "browser.uiCustomization.navBarWhenVerticalTabs" = [
             "sidebar-button"
