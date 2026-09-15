@@ -37,6 +37,7 @@
         ".local"
         ".config/mozilla/"
         ".config/goa-1.0/"
+        ".wine"
         {
           directory = ".cache/";
           mode = "0700";
