@@ -14,9 +14,6 @@ rec {
       nixos-facter
       jq
     ];
-    runtimeEnv = {
-      template = ./template.nix;
-    };
     text = builtins.readFile ./scan.sh;
   };
   sing = pkgs.writeShellApplication {
