@@ -89,8 +89,8 @@
   documentation.nixos.enable = false;
   nix = {
     enable = true;
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     settings = {
+    	nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
       download-buffer-size = 256 * 1024 * 1024;
       experimental-features = [
         "nix-command"
