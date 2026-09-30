@@ -15,11 +15,7 @@
     assets.packages.persist
     assets.packages.system
     assets.packages.scan
-    (aspellWithDicts (dicts: [
-      dicts.en
-      dicts.en-computers
-      dicts.en-science
-    ]))
+    hunspellDicts.en_GB-ize
     android-tools
   ];
   boot = {
