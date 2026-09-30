@@ -89,7 +89,7 @@
           ruff
           (python313.withPackages (ps: with ps; [ terminaltexteffects ]))
 
-          assets.update
+          assets.packages.update
         ];
       };
     };
