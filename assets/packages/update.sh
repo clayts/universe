@@ -117,4 +117,6 @@ git commit -m "Update flake.lock"
 
 if [[ $PUSH -eq 1 ]]; then
     git push origin HEAD
+    # Give the remote a moment before anything (e.g. system sync) fetches it.
+    sleep 3
 fi
