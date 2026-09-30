@@ -72,4 +72,9 @@ rec {
       python ${./rizzlefetch.py}
     '';
   };
+  update = pkgs.writeShellApplication {
+    name = "update";
+    runtimeInputs = [ pkgs.git ];
+    text = builtins.readFile ./update.sh;
+  };
 }
