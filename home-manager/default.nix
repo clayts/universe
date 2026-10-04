@@ -40,7 +40,6 @@
           snapshot
           assets.packages.sabaki
           gnome-calendar
-          apostrophe
         ];
         fonts = with assets.style.fonts; [
           sans.package
